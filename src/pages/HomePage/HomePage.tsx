@@ -454,7 +454,10 @@ function HomePage() {
                     name="email"
                     placeholder="Your email address"
                   />
-                  <button type="submit" className="btn btn-primary-gradient">
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-primary-gradient"
+                  >
                     Subscribe
                   </button>
                 </div>

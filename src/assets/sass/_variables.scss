@@ -1,13 +1,6 @@
 $font-base: 'Poppins';
 $blue: #395ce0;
-$gray: '#21232d';
-$gray-light: '#626674';
-
-@mixin hideScrollbar {
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
+$blue-light: #627cff;
+$blue-bold: #274ee1;
+$gray: #21232d;
+$gray-light: #626674;
