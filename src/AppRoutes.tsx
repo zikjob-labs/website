@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import routes from './configs/routes';
 import HomePage from './pages/HomePage';
+import ProfilePage from './pages/Profile';
 import { WalletLoginPage, WalletRegisterPage } from './pages/Auth';
-import { ProfilePage } from './pages/Profile';
 import { NotFoundPage } from './pages/Common';
 
 function AppRoutes() {

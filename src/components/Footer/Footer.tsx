@@ -1,13 +1,30 @@
-import logoImg from '../../assets/images/logo.png';
-import social1 from '../../assets/images/social-1.png';
-import social2 from '../../assets/images/social-2.png';
-import social3 from '../../assets/images/social-3.png';
-import social4 from '../../assets/images/social-4.png';
-import social5 from '../../assets/images/social-5.png';
+import {
+  logoImg,
+  social1Img,
+  social2Img,
+  social3Img,
+  social4Img,
+  social5Img,
+} from '@/assets/images';
 
 function Footer() {
+  const socials = [
+    {
+      name: 'telegram',
+      link: 'https://t.me/zikjob_global_chat',
+      src: social1Img,
+    },
+    { name: 'twitter', link: 'https://twitter.com/zikjob', src: social2Img },
+    { name: 'discord', link: 'https://discord.gg/QqcT2Y4XST', src: social3Img },
+    { name: 'facebook', link: 'https://facebook.com/zikjob', src: social4Img },
+    {
+      name: 'medium',
+      link: 'https://medium.com/@zikjobglobal',
+      src: social5Img,
+    },
+  ];
   return (
-    <footer className="footer">
+    <footer className="footer pt-12 pb-6">
       <div className="container">
         <div className="footer__top grid lg:grid-cols-[25%_auto_25%] gap-[20px] items-center">
           <figure className="footer__logo">
@@ -30,34 +47,16 @@ function Footer() {
             </ul>
           </nav>
           <ul className="footer__social flex items-center justify-center lg:justify-end">
-            <li>
-              <a href="https://t.me/zikjob_global_chat">
-                <img src={social1} alt="telegram-channel" />
-              </a>
-            </li>
-            <li>
-              <a href="https://twitter.com/zikjob">
-                <img src={social2} alt="twitter" />
-              </a>
-            </li>
-            <li>
-              <a href="https://discord.gg/QqcT2Y4XST">
-                <img src={social3} alt="discord" />
-              </a>
-            </li>
-            <li>
-              <a href="https://facebook.com/zikjob">
-                <img src={social4} alt="facebook" />
-              </a>
-            </li>
-            <li>
-              <a href="https://medium.com/@zikjobglobal">
-                <img src={social5} alt="medium" />
-              </a>
-            </li>
+            {socials.map((social, index) => (
+              <li key={index}>
+                <a href={social.link}>
+                  <img src={social.src} alt={social.name} />
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
-        <div className="footer__bottom text-center">
+        <div className="mt-4 text-[#767676] text-xs text-center">
           <p>©2022 ZIKJOB. All rights reserved.</p>
         </div>
       </div>

@@ -1,37 +1,35 @@
 /* eslint-disable react/no-unescaped-entities */
-import useCountStore from '@/stores/useCountStore';
-import heroImg from '../../assets/images/hero-img.png';
-import earthImg from '../../assets/images/earth.png';
-import whatIsZikjobImg from '../../assets/images/what-is-img.png';
-import icon1Img from '../../assets/images/icon-1.png';
-import icon2Img from '../../assets/images/icon-2.png';
-import icon3Img from '../../assets/images/icon-3.png';
-import symbol1Img from '../../assets/images/symbol-1.png';
-import symbol2Img from '../../assets/images/symbol-2.png';
-import symbol3Img from '../../assets/images/symbol-3.png';
-import ecoImg from '../../assets/images/eco.png';
-import social1Img from '../../assets/images/social-1.png';
-import social2Img from '../../assets/images/social-2.png';
-import social3Img from '../../assets/images/social-3.png';
-import social4Img from '../../assets/images/social-4.png';
-import social5Img from '../../assets/images/social-5.png';
-import social7Img from '../../assets/images/social-7.png';
-import ProfileSVG from '../../assets/svg/profile.svg?component';
-import NftSVG from '../../assets/svg/nft.svg?component';
-import JobSVG from '../../assets/svg/job.svg?component';
-import MetaverseSVG from '../../assets/svg/metaverse.svg?component';
-import ELearningSVG from '../../assets/svg/elearning.svg?component';
-import partnerSVG from '../../assets/svg/partner.svg';
+import {
+  earthImg,
+  ecoImg,
+  heroImg,
+  icon1Img,
+  icon2Img,
+  icon3Img,
+  social1Img,
+  social2Img,
+  social3Img,
+  social4Img,
+  social5Img,
+  social7Img,
+  symbol1Img,
+  symbol2Img,
+  symbol3Img,
+  whatIsZikjobImg,
+} from '@/assets/images';
+import {
+  ELearningSVG,
+  JobSVG,
+  MetaverseSVG,
+  NftSVG,
+  PartnerSVG,
+  ProfileSVG,
+} from '@/assets/svg';
 
 function HomePage() {
-  const [count, increment] = useCountStore((state) => [
-    state.count,
-    state.increment,
-  ]);
-
   return (
     <main>
-      <section className="hero">
+      <section className="hero bg-[url('./src/assets/images/gradient-gray-bg.png')] bg-no-repeat bg-bottom bg-cover">
         <div className="container flex flex-col lg:flex-row items-center">
           <figure className="mb-[20px] lg:mb-0 lg:w-[30%]">
             <img src={heroImg} alt="hero-section" />
@@ -46,14 +44,12 @@ function HomePage() {
               Leave your footprint on the Metaverse using new generation of
               digital profile
             </p>
-            <p>Count {count}</p>
-            <button onClick={increment}>Increment</button>
           </div>
         </div>
       </section>
       <section className="section lg:mb-[-30px] lg:mt-[-30px]">
         <figure>
-          <img src={earthImg} alt="hr-earth" />
+          <img src={earthImg} className="w-full" alt="hr-earth" />
         </figure>
       </section>
       <section className="section !mb-0">
@@ -78,7 +74,7 @@ function HomePage() {
             <img src={whatIsZikjobImg} alt="what-is-zikjob" />
           </figure>
         </div>
-        <div className="wave">
+        <div className="wave bg-[url('./src/assets/images/wavy-bg.png')] bg-no-repeat bg-center bg-cover">
           <div className="container">
             <ul className="wave__list">
               <li className="wave__item">
@@ -314,27 +310,27 @@ function HomePage() {
           <ul className="partner__list">
             <li className="partner__item">
               <a href="#" className="partner__item-inner">
-                <img src={partnerSVG} alt="partner-coming-soon" />
+                <img src={PartnerSVG} alt="partner-coming-soon" />
               </a>
             </li>
             <li className="partner__item">
               <a href="#" className="partner__item-inner">
-                <img src={partnerSVG} alt="partner-coming-soon" />
+                <img src={PartnerSVG} alt="partner-coming-soon" />
               </a>
             </li>
             <li className="partner__item">
               <a href="#" className="partner__item-inner">
-                <img src={partnerSVG} alt="partner-coming-soon" />
+                <img src={PartnerSVG} alt="partner-coming-soon" />
               </a>
             </li>
             <li className="partner__item">
               <a href="#" className="partner__item-inner">
-                <img src={partnerSVG} alt="partner-coming-soon" />
+                <img src={PartnerSVG} alt="partner-coming-soon" />
               </a>
             </li>
             <li className="partner__item">
               <a href="#" className="partner__item-inner">
-                <img src={partnerSVG} alt="partner-coming-soon" />
+                <img src={PartnerSVG} alt="partner-coming-soon" />
               </a>
             </li>
           </ul>
