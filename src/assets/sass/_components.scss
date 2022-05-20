@@ -1,25 +1,25 @@
 %primary-gradient {
-  @apply bg-gradient-to-b from-blue-light to-blue-bold;
+  @apply bg-gradient-to-b from-blue-400 to-blue-800;
 }
 
 .btn {
-  @apply text-lg rounded-xl font-medium;
+  @apply text-base lg:text-lg rounded-xl font-normal;
   &-primary {
-    @apply px-8 py-2.5;
+    @apply px-4 lg:px-8 py-2;
   }
 
   &-outline {
-    @apply px-6 py-2 border-2 lg:ml-4 border-2;
+    @apply px-4 py-[6.5px] lg:ml-4 border-[1.5px] border-[1.5px] border-primary text-primary hover:bg-blue-50 dark:hover:bg-blue-50 dark:bg-light;
   }
 
   &-primary-gradient {
     @extend %primary-gradient;
-    @apply text-white hover:bg-gradient-to-r;
+    @apply text-light hover:bg-gradient-to-r;
   }
 }
 
 .btn-menu {
-  color: $blue;
+  color: $primary;
 
   &:not(.active) {
     .fs-nav-close {
@@ -36,59 +36,130 @@
 
 .navbar {
   &__item {
-    @apply lg:text-gray-light lg:text-lg lg:mr-8 font-medium;
+    @apply text-gray-500 text-lg lg:mr-8 font-normal;
 
     a {
-      @apply block p-2.5 lg:p-0;
+      @apply block pb-8 lg:p-0;
     }
 
     &.active {
-      @apply text-gray;
+      @apply text-gray-900 dark:text-light font-medium;
     }
+  }
+}
+
+.header {
+  h1 svg path {
+    @apply fill-primary dark:fill-light;
   }
 }
 
 @media (max-width: 1023px) {
   .header {
     &__nav {
-      @apply w-full fixed bg-blue left-0 p-4 text-center text-white;
+      @apply bg-light dark:bg-dark w-full fixed left-0 px-4 pt-11;
       top: calc(55.5px);
       height: calc(100% - 55.5px);
     }
 
     &__buttons {
-      @apply flex-col;
-
-      a {
-        @apply mb-4;
-      }
+      @apply w-full flex-row justify-between pb-3;
     }
 
     .navbar {
       @apply w-full flex-col;
+    }
+
+    .fs-nav-open svg path {
+      @apply dark:stroke-light;
+    }
+
+    .fs-nav-close svg path {
+      @apply dark:fill-light;
     }
   }
 
   .menu-opened {
     .header {
       &__nav {
-        @apply flex flex-col justify-evenly items-center;
+        @apply flex flex-col justify-between;
       }
     }
   }
 }
 
 .section {
-  @apply mb-[150px];
+  @apply mb-24;
+
+  &__title {
+    @apply text-xl lg:text-5xl font-semibold lg:text-center;
+  }
 
   @media (max-width: 639px) {
-    @apply mb-[50px];
+    @apply mb-16;
+  }
+}
+
+.hero {
+  @apply pt-16 pb-32;
+
+  @media (max-width: 767px) {
+    @apply pb-0 pt-[30px];
+
+    img {
+      @apply max-w-[75%] m-auto;
+    }
+  }
+}
+
+.wave {
+  @apply h-[320px];
+
+  &__list {
+    @apply flex justify-around;
+  }
+
+  &__item {
+    a {
+      @apply flex flex-col justify-center items-center text-center;
+
+      strong {
+        @apply text-lg font-semibold mt-[-30px];
+      }
+
+      img {
+        @apply mx-auto;
+      }
+    }
+
+    &--symbol {
+      @apply flex justify-center items-center;
+    }
+
+    &:nth-child(1) {
+      transform: translate(-70px, -50px);
+    }
+    &:nth-child(2) {
+      transform: translate(-80px, 60px);
+    }
+    &:nth-child(3) {
+      transform: translate(-70px, 130px);
+    }
+    &:nth-child(4) {
+      transform: translate(-50px, 80px);
+    }
+    &:nth-child(5) {
+      transform: translate(10px, 90px);
+    }
+    &:nth-child(6) {
+      transform: translateY(-60px);
+    }
   }
 }
 
 .partner {
   &__list {
-    @apply grid grid-cols-2 lg:grid-cols-5 gap-[20px] max-w-[1150px] mx-auto;
+    @apply grid grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-12 mx-auto;
   }
 
   &__item {
@@ -106,19 +177,25 @@
 
 .community {
   &__list {
-    @apply grid grid-cols-2 lg:grid-cols-3 justify-center max-w-[935px] mx-auto gap-x-[48px] gap-y-[30px];
+    @apply grid grid-cols-1 lg:grid-cols-3 justify-center max-w-[935px] mx-auto gap-x-[48px] gap-y-4 lg:gap-y-[30px];
   }
 
   &__item {
     &-link {
-      border-radius: 10px;
-      background-color: rgb(255, 255, 255);
-      display: grid;
+      @apply grid bg-white dark:bg-transparent rounded-[10px];
       align-items: center;
       grid-template-columns: 40px 1fr;
       gap: 1px 15px;
       padding: 10px 15px;
       border: 1px solid rgb(130, 150, 246);
+
+      h3 {
+        @apply font-medium lg:text-lg;
+      }
+
+      span {
+        @apply text-sm lg:text-base;
+      }
 
       figure {
         grid-row: 1 / span 2;
@@ -134,25 +211,20 @@
   @media (max-width: 575px) {
     &__item {
       &-link {
-        grid-template-columns: 100%;
         height: 100%;
-        text-align: center;
       }
     }
   }
 }
 
 .subscription {
+  @apply mb-0;
+
   &__form {
-    @apply flex items-center justify-center;
+    @apply flex items-center justify-center lg:bg-gradient-to-b lg:from-white to-[#D2E8FF] dark:lg:bg-gradient-to-t dark:lg:from-[#0E1648] dark:lg:to-transparent;
     padding: 0 50px 50px 50px;
     min-height: 318px;
     border-radius: 10px;
-    background-image: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgb(210, 232, 255) 100%
-    );
 
     &-inner {
       width: 755px;
@@ -161,36 +233,30 @@
   }
 
   .form-group {
+    @apply relative;
     margin: 25px auto 0;
-    position: relative;
 
     input {
-      width: 100%;
+      @apply w-full h-[78px] leading-[78px] text-primary text-base lg:text-lg font-normal pl-4 pr-[150px] lg:pr-[188px] py-4 lg:py-5 rounded-xl dark:bg-transparent;
       border: 1px solid #8296f6;
-      border-radius: 10px;
-      height: 81px;
-      line-height: 81px;
-      padding: 15px 25px;
-      color: $blue;
 
       &::placeholder {
-        color: $blue;
-        font-size: 1.8rem;
+        @apply text-primary dark:text-light text-base lg:text-lg font-normal;
       }
     }
 
     .btn {
-      position: absolute;
-      right: 27px;
-      top: 17px;
-      text-transform: uppercase;
-      font-weight: 700;
+      @apply absolute top-[17px] right-[17px] text-lg font-medium uppercase;
     }
   }
 
   @media (max-width: 767px) {
+    .container {
+      @apply bg-gradient-to-b from-white to-[#D2E8FF] dark:bg-gradient-to-t dark:from-[#0E1648] dark:to-transparent;
+    }
+
     &__form {
-      padding: 10px;
+      padding: 0;
       min-height: 200px;
 
       input {
@@ -204,92 +270,25 @@
   }
 }
 
-.hero {
-  padding-top: 100px;
-  padding-bottom: 100px;
-
-  @media (max-width: 767px) {
-    padding-bottom: 0;
-    padding-top: 30px;
-
-    img {
-      max-width: 75%;
-      margin: 0 auto;
-    }
-  }
-}
-
-.wave {
-  height: 350px;
-
-  &__list {
-    display: flex;
-    justify-content: space-around;
-  }
-
-  &__item {
-    a {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-
-      strong {
-        margin-top: -30px;
-      }
-    }
-
-    &--symbol {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    &:nth-child(1) {
-      transform: translateY(-40px);
-    }
-    &:nth-child(2) {
-      transform: translate(-60px, 70px);
-    }
-    &:nth-child(3) {
-      transform: translate(-70px, 90px);
-    }
-    &:nth-child(4) {
-      transform: translate(-50px, 80px);
-    }
-    &:nth-child(5) {
-      transform: translate(10px, 90px);
-    }
-    &:nth-child(6) {
-      transform: translateY(-60px);
-    }
-  }
-
-  @media (max-width: 767px) {
-    height: 300px;
-    background-position: left;
-
-    &__item {
-      &--symbol {
-        display: none;
-      }
-
-      &:nth-child(1) {
-        transform: translateY(-20px);
-      }
-
-      &:nth-child(2) {
-        transform: translate(0px, 10px);
-      }
-
-      &:nth-child(3) {
-        transform: translate(0px, 60px);
-      }
-    }
-  }
-}
-
 .feature {
+  .swiper-wrapper {
+    .swiper-slide {
+      @apply min-h-[390px] flex flex-col items-center text-center rounded-[10px] border-[1.5px] border-gray-300 px-4 pt-2 pb-12;
+
+      figure {
+        @apply mb-2;
+
+        svg path {
+          @apply fill-primary dark:fill-light;
+        }
+      }
+
+      h3 {
+        @apply text-xl font-semibold mb-2;
+      }
+    }
+  }
+
   &__list {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -297,54 +296,59 @@
   }
 
   &__detail {
-    height: 300px;
+    @apply h-[300px];
+
     &__item {
-      svg {
-        max-height: 152px;
-        color: $blue;
+      @apply absolute inset-0 transition-all ease-in-out duration-1000 transform;
+
+      h3 {
+        @apply text-2xl font-semibold mb-[20px];
+      }
+
+      p {
+        @apply leading-[2] text-left;
       }
     }
   }
 
   &__item {
-    @apply flex items-center justify-center text-center;
-    padding: 16px;
-    border-radius: 20px;
-    box-shadow: 0px 6px 33.25px 1.75px rgba(15, 19, 41, 0.16);
-    min-height: 155px;
+    @apply p-4 flex items-center justify-center border-[1.5px] border-solid border-primary text-center text-lg dark:text-primary rounded-[10px] min-h-[155px];
 
     img {
       margin: 0 auto 10px;
     }
 
     svg {
-      max-height: 47px;
-      margin: 0 auto 10px;
-      color: $blue;
+      @apply max-h-[76px] mb-4 m-auto;
     }
 
-    &:last-child {
-      grid-column: 2 / span 1;
+    svg path {
+      @apply dark:fill-primary;
     }
 
     &:nth-child(2) {
-      svg {
-        max-height: 60px;
-      }
+      grid-column: 2 / span 1;
     }
 
-    &:nth-child(1),
-    &:nth-child(3) {
+    &:nth-child(2),
+    &:nth-child(4) {
       transform: translateY(50%);
     }
 
     &.active {
-      background-image: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0) 0%,
-        rgb(222, 237, 255) 100%
-      );
-      border: 3px solid #8296f6;
+      @apply dark:text-light border-[1.5px] border-solid border-primary bg-gradient-to-b from-white to-[#D2E8FF] dark:bg-gradient-to-b dark:from-blue-400 dark:to-blue-700;
+
+      svg path {
+        @apply fill-primary dark:fill-light;
+      }
+    }
+  }
+
+  &__item:hover {
+    @apply dark:text-light;
+
+    svg path {
+      @apply fill-primary dark:fill-light;
     }
   }
 }
@@ -395,6 +399,10 @@
 .step {
   @apply relative pt-[60px];
 
+  h3 {
+    @apply text-lg font-medium mb-4;
+  }
+
   &:before {
     content: '';
     top: 0;
@@ -411,9 +419,13 @@
     );
   }
 
+  ul {
+    @apply pl-5 list-disc;
+  }
+
   li {
     + li {
-      @apply mt-[10px];
+      @apply mt-2;
     }
   }
 
@@ -427,9 +439,6 @@
   &__navbar {
     li {
       @apply text-sm;
-      + li {
-        margin-left: 2rem;
-      }
     }
   }
 
@@ -440,11 +449,10 @@
       }
 
       a {
-        @apply flex items-center justify-center w-8 h-8;
+        @apply lg:flex lg:items-center lg:justify-center w-8 h-8;
 
-        img {
-          display: block;
-          filter: brightness(0);
+        svg path {
+          @apply fill-gray-700 dark:fill-light;
         }
       }
     }
@@ -454,13 +462,8 @@
     &__navbar {
       li {
         + li {
-          @apply ml-4 text-center;
+          @apply ml-0;
         }
-      }
-    }
-    &__logo {
-      img {
-        margin: auto;
       }
     }
   }

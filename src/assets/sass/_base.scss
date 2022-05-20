@@ -5,7 +5,7 @@ html {
 
 body {
   font-family: $font-base;
-  @apply text-gray;
+  @apply text-gray-900 dark:text-light bg-light dark:bg-dark;
 
   &.menu-opened {
     overflow: hidden;

@@ -1,14 +1,9 @@
-import create, { GetState, Mutate, SetState, StoreApi } from 'zustand';
+import create from 'zustand';
 import { devtools } from 'zustand/middleware';
-import immer from '@/utils/immer';
+import { immer } from 'zustand/middleware/immer';
 import { MenuStore } from '@/types/menu';
 
-const useMenuStore = create<
-  MenuStore,
-  SetState<MenuStore>,
-  GetState<MenuStore>,
-  Mutate<StoreApi<MenuStore>, [['zustand/devtools', never]]>
->(
+const useMenuStore = create<MenuStore>()(
   devtools(
     immer((set) => ({
       isMobileMenuActive: false,
