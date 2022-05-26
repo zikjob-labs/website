@@ -11,13 +11,13 @@ function ThemeButton() {
   return (
     <div
       onClick={toggleTheme}
-      className="lg:ml-4 w-10 lg:w-11 flex justify-center hover:bg-blue-50 dark:hover:bg-primary rounded-full"
+      className="lg:ml-4 w-10 lg:w-11 flex justify-center items-center hover:bg-blue-50 dark:hover:bg-primary rounded-full"
     >
-      <img
-        width="24"
-        src={isDark(theme) ? IconSun : IconMoon}
-        alt="zikjob-switch-theme"
-      />
+      {isDark(theme) ? (
+        <IconSun className="w-6" />
+      ) : (
+        <IconMoon className="w-6" />
+      )}
     </div>
   );
 }

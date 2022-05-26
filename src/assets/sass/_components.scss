@@ -9,7 +9,11 @@
   }
 
   &-outline {
-    @apply px-4 py-[6.5px] lg:ml-4 border-[1.5px] border-[1.5px] border-primary text-primary hover:bg-blue-50 dark:hover:bg-blue-50 dark:bg-light;
+    @apply px-4 py-[6.5px] lg:ml-4 border-[1.5px] border-primary dark:border-light text-primary dark:text-light dark:bg-midnight-900 hover:bg-blue-50 dark:hover:bg-midnight-500;
+  }
+
+  &-wallet {
+    @apply flex justify-start items-center gap-2 px-4 bg-blue-50 dark:bg-midnight-500 dark:text-light;
   }
 
   &-primary-gradient {
@@ -34,6 +38,50 @@
   }
 }
 
+.dropdown {
+  @apply relative;
+
+  &__menu {
+    @apply absolute z-[1010] top-[50px] right-0 bg-blue-50 dark:bg-midnight-600 rounded-lg shadow;
+
+    > ul {
+      @apply py-2 text-base;
+    }
+  }
+
+  &__item {
+    &.active {
+      @apply bg-blue-100 dark:bg-midnight-800 hover:bg-blue-200 dark:hover:bg-midnight-500;
+    }
+
+    @apply flex justify-start items-center px-4 py-2 hover:bg-blue-200 dark:hover:bg-midnight-500 cursor-pointer;
+  }
+}
+
+.modal {
+  @apply flex items-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-[1200] w-full h-full;
+
+  &__dialog {
+    @apply relative p-4 m-auto w-full max-w-md h-auto;
+  }
+
+  &__content {
+    @apply relative bg-white dark:bg-midnight-800 rounded-lg shadow;
+  }
+
+  &__header {
+    @apply flex justify-between items-center p-4 rounded-t dark:border-gray-600;
+  }
+
+  &__body {
+    @apply flex flex-col gap-4 p-4;
+  }
+}
+
+svg.spinner {
+  @apply w-8 h-8 animate-spin text-gray-200 dark:text-midnight-600 fill-primary dark:fill-light;
+}
+
 .navbar {
   &__item {
     @apply text-gray-500 text-lg lg:mr-8 font-normal;
@@ -45,12 +93,6 @@
     &.active {
       @apply text-gray-900 dark:text-light font-medium;
     }
-  }
-}
-
-.header {
-  h1 svg path {
-    @apply fill-primary dark:fill-light;
   }
 }
 
@@ -68,14 +110,6 @@
 
     .navbar {
       @apply w-full flex-col;
-    }
-
-    .fs-nav-open svg path {
-      @apply dark:stroke-light;
-    }
-
-    .fs-nav-close svg path {
-      @apply dark:fill-light;
     }
   }
 
@@ -467,4 +501,98 @@
       }
     }
   }
+}
+
+// Profile
+.network__selector {
+  ul {
+    li {
+      svg {
+        @apply mr-2 w-6 h-6;
+      }
+    }
+  }
+}
+
+.theme__toggle {
+  svg {
+    @apply absolute z-[1012] top-1.5 w-5;
+  }
+
+  svg:first-child {
+    @apply left-1;
+    path {
+      @apply stroke-gray-900;
+    }
+  }
+
+  svg:last-child {
+    @apply right-1;
+    path {
+      @apply stroke-light;
+    }
+  }
+
+  .peer:checked ~ .toggle_theme_button {
+    svg:first-child {
+      path {
+        @apply stroke-light;
+      }
+    }
+
+    svg:last-child {
+      path {
+        @apply stroke-gray-900;
+      }
+    }
+  }
+}
+
+.more__box {
+  ul > ul {
+    @apply block lg:hidden;
+    justify-content: space-between;
+
+    li {
+      @apply px-4 py-2 text-base text-gray-900 dark:text-light hover:bg-blue-200 dark:hover:bg-midnight-500;
+
+      a {
+        @apply pb-0 font-normal;
+      }
+    }
+  }
+}
+
+.modal__wallet {
+  &__item {
+    @apply px-4 py-2 border-[1.5px] border-blue-100 dark:border-midnight-600 bg-blue-50 dark:bg-midnight-800 rounded-lg flex justify-between items-center cursor-pointer;
+
+    > span {
+      @apply text-gray-700 dark:text-light;
+    }
+
+    > svg {
+      @apply w-8 h-8;
+    }
+  }
+
+  &__item.connect__error {
+    @apply border-red-500;
+
+    > span {
+      @apply text-red-500;
+    }
+
+    > button {
+      @apply px-3 py-2 text-xs bg-blue-100 dark:bg-midnight-400 rounded-md;
+    }
+  }
+}
+
+.walletconnect-qrcode__base {
+  padding-top: 50px !important;
+}
+
+.walletconnect-modal__base {
+  max-width: 350px !important;
 }

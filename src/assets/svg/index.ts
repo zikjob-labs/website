@@ -1,9 +1,26 @@
 import Logo from './logo.svg?component';
+import LogoNoText from './logo-no-text.svg?component';
 
-import IconMoon from './icon-moon.svg';
-import IconSun from './icon-sun.svg';
+import IconMoon from './icon-moon.svg?component';
+import IconSun from './icon-sun.svg?component';
+import IconMoonToggle from './icon-moon-toggle.svg?component';
+import IconSunToggle from './icon-sun-toggle.svg?component';
 import IconMenu from './icon-menu.svg?component';
 import IconCancel from './icon-cancel.svg?component';
+import IconArrowDown from './icon-arrow-down.svg?component';
+import IconArrowLeft from './icon-arrow-left.svg?component';
+import IconArrowRight from './icon-arrow-right.svg?component';
+import IconMore from './icon-more.svg?component';
+import IconWallet from './icon-wallet.svg?component';
+import IconLogout from './icon-logout.svg?component';
+import IconSpin from './icon-spin.svg?component';
+
+import IconEthereum from './icon-ethereum.svg?component';
+import IconBSC from './icon-bsc.svg?component';
+
+import IconMetaMask from './icon-metamask.svg?component';
+import IconWalletConnect from './icon-walletconnect.svg?component';
+import IconCoinbaseWallet from './icon-coinbasewallet.svg?component';
 
 import ProfileSVG from './profile.svg?component';
 import NftSVG from './nft.svg?component';
@@ -35,11 +52,28 @@ import FooterMedium from './footer-medium.svg?component';
 
 export {
   Logo,
+  LogoNoText,
   // Icon
   IconMoon,
   IconSun,
+  IconMoonToggle,
+  IconSunToggle,
   IconMenu,
   IconCancel,
+  IconArrowDown,
+  IconArrowLeft,
+  IconArrowRight,
+  IconMore,
+  IconWallet,
+  IconLogout,
+  IconSpin,
+  // Icon Network
+  IconEthereum,
+  IconBSC,
+  // Icon Wallet
+  IconMetaMask,
+  IconWalletConnect,
+  IconCoinbaseWallet,
   // Feature
   ProfileSVG,
   NftSVG,

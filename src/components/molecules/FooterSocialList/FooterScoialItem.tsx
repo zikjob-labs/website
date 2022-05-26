@@ -8,11 +8,10 @@ interface Props {
   };
 }
 function FooterSocialItem({ social }: Props) {
-  const SVGImage = social.src;
   return (
     <li>
       <a href={social.link}>
-        <SVGImage className="w-6 h-6 lg:w-8 lg:h-8" />
+        <social.src className="w-6 h-6 lg:w-8 lg:h-8" />
       </a>
     </li>
   );

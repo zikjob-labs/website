@@ -6,7 +6,6 @@ interface Props {
 }
 
 function FeatureCard({ feature, toggleFeature }: Props) {
-  const SVGImage = feature.img;
   return (
     <li
       className={`feature__item cursor-pointer ${
@@ -17,7 +16,7 @@ function FeatureCard({ feature, toggleFeature }: Props) {
     >
       <div className="feature__link">
         <figure>
-          <SVGImage />
+          <feature.img />
         </figure>
         <h3>{feature.label}</h3>
       </div>

@@ -19,10 +19,10 @@ function MobileMenuButton() {
       onClick={clickMobileMenu}
     >
       <strong className="fs-nav-open">
-        <IconMenu />
+        <IconMenu className="text-primary dark:text-light" />
       </strong>
       <strong className="fs-nav-close">
-        <IconCancel />
+        <IconCancel className="fill-gray-900 dark:fill-light" />
       </strong>
     </button>
   );

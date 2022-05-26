@@ -1,14 +1,12 @@
-import routes from '@/configs/routes';
-import { Link } from 'react-router-dom';
+import PageTemplate from '@/components/templates/PageTemplate';
+import Footer from '@/components/organisms/Footer';
+import HeaderWallet from '@/components/organisms/HeaderWallet';
 
 function ProfilePage() {
   return (
-    <div>
-      <p>Profile Page!</p>
-      <p>
-        <Link to={routes.path.home}>Back to HomePage</Link>
-      </p>
-    </div>
+    <PageTemplate header={<HeaderWallet />} footer={<Footer />}>
+      <main></main>
+    </PageTemplate>
   );
 }
 

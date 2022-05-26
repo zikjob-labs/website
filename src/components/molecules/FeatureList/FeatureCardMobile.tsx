@@ -6,11 +6,10 @@ interface Props {
 }
 
 function FeatureCardMobile({ feature }: Props) {
-  const SVGImage = feature.img;
   return (
     <Fragment>
       <figure>
-        <SVGImage />
+        <feature.img />
       </figure>
       <h3>{feature.label}</h3>
       <p>{feature.description}</p>
