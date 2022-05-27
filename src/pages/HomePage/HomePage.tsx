@@ -1,16 +1,16 @@
 import PageTemplate from '@/components/templates/PageTemplate';
 import Header from '@/components/organisms/Header';
 import Footer from '@/components/organisms/Footer';
-import Hero from '@/components/organisms/Hero';
-import EarthSection from '@/components/organisms/EarthSection';
-import WhatIsZikJobSection from '@/components/organisms/WhatIsZikJobSection';
-import FeatureSection from '@/components/organisms/FeatureSection';
-import EcosystemSection from '@/components/organisms/EcosystemSection';
-import RoadmapSection from '@/components/organisms/RoadmapSection';
-import InvestorSection from '@/components/organisms/InvestorSection';
-import PartnerSection from '@/components/organisms/PartnerSection';
-import CommunitySection from '@/components/organisms/CommunitySection';
-import SubscriptionSection from '@/components/organisms/SubscriptionSection';
+import Hero from '@/components/organisms/HomeBody/Hero';
+import EarthSection from '@/components/organisms/HomeBody/EarthSection';
+import WhatIsZikJobSection from '@/components/organisms/HomeBody/WhatIsZikJobSection';
+import FeatureSection from '@/components/organisms/HomeBody/FeatureSection';
+import EcosystemSection from '@/components/organisms/HomeBody/EcosystemSection';
+import RoadmapSection from '@/components/organisms/HomeBody/RoadmapSection';
+import InvestorSection from '@/components/organisms/HomeBody/InvestorSection';
+import PartnerSection from '@/components/organisms/HomeBody/PartnerSection';
+import CommunitySection from '@/components/organisms/HomeBody/CommunitySection';
+import SubscriptionSection from '@/components/organisms/HomeBody/SubscriptionSection';
 
 function HomePage() {
   return (

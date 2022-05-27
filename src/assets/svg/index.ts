@@ -12,6 +12,7 @@ import IconArrowLeft from './icon-arrow-left.svg?component';
 import IconArrowRight from './icon-arrow-right.svg?component';
 import IconMore from './icon-more.svg?component';
 import IconWallet from './icon-wallet.svg?component';
+import IconWrongNetwork from './icon-wrong-network.svg?component';
 import IconLogout from './icon-logout.svg?component';
 import IconSpin from './icon-spin.svg?component';
 
@@ -65,6 +66,7 @@ export {
   IconArrowRight,
   IconMore,
   IconWallet,
+  IconWrongNetwork,
   IconLogout,
   IconSpin,
   // Icon Network

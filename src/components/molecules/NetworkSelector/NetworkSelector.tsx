@@ -1,4 +1,9 @@
-import { IconArrowDown, IconBSC, IconEthereum } from '@/assets/svg';
+import {
+  IconArrowDown,
+  IconBSC,
+  IconEthereum,
+  IconWrongNetwork,
+} from '@/assets/svg';
 import useOnClickOutside from '@/hooks/useOnClickOutside';
 import { useRef, useState } from 'react';
 import { useNetwork } from 'wagmi';
@@ -66,12 +71,14 @@ function NetworkSelector() {
       <button
         className={`btn btn-outline flex items-center ${
           isWrongNetwork
-            ? '!border-0 !bg-red-500 hover:!bg-red-600 !text-light !py-2.5 lg:!py-[6.5px]'
+            ? '!border-red-500 !bg-red-500 hover:!bg-red-600 !text-light'
             : ''
         }`}
         onClick={() => setOpen(!isOpen)}
       >
-        {!isWrongNetwork && (
+        {isWrongNetwork ? (
+          <IconWrongNetwork className="block lg:hidden w-6 h-6" />
+        ) : (
           <networkItemActive.img className="block lg:hidden w-6 h-6" />
         )}
         <span className="hidden lg:block">
