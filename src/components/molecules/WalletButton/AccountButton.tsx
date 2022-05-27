@@ -1,6 +1,5 @@
 import { IconArrowDown, IconLogout, IconWallet } from '@/assets/svg';
 import useOnClickOutside from '@/hooks/useOnClickOutside';
-import useAccountStore from '@/stores/useAccountStore';
 import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useAccount, useDisconnect } from 'wagmi';
@@ -17,9 +16,10 @@ function AccountButton() {
   }, []);
 
   const { data: account } = useAccount();
-  const disconnectAccount = useAccountStore((state) => state.disconnect);
   const { disconnect } = useDisconnect({
-    onSuccess: () => disconnectAccount(),
+    onSuccess: () => {
+      toast.success('Disconnected!');
+    },
     onError: (error) => {
       toast.error(error.message);
     },

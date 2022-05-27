@@ -8,7 +8,6 @@ import {
 } from '@/components/molecules';
 
 function HeaderWallet() {
-  console.log('render header wallet');
   return (
     <header className="header bg-light dark:bg-dark sticky z-[1010] top-0 px-4 py-3 lg:px-8 lg:py-4">
       <div className="flex items-center">

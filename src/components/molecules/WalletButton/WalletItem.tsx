@@ -1,5 +1,4 @@
 import { IconSpin } from '@/assets/svg';
-import useAccountStore from '@/stores/useAccountStore';
 import { Fragment, FunctionComponent } from 'react';
 import toast from 'react-hot-toast';
 import { useConnect } from 'wagmi';
@@ -13,9 +12,10 @@ interface Props {
 }
 
 function WalletItem({ item }: Props) {
-  const connectAccount = useAccountStore((state) => state.connect);
   const { connect, connectors, isConnecting, pendingConnector } = useConnect({
-    onConnect: () => connectAccount(),
+    onConnect: () => {
+      toast.success('Connected!');
+    },
     onError: (error) => {
       toast.error(error.message);
     },

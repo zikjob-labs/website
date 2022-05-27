@@ -1,6 +1,6 @@
 import { Buffer } from 'buffer';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Toaster } from 'react-hot-toast';
 
 import './assets/sass/style.scss';
@@ -13,12 +13,14 @@ import reportWebVitals from './reportWebVitals';
 
 window.Buffer = window.Buffer || Buffer;
 
-ReactDOM.render(
+const container = document.getElementById('root');
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const root = createRoot(container!);
+root.render(
   <React.StrictMode>
     <App />
     <Toaster />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );
 
 reportWebVitals();

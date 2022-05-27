@@ -33,7 +33,7 @@ function MenuChild(props: Props) {
   );
 }
 
-export default memo(
-  MenuChild,
-  (prevProps, nextProps) => prevProps.item.isActive == nextProps.item.isActive
-);
+const compare = (prevProps: Readonly<Props>, nextProps: Readonly<Props>) =>
+  prevProps.item.isActive == nextProps.item.isActive;
+
+export default memo(MenuChild, compare);
