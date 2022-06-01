@@ -1,6 +1,6 @@
 import { IconArrowDown, IconLogout, IconWallet } from '@/assets/svg';
 import useOnClickOutside from '@/hooks/useOnClickOutside';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useAccount, useDisconnect } from 'wagmi';
 
@@ -8,12 +8,6 @@ function AccountButton() {
   const ref = useRef(null);
   const [isOpen, setOpen] = useState(false);
   useOnClickOutside(ref, () => setOpen(false));
-  useEffect(() => {
-    return () => {
-      ref.current = null;
-      setOpen(false);
-    };
-  }, []);
 
   const { data: account } = useAccount();
   const { disconnect } = useDisconnect({

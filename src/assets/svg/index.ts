@@ -1,6 +1,8 @@
 import Logo from './logo.svg?component';
 import LogoNoText from './logo-no-text.svg?component';
 
+import AvatarDefault from './avatar-default.svg?component';
+
 import IconMoon from './icon-moon.svg?component';
 import IconSun from './icon-sun.svg?component';
 import IconMoonToggle from './icon-moon-toggle.svg?component';
@@ -15,6 +17,23 @@ import IconWallet from './icon-wallet.svg?component';
 import IconWrongNetwork from './icon-wrong-network.svg?component';
 import IconLogout from './icon-logout.svg?component';
 import IconSpin from './icon-spin.svg?component';
+import IconFolder from './icon-folder.svg?component';
+import IconAdd from './icon-add.svg?component';
+import IconTick from './icon-tick.svg?component';
+import IconArrange from './icon-arrange.svg?component';
+import IconEdit from './icon-edit.svg?component';
+import IconEditFill from './icon-edit-fill.svg?component';
+import IconPhone from './icon-phone.svg?component';
+import IconMail from './icon-mail.svg?component';
+import IconGender from './icon-gender.svg?component';
+import IconEarth from './icon-earth.svg?component';
+import IconVideo from './icon-video.svg?component';
+import IconHeart from './icon-heart.svg?component';
+import IconHeartFull from './icon-heart-full.svg?component';
+import IconShare from './icon-share.svg?component';
+import IconDelete from './icon-delete.svg?component';
+import IconPagingLeft from './icon-paging-left.svg?component';
+import IconPagingRight from './icon-paging-right.svg?component';
 
 import IconEthereum from './icon-ethereum.svg?component';
 import IconBSC from './icon-bsc.svg?component';
@@ -54,6 +73,7 @@ import FooterMedium from './footer-medium.svg?component';
 export {
   Logo,
   LogoNoText,
+  AvatarDefault,
   // Icon
   IconMoon,
   IconSun,
@@ -69,6 +89,23 @@ export {
   IconWrongNetwork,
   IconLogout,
   IconSpin,
+  IconFolder,
+  IconAdd,
+  IconTick,
+  IconArrange,
+  IconEdit,
+  IconEditFill,
+  IconPhone,
+  IconMail,
+  IconGender,
+  IconEarth,
+  IconVideo,
+  IconHeart,
+  IconHeartFull,
+  IconShare,
+  IconDelete,
+  IconPagingLeft,
+  IconPagingRight,
   // Icon Network
   IconEthereum,
   IconBSC,

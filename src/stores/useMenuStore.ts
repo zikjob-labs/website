@@ -1,9 +1,9 @@
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
-import { MenuStore } from '@/types/menu';
+import { MenuState } from '@/types/menu';
 
-const useMenuStore = create<MenuStore>()(
+const useMenuStore = create<MenuState>()(
   devtools(
     immer((set) => ({
       isMobileMenuActive: false,

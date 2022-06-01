@@ -1,5 +1,7 @@
 import { FooterSocialList } from '@/components/molecules';
 import Logo from '@/components/molecules/Logo';
+import routes from '@/configs/routes';
+import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
@@ -12,7 +14,7 @@ function Footer() {
             </figure>
             <ul className="flex flex-col gap-4 lg:gap-8 lg:flex-row lg:items-center justify-start lg:justify-center">
               <li>
-                <a href="https://zikjob.com">Home</a>
+                <Link to={routes.path.home}>Home</Link>
               </li>
               <li>
                 <a href="#">Terms of Service</a>

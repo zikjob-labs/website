@@ -14,7 +14,6 @@ function MenuChild(props: Props) {
   );
 
   const clickMenu = () => {
-    document.body.classList.remove('menu-opened');
     setIsMobileMenuActive(false);
   };
 

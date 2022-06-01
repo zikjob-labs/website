@@ -7,7 +7,6 @@ function MobileMenuButton() {
     state.setIsMobileMenuActive,
   ]);
   const clickMobileMenu = () => {
-    document.body.classList.toggle('menu-opened');
     setIsMobileMenuActive(!isMobileMenuActive);
   };
 

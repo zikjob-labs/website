@@ -8,7 +8,7 @@ export interface MenuItem {
   isActive: boolean;
 }
 
-export interface MenuStore extends State {
+export interface MenuState extends State {
   isMobileMenuActive: boolean;
   setIsMobileMenuActive: (newVal: boolean) => void;
 }

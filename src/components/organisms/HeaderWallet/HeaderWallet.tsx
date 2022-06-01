@@ -6,6 +6,8 @@ import {
   MoreButton,
   NetworkSelector,
 } from '@/components/molecules';
+import routes from '@/configs/routes';
+import { Link } from 'react-router-dom';
 
 function HeaderWallet() {
   return (
@@ -15,7 +17,9 @@ function HeaderWallet() {
           <Logo />
         </h1>
         <h1 className="block lg:hidden">
-          <LogoNoText className="text-primary dark:text-light" />
+          <Link to={routes.path.home}>
+            <LogoNoText className="text-primary dark:text-light" />
+          </Link>
         </h1>
         <nav className="header__nav hidden lg:flex lg:flex-auto lg:justify-end items-center">
           <Menu />

@@ -1,11 +1,11 @@
 import create from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { devtools, persist } from 'zustand/middleware';
-import { ThemeStore } from '@/types/theme';
+import { ThemeState } from '@/types/theme';
 import { ThemeTypes } from '@/constants';
 import { setTheme } from '@/utils';
 
-const useThemeStore = create<ThemeStore>()(
+const useThemeStore = create<ThemeState>()(
   devtools(
     persist(
       immer((set) => ({

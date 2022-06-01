@@ -69,7 +69,7 @@ function NetworkSelector() {
   return (
     <div ref={ref} className="dropdown network__selector">
       <button
-        className={`btn btn-outline flex items-center ${
+        className={`btn btn-outline flex items-center lg:ml-4 ${
           isWrongNetwork
             ? '!border-red-500 !bg-red-500 hover:!bg-red-600 !text-light'
             : ''

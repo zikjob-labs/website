@@ -17,7 +17,7 @@ function MoreButton() {
   return (
     <div ref={ref} className="dropdown">
       <button
-        className="btn btn-outline flex items-center !px-2"
+        className="btn btn-outline flex items-center !px-2.5 !py-2 lg:ml-4"
         onClick={() => setOpen(!isOpen)}
       >
         <IconMore className="w-5" />
