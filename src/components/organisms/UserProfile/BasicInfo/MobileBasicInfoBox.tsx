@@ -1,7 +1,6 @@
 import {
   AvatarDefault,
   IconEarth,
-  IconEdit,
   IconGender,
   IconMail,
   IconPhone,
@@ -13,8 +12,9 @@ import FavoriteButton from '@/components/molecules/FavoriteButton';
 import ShareButton from '@/components/molecules/ShareButton';
 import useProfileStore from '@/stores/useProfileStore';
 import { useAccount } from 'wagmi';
+import InfoEditButton from './InfoEditButton';
 
-function MobileInfoBasicBox() {
+function MobileBasicInfoBox() {
   const { data: account } = useAccount();
   const profile = useProfileStore((state) => state.profile);
   if (profile)
@@ -49,9 +49,7 @@ function MobileInfoBasicBox() {
               </div>
             </div>
           </div>
-          <div className="ml-1 text-primary dark:text-light">
-            <IconEdit />
-          </div>
+          <InfoEditButton />
         </div>
         <div className="flex">
           <button className="inline-flex justify-center items-center px-2 py-1 rounded-lg bg-gradient-to-b from-blue-400 to-blue-800 text-light">
@@ -112,9 +110,7 @@ function MobileInfoBasicBox() {
         <div className="grow">
           <h3 className="text-lg font-medium break-all">{account?.address}</h3>
         </div>
-        <div className="ml-3 text-primary dark:text-light">
-          <IconEdit />
-        </div>
+        <InfoEditButton />
       </div>
       <div className="flex">
         <button className="inline-flex justify-center items-center px-2 py-1 rounded-lg bg-gradient-to-b from-blue-400 to-blue-800 text-light">
@@ -155,4 +151,4 @@ function MobileInfoBasicBox() {
   );
 }
 
-export default MobileInfoBasicBox;
+export default MobileBasicInfoBox;

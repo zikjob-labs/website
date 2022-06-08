@@ -1,11 +1,7 @@
-%primary-gradient {
-  @apply bg-gradient-to-b from-blue-400 to-blue-800;
-}
-
 .btn {
   @apply text-base lg:text-lg rounded-xl font-normal;
   &-primary {
-    @apply px-4 lg:px-8 py-2;
+    @apply px-4 lg:px-8 py-2 text-light bg-gradient-to-b hover:bg-gradient-to-r from-blue-400 to-blue-800;
   }
 
   &-outline {
@@ -18,11 +14,6 @@
 
   &-wallet {
     @apply flex justify-start items-center gap-2 px-4 bg-blue-50 dark:bg-midnight-500 dark:text-light;
-  }
-
-  &-primary-gradient {
-    @extend %primary-gradient;
-    @apply text-light hover:bg-gradient-to-r;
   }
 }
 
@@ -63,14 +54,46 @@
 }
 
 .modal {
-  @apply flex items-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-[1200] w-full h-full;
+  @apply hidden items-center overflow-y-auto overflow-x-hidden fixed top-0 left-0 z-[1200] w-full h-full;
+
+  &.slide {
+    @apply flex transition ease-out duration-500;
+
+    &__left {
+      @apply -translate-x-full;
+    }
+
+    &__right {
+      @apply translate-x-full;
+    }
+
+    &.active {
+      @apply translate-x-0;
+    }
+
+    .modal__dialog {
+      @apply p-0 lg:p-4 w-full h-full max-h-full lg:max-h-[calc(100%_-_3.5rem)];
+    }
+
+    .modal__content {
+      @apply rounded-none lg:rounded-lg h-full lg:h-auto max-h-full lg:max-h-[calc(100vh_-_5.5rem)];
+    }
+  }
+
+  &.active {
+    @apply flex;
+
+    + .modal__backdrop {
+      @apply flex;
+    }
+  }
 
   &__dialog {
-    @apply relative p-4 m-auto w-full max-w-md h-auto;
+    @apply relative p-4 m-auto w-full h-full max-h-[calc(100%_-_3.5rem)];
   }
 
   &__content {
-    @apply relative bg-white dark:bg-midnight-800 rounded-lg shadow;
+    @apply relative max-h-[calc(100vh_-_5.5rem)] flex flex-col bg-white dark:bg-midnight-800 rounded-lg shadow overflow-hidden;
   }
 
   &__header {
@@ -78,7 +101,15 @@
   }
 
   &__body {
-    @apply flex flex-col gap-4 p-4;
+    @apply flex flex-col gap-4 px-4 pt-4 pb-24 overflow-y-auto;
+  }
+
+  &__footer {
+    @apply flex p-4 fixed lg:static bottom-0 w-full bg-light dark:bg-midnight-800 border-t-[1.5px] border-t-gray-100 dark:border-t-midnight-400;
+  }
+
+  &__backdrop {
+    @apply hidden bg-gray-900 bg-opacity-30 dark:bg-opacity-50 fixed inset-0 z-[1100];
   }
 }
 
@@ -130,6 +161,7 @@ svg.spinner {
   }
 }
 
+// Homepage
 .hero {
   @apply pt-16 pb-32;
 

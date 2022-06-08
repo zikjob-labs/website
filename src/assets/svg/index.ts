@@ -34,6 +34,11 @@ import IconShare from './icon-share.svg?component';
 import IconDelete from './icon-delete.svg?component';
 import IconPagingLeft from './icon-paging-left.svg?component';
 import IconPagingRight from './icon-paging-right.svg?component';
+import IconPagingBottom from './icon-paging-bottom.svg?component';
+import IconPagingTop from './icon-paging-top.svg?component';
+import IconCloseCircle from './icon-close-circle.svg?component';
+import IconGalleryAdd from './icon-gallery-add.svg?component';
+import IconNavigatorLeft from './icon-navigator-left.svg?component';
 
 import IconEthereum from './icon-ethereum.svg?component';
 import IconBSC from './icon-bsc.svg?component';
@@ -106,6 +111,11 @@ export {
   IconDelete,
   IconPagingLeft,
   IconPagingRight,
+  IconPagingBottom,
+  IconPagingTop,
+  IconCloseCircle,
+  IconGalleryAdd,
+  IconNavigatorLeft,
   // Icon Network
   IconEthereum,
   IconBSC,

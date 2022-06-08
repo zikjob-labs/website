@@ -1,7 +1,6 @@
 import {
   AvatarDefault,
   IconEarth,
-  IconEdit,
   IconGender,
   IconMail,
   IconPhone,
@@ -13,8 +12,9 @@ import FavoriteButton from '@/components/molecules/FavoriteButton';
 import ShareButton from '@/components/molecules/ShareButton';
 import useProfileStore from '@/stores/useProfileStore';
 import { useAccount } from 'wagmi';
+import InfoEditButton from './InfoEditButton';
 
-function InfoBasicBox() {
+function BasicInfoBox() {
   const { data: account } = useAccount();
   const profile = useProfileStore((state) => state.profile);
   if (profile)
@@ -83,19 +83,17 @@ function InfoBasicBox() {
             </button>
           </div>
         </div>
-        <div className="ml-8">
-          <button className="btn btn-outline !px-2 !py-1.5 !text-sm inline-flex items-center">
-            <IconEdit className="w-6 h-6 mr-2" /> Edit
-          </button>
-        </div>
+        <InfoEditButton />
       </div>
     );
 
   return (
     <div className="container flex flex-row justify-start">
-      <div className="relative mr-8">
-        <AvatarDefault className="w-full h-auto max-w-[197px] max-h-[197px] text-gray-300" />
-        <div className="absolute w-4 h-4 right-[10%] top-[80%] rounded-full bg-[#00BA88]"></div>
+      <div className="mr-8">
+        <div className="relative">
+          <AvatarDefault className="w-full h-auto max-w-[197px] max-h-[197px] text-gray-300" />
+          <div className="absolute w-4 h-4 right-[10%] top-[80%] rounded-full bg-[#00BA88]"></div>
+        </div>
       </div>
       <div className="grow">
         <h3 className="text-xl font-semibold break-all">{account?.address}</h3>
@@ -134,13 +132,9 @@ function InfoBasicBox() {
           </button>
         </div>
       </div>
-      <div className="ml-8">
-        <button className="btn btn-outline !px-2 !py-1.5 !text-sm inline-flex items-center">
-          <IconEdit className="w-6 h-6 mr-2" /> Edit
-        </button>
-      </div>
+      <InfoEditButton />
     </div>
   );
 }
 
-export default InfoBasicBox;
+export default BasicInfoBox;

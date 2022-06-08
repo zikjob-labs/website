@@ -28,7 +28,7 @@ function Header() {
           <Menu />
           <div className="header__buttons flex">
             <Link
-              className="btn btn-primary btn-primary-gradient"
+              className="btn btn-primary"
               to={routes.path.profile}
               onClick={() => setIsMobileMenuActive(false)}
             >

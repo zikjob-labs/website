@@ -1,7 +1,8 @@
-import { IconAdd, IconEditFill, IconTick } from '@/assets/svg';
+import { IconEditFill, IconTick } from '@/assets/svg';
 import useProfileStore from '@/stores/useProfileStore';
+import AddExperienceButton from './AddExperienceButton';
 
-function EducationBox() {
+function ExperienceBox() {
   const profile = useProfileStore((state) => state.profile);
   if (profile)
     return (
@@ -9,11 +10,8 @@ function EducationBox() {
         <div className="profile__box__main">
           <div className="profile__box__header">
             <h4>
-              Education
-              <button className="ml-2 lg:ml-6 btn btn-outline inline-flex items-center !px-2 !py-1 !text-sm !font-medium">
-                <IconAdd className="mr-2" />
-                Add
-              </button>
+              Experiences
+              <AddExperienceButton header />
             </h4>
             <div className="toggle__button">
               <span className="toggle__button__label">Show</span>
@@ -63,17 +61,17 @@ function EducationBox() {
                   <h5 className="mb-1 inline-flex gap-2 justify-between items-start font-semibold">
                     National University of Civil Engineering
                     <button>
-                      <span className="block flex justify-center items-center w-10 h-10 rounded-full hover:bg-gray-100">
-                        <IconEditFill className="w-8 h-8 text-primary dark:text-light dark:hover:bg-midnight-600" />
+                      <span className="block flex justify-center items-center w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-midnight-600">
+                        <IconEditFill className="w-8 h-8 text-primary dark:text-light" />
                       </span>
                     </button>
                   </h5>
                   <p>Major: Computer Science</p>
                   <p>10/2015 - 10/2020</p>
                   <div className="inline-flex items-center text-primary font-semibold">
-                    <button className="w-5 h-5 rounded-full flex justify-center items-center bg-primary text-light  mr-1">
+                    <div className="w-5 h-5 rounded-full flex justify-center items-center bg-primary text-light  mr-1">
                       <IconTick className="w-full h-full" />
-                    </button>
+                    </div>
                     Verified
                   </div>
                   <p className="mt-1">
@@ -92,8 +90,8 @@ function EducationBox() {
                   <h5 className="mb-1 inline-flex gap-2 justify-between items-start font-semibold">
                     National University of Civil Engineering
                     <button>
-                      <span className="block flex justify-center items-center w-10 h-10 rounded-full hover:bg-gray-100">
-                        <IconEditFill className="w-8 h-8 text-primary dark:text-light dark:hover:bg-midnight-600" />
+                      <span className="block flex justify-center items-center w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-midnight-600">
+                        <IconEditFill className="w-8 h-8 text-primary dark:text-light" />
                       </span>
                     </button>
                   </h5>
@@ -122,7 +120,7 @@ function EducationBox() {
     <div className="container profile__box">
       <div className="profile__box__main">
         <div className="profile__box__header">
-          <h4>Education</h4>
+          <h4>Experiences</h4>
           <div className="toggle__button">
             <span className="toggle__button__label">Show</span>
             <label className="toggle__button__body">
@@ -132,14 +130,11 @@ function EducationBox() {
           </div>
         </div>
         <div className="profile__box__body">
-          <button className="btn btn-outline flex justify-center items-center !m-auto">
-            <IconAdd className="mr-2" />
-            Add
-          </button>
+          <AddExperienceButton />
         </div>
       </div>
     </div>
   );
 }
 
-export default EducationBox;
+export default ExperienceBox;

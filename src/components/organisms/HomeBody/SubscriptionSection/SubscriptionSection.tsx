@@ -58,7 +58,7 @@ function SubscriptionSection() {
               />
               <button
                 type="submit"
-                className="btn btn-primary btn-primary-gradient"
+                className="btn btn-primary"
                 onClick={submitForm}
               >
                 Subscribe

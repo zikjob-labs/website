@@ -11,7 +11,11 @@ function useOnClickOutside(
 
   useEffect(() => {
     const listener = (event: MouseEvent | TouchEvent) => {
-      if (!ref.current || ref.current.contains(event.target as Node)) {
+      if (
+        !ref.current ||
+        ref.current.contains(event.target as Node) ||
+        document.getElementById('presentation')?.contains(event.target as Node)
+      ) {
         return;
       }
       if (handlerRef.current) handlerRef.current(event);

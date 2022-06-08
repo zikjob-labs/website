@@ -1,5 +1,6 @@
-import { IconAdd, IconEditFill } from '@/assets/svg';
+import { IconEditFill } from '@/assets/svg';
 import useProfileStore from '@/stores/useProfileStore';
+import AddSkillButton from './AddSkillButton';
 
 function SkillBox() {
   const profile = useProfileStore((state) => state.profile);
@@ -10,10 +11,7 @@ function SkillBox() {
           <div className="profile__box__header">
             <h4>
               Skills
-              <button className="ml-2 lg:ml-6 btn btn-outline inline-flex items-center !px-2 !py-1 !text-sm !font-medium">
-                <IconAdd className="mr-2" />
-                Add
-              </button>
+              <AddSkillButton header />
             </h4>
             <div className="toggle__button">
               <span className="toggle__button__label">Show</span>
@@ -147,10 +145,7 @@ function SkillBox() {
           </div>
         </div>
         <div className="profile__box__body">
-          <button className="btn btn-outline flex justify-center items-center !m-auto">
-            <IconAdd className="mr-2" />
-            Add
-          </button>
+          <AddSkillButton />
         </div>
       </div>
     </div>

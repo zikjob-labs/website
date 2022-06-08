@@ -4,18 +4,18 @@ import { isMobile } from '@/utils/userAgent';
 // import PortfolioBox from './PortfolioBox';
 // import AchievementBox from './AchievementBox';
 // import CertificateBox from './CertificateBox';
-import SkillBox from './SkillBox';
-import ExperienceBox from './ExperienceBox';
-import EducationBox from './EducationBox';
+import SkillBox from './SkillBox/SkillBox';
+import ExperienceBox from './ExperienceBox/ExperienceBox';
+import EducationBox from './EducationBox/EducationBox';
 import CompletionProgressBox from './CompletionProgressBox';
 import ArrangeButton from './ArrangeButton';
-import InfoBasicBox from './InfoBasicBox';
-import MobileInfoBasicBox from './MobileInfoBasicBox';
+import MobileBasicInfoBox from './BasicInfo/MobileBasicInfoBox';
+import BasicInfoBox from './BasicInfo/BasicInfoBox';
 
 function UserProfile() {
   return (
     <section className="profile my-10">
-      {isMobile ? <MobileInfoBasicBox /> : <InfoBasicBox />}
+      {isMobile ? <MobileBasicInfoBox /> : <BasicInfoBox />}
       <ArrangeButton />
       <CompletionProgressBox />
       <EducationBox />

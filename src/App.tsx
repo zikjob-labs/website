@@ -38,7 +38,7 @@ const bscTestnet: Chain = {
 
 const chains = [chain.mainnet, chain.ropsten, chain.kovan, bsc, bscTestnet];
 const client = createClient({
-  autoConnect: true,
+  autoConnect: false,
   connectors: [
     new MetaMaskConnector({
       chains,
