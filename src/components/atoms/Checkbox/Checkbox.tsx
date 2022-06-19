@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 
 interface Props {
   name?: string;
@@ -7,24 +7,43 @@ interface Props {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-function Checkbox({ name, label, checked, onChange }: Props) {
-  const [check, setCheck] = useState(checked ?? false);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function Checkbox({ name, label, checked, onChange }: Props, ref: any) {
+  const [valueState, setValueState] = useState(checked ?? false);
+
+  const toggle = (event: React.MouseEvent) => {
+    setValueState(!valueState);
+
+    if (onChange) {
+      const nativeEvent = event.nativeEvent || event;
+      const clonedEvent = new (nativeEvent.constructor as {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        new (...args: any): React.ChangeEvent<HTMLInputElement>;
+      })(nativeEvent.type, nativeEvent);
+
+      Object.defineProperty(clonedEvent, 'target', {
+        writable: true,
+        value: { checked: !valueState, name },
+      });
+      onChange(clonedEvent);
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCheck(e.target.checked);
+    setValueState(e.target.checked);
 
     if (onChange) {
       onChange(e);
     }
   };
-
   return (
     <div className="inline-flex items-center">
       <label className="relative inline-flex items-center cursor-pointer p-3 rounded-full">
         <input
+          ref={ref}
           type="checkbox"
           name={name}
-          checked={check}
+          checked={valueState}
           onChange={handleChange}
           className="peer appearance-none w-6 h-6 rounded-lg border-[1.5px] border-gray-400 dark:border-gray-100 cursor-pointer transition-all disabled:border-gray-300 dark:disabled:border-midnight-400 disabled:checked:bg-gray-300 before:content[''] before:block before:w-12 before:h-12 before:rounded-full before:absolute before:top-2/4 before:left-2/4 before:-translate-y-2/4 before:-translate-x-2/4 before:bg-gray-500 checked:before:bg-green-500 before:opacity-0 hover:before:opacity-10 before:transition-opacity checked:bg-green-500 checked:border-green-500 dark:checked:bg-green-500 dark:checked:border-green-500"
         />
@@ -48,7 +67,7 @@ function Checkbox({ name, label, checked, onChange }: Props) {
       </label>
       <label
         className="text-grey-600 font-normal select-none cursor-pointer mt-px"
-        onClick={() => setCheck(!check)}
+        onClick={toggle}
       >
         {label}
       </label>
@@ -56,4 +75,4 @@ function Checkbox({ name, label, checked, onChange }: Props) {
   );
 }
 
-export default Checkbox;
+export default forwardRef(Checkbox);

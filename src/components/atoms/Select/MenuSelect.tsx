@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 const presentationElement = document.getElementById('presentation');
-
 interface Props {
   children: React.ReactNode;
 }
@@ -11,12 +10,12 @@ function MenuSelect({ children }: Props) {
   const boxElement = document.createElement('div');
 
   useEffect(() => {
-    presentationElement?.append(boxElement);
+    presentationElement?.appendChild(boxElement);
 
     return () => {
-      boxElement.remove();
+      presentationElement?.removeChild(boxElement);
     };
-  }, []);
+  });
 
   return createPortal(children, boxElement);
 }

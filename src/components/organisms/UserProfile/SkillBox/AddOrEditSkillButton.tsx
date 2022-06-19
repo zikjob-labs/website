@@ -8,7 +8,7 @@ interface Props {
   header?: boolean;
 }
 
-function AddSkillButton({ header }: Props) {
+function AddOrEditSkillButton({ header }: Props) {
   const modalRef = useRef<ModalHandle>(null);
 
   return (
@@ -22,9 +22,10 @@ function AddSkillButton({ header }: Props) {
         onClick={() => modalRef.current?.open()}
       >
         <IconAdd className={header ? '' : 'mr-2'} />
-        Add
+        {header ? 'Edit' : 'Add'}
       </button>
       <Modal
+        name="skill-modal"
         ref={modalRef}
         width="max-w-2xl"
         slide
@@ -32,21 +33,25 @@ function AddSkillButton({ header }: Props) {
         layer={{ isRoot: true }}
         header={
           <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
-            Skill
+            {header ? 'Edit Skill' : 'Add Skill'}
           </h3>
         }
         footer={
           <div className="w-full flex justify-end">
-            <button className="btn btn-primary !px-4 !py-2 !text-base">
+            <button
+              type="submit"
+              form="skill-form"
+              className="btn btn-primary !px-4 !py-2 !text-base"
+            >
               Save
             </button>
           </div>
         }
       >
-        <SkillUpdateModal />
+        <SkillUpdateModal parentRef={modalRef} />
       </Modal>
     </Fragment>
   );
 }
 
-export default AddSkillButton;
+export default AddOrEditSkillButton;

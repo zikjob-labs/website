@@ -57,7 +57,7 @@
   @apply hidden items-center overflow-y-auto overflow-x-hidden fixed top-0 left-0 z-[1200] w-full h-full;
 
   &.slide {
-    @apply flex transition ease-out duration-500;
+    @apply flex transition ease-out duration-[400ms];
 
     &__left {
       @apply -translate-x-full;
@@ -101,7 +101,7 @@
   }
 
   &__body {
-    @apply flex flex-col gap-4 px-4 pt-4 pb-24 overflow-y-auto;
+    @apply flex flex-col gap-4 px-4 pt-4 pb-24 lg:pb-4 overflow-y-auto;
   }
 
   &__footer {

@@ -3,9 +3,9 @@ import Modal from '@/components/atoms/Modal';
 import { ModalHandle } from '@/components/atoms/Modal/Modal';
 import { isMobile } from '@/utils/userAgent';
 import { useRef } from 'react';
-import InfoEditModal from './InfoEditModal';
+import EditInfoModal from './EditInfoModal';
 
-function InfoEditButton() {
+function EditInfoButton() {
   const modalRef = useRef<ModalHandle>(null);
 
   return (
@@ -26,6 +26,7 @@ function InfoEditButton() {
         </button>
       )}
       <Modal
+        name="edit-info-modal"
         ref={modalRef}
         width="max-w-2xl"
         slide
@@ -38,16 +39,20 @@ function InfoEditButton() {
         }
         footer={
           <div className="w-full flex justify-end">
-            <button className="btn btn-primary !px-4 !py-2 !text-base">
+            <button
+              type="submit"
+              form="info-edit-form"
+              className="btn btn-primary !px-4 !py-2 !text-base"
+            >
               Save
             </button>
           </div>
         }
       >
-        <InfoEditModal parentRef={modalRef} />
+        <EditInfoModal parentRef={modalRef} />
       </Modal>
     </div>
   );
 }
 
-export default InfoEditButton;
+export default EditInfoButton;

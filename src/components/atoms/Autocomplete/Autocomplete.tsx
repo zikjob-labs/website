@@ -6,8 +6,13 @@ import {
 } from '@/assets/svg';
 import useOnClickOutside from '@/hooks/useOnClickOutside';
 import React, { forwardRef, useLayoutEffect, useRef, useState } from 'react';
-import MenuSelect from './MenuSelect';
-import { SelectItemProps } from './SelectItem';
+import MenuSelect from '../Select/MenuSelect';
+import SelectItem from '../Select/SelectItem';
+
+interface OptionItem {
+  text: string;
+  value: string;
+}
 
 interface Props {
   name?: string;
@@ -17,14 +22,14 @@ interface Props {
   helperText?: string;
   multiple?: boolean;
   maxItem?: number;
-  tag?: boolean;
+  freeSolo?: boolean;
   error?: boolean;
   disabled?: boolean;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  children: React.ReactElement<SelectItemProps>[];
+  options: OptionItem[];
 }
 
-function Select(
+function Autocomplete(
   {
     name,
     label,
@@ -33,23 +38,35 @@ function Select(
     helperText,
     multiple,
     maxItem,
-    tag,
+    freeSolo,
     error,
     disabled,
     onChange,
-    children,
+    options,
   }: Props,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ref: any
 ) {
   const boxRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLElement>(null);
+  const searchBoxRef = useRef<HTMLInputElement>(null);
+  const data: { [key: string]: string } = {};
   const [heightBox, setHeightBox] = useState(56);
   const [show, setShow] = useState(false);
   const [valueState, setValueState] = useState(value ?? '');
+  const [valueSearch, setValueSearch] = useState(
+    Array.isArray(value) ? '' : value ?? ''
+  );
 
   useOnClickOutside(boxRef, () => {
     setShow(false);
+  });
+  useOnClickOutside(searchBoxRef, () => {
+    if (multiple || valueSearch == '' || valueState.length == 0) {
+      setValueSearch('');
+    } else {
+      setValueSearch(data[valueState.toString()]);
+    }
   });
   const toggleShow = () => {
     !disabled && setShow(!show);
@@ -64,23 +81,29 @@ function Select(
     setHeightBox(newHeight);
   });
 
-  const data: { [key: string]: string } = {};
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const index = children
-      .map((child) => child.props.value)
+    const index = options
+      .map((child) => child.value)
       .indexOf(event.target.value);
 
     if (index === -1) {
       return;
     }
 
-    const child = children[index];
-    setValueState(child.props.value);
+    const child = options[index];
+    setValueState(child.value);
 
     if (onChange) {
       onChange(event);
     }
+  };
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    if (value == '') {
+      !multiple && setValueState('');
+    }
+    setValueSearch(event.target.value);
   };
 
   const handleRemoveItemClick =
@@ -100,6 +123,7 @@ function Select(
         }
       } else {
         newValue = value;
+        setValueSearch('');
       }
 
       setValueState(newValue);
@@ -121,71 +145,91 @@ function Select(
       setShow(false);
     };
 
-  const handleItemClick =
-    (child: React.ReactElement<SelectItemProps>) =>
-    (event: React.MouseEvent) => {
-      let newValue;
+  const handleItemClick = (child: OptionItem) => (event: React.MouseEvent) => {
+    let newValue;
 
-      if (multiple) {
-        newValue = Array.isArray(valueState) ? valueState.slice() : [];
-        if (maxItem && newValue.length >= maxItem) {
-          setShow(false);
-          return;
-        }
-        const itemIndex = newValue.indexOf(child.props.value);
-        if (itemIndex === -1) {
-          newValue.push(child.props.value);
-        } else {
-          newValue.splice(itemIndex, 1);
-          newValue.length == 0 && (newValue = '');
-        }
+    if (multiple) {
+      newValue = Array.isArray(valueState) ? valueState.slice() : [];
+      if (maxItem && newValue.length >= maxItem) {
+        setValueSearch('');
+        setShow(false);
+        return;
+      }
+      const itemIndex = newValue.indexOf(child.value);
+      if (itemIndex === -1) {
+        newValue.push(child.value);
       } else {
-        newValue = child.props.value;
+        newValue.splice(itemIndex, 1);
+        newValue.length == 0 && (newValue = '');
       }
+    } else {
+      newValue = child.value;
+    }
 
-      if (valueState !== newValue) {
-        setValueState(newValue);
+    if (valueState !== newValue) {
+      setValueState(newValue);
+      multiple ? setValueSearch('') : setValueSearch(child.text);
 
-        if (onChange) {
-          const nativeEvent = event.nativeEvent || event;
-          const clonedEvent = new (nativeEvent.constructor as {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            new (...args: any): React.ChangeEvent<HTMLInputElement>;
-          })(nativeEvent.type, nativeEvent);
+      if (onChange) {
+        const nativeEvent = event.nativeEvent || event;
+        const clonedEvent = new (nativeEvent.constructor as {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          new (...args: any): React.ChangeEvent<HTMLInputElement>;
+        })(nativeEvent.type, nativeEvent);
 
-          Object.defineProperty(clonedEvent, 'target', {
-            writable: true,
-            value: { value: newValue, name },
-          });
-          onChange(clonedEvent);
+        Object.defineProperty(clonedEvent, 'target', {
+          writable: true,
+          value: { value: newValue, name },
+        });
+        onChange(clonedEvent);
+      }
+    }
+
+    setShow(false);
+  };
+
+  const items = options
+    .map((child) => {
+      data[child.value] = child.text;
+      return child;
+    })
+    .filter((child) => {
+      return multiple ||
+        (valueState != undefined && valueSearch != data[valueState.toString()])
+        ? child.text.includes(valueSearch)
+        : true;
+    })
+    .map((child, index) => {
+      // Limit 100 items if the options more than 100 items
+      if (index > 100) return null;
+
+      return React.cloneElement(
+        <SelectItem value={child.value} textDisplay={child.text}>
+          {child.text}
+        </SelectItem>,
+        {
+          key: index,
+          onClick: handleItemClick(child),
+          selected:
+            valueState != ''
+              ? (() => {
+                  let selected;
+                  if (multiple) {
+                    const valueStateInit = Array.isArray(valueState)
+                      ? valueState.slice()
+                      : [];
+                    selected = valueStateInit.indexOf(child.value) !== -1;
+                  } else {
+                    selected = child.value == valueState;
+                  }
+
+                  return selected;
+                })()
+              : undefined,
         }
-      }
-
-      setShow(false);
-    };
-
-  const items = children.map((child) => {
-    data[child.props.value] = child.props.textDisplay;
-    return React.cloneElement(child, {
-      onClick: handleItemClick(child),
-      selected:
-        valueState != ''
-          ? (() => {
-              let selected;
-              if (multiple) {
-                const valueStateInit = Array.isArray(valueState)
-                  ? valueState.slice()
-                  : [];
-                selected = valueStateInit.indexOf(child.props.value) !== -1;
-              } else {
-                selected = child.props.value == valueState;
-              }
-
-              return selected;
-            })()
-          : undefined,
-    });
-  });
+      );
+    })
+    .filter((item) => item != null);
 
   return (
     <div className="flex flex-col">
@@ -198,7 +242,7 @@ function Select(
       >
         <button
           type="button"
-          className={`group peer w-full h-full px-4 py-[15px] bg-transparent text-base caret-transparent text-gray-900 dark:text-light font-normal rounded-[7px] outline-0 focus:outlined-0 border-[1.5px] border-t-transparent dark:border-t-transparent ${
+          className={`group peer w-full h-full px-4 py-[15px] bg-transparent text-base text-gray-900 dark:text-light font-normal rounded-[7px] outline-0 focus:outlined-0 border-[1.5px] border-t-transparent dark:border-t-transparent ${
             error
               ? 'border-t-transparent border-red-500 hover:border-t-transparent hover:border-red-500 focus:border-t-transparent focus:border-red-500'
               : disabled
@@ -211,70 +255,70 @@ function Select(
           }`}
           onClick={toggleShow}
         >
-          {valueState ? (
+          {
             <span
               ref={contentRef}
-              className={`absolute pr-12 top-2/4 -translate-y-2/4 left-[18px]  w-[87%] text-left text-ellipsis overflow-hidden whitespace-nowrap ${
+              className={`absolute inline-flex gap-2 flex-wrap top-2/4 -translate-y-2/4 left-[18px]  w-[87%] text-left text-ellipsis overflow-hidden whitespace-nowrap ${
                 disabled
                   ? 'text-gray-100 dark:text-midnight-600'
                   : 'text-gray-900 dark:text-light'
               }`}
             >
-              {Array.isArray(valueState) ? (
-                tag ? (
-                  <div className="flex flex-row flex-wrap gap-2">
-                    {valueState.map((valueItem, index) => (
-                      <div
-                        key={index}
-                        className="inline-flex justify-center items-center pl-3 pr-2 py-1.5 bg-blue-50 dark:bg-midnight-700 rounded-full text-sm font-medium"
-                      >
-                        <span>{data[valueItem]}</span>
-                        <IconCloseBold
-                          className={`ml-1 w-5 h-5 ${
-                            disabled
-                              ? 'text-gray-100 dark:text-midnight-600'
-                              : 'text-gray-700 dark:text-gray-200'
-                          }`}
-                          onClick={handleRemoveItemClick(valueItem)}
-                        />
-                      </div>
-                    ))}
+              {Array.isArray(valueState) &&
+                valueState.map((valueItem, index) => (
+                  <div
+                    key={index}
+                    className="inline-flex justify-center items-center pl-3 pr-2 py-1.5 bg-blue-50 dark:bg-midnight-700 rounded-full text-sm font-medium"
+                  >
+                    <span>{data[valueItem]}</span>
+                    <IconCloseBold
+                      className={`ml-1 w-5 h-5 ${
+                        disabled
+                          ? 'text-gray-100 dark:text-midnight-600'
+                          : 'text-gray-700 dark:text-gray-200'
+                      }`}
+                      onClick={handleRemoveItemClick(valueItem)}
+                    />
                   </div>
-                ) : (
-                  valueState.map((valueItem) => data[valueItem]).join(',')
-                )
-              ) : (
-                data[valueState]
-              )}
+                ))}
+              <input
+                ref={searchBoxRef}
+                className={`input-autocomplete w-auto grow ${
+                  freeSolo ? 'pr-6' : 'pr-12'
+                } outline-0 bg-transparent dark:placeholder:text-midnight-300`}
+                placeholder={placeholder}
+                value={valueSearch}
+                onChange={handleSearchChange}
+                onKeyUp={(e) => {
+                  if (e.key == ' ') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }
+                }}
+              />
             </span>
-          ) : (
-            <span
-              className={`absolute pr-12 top-2/4 -translate-y-2/4 left-[18px] w-[87%] text-left text-ellipsis overflow-hidden whitespace-nowrap ${
+          }
+          {!freeSolo && (
+            <div
+              className={`grid place-items-center absolute top-2/4 right-4 -translate-y-2/4 w-6 h-6 ${
                 disabled
-                  ? 'text-gray-100 dark:text-midnight-600'
-                  : 'text-gray-400 dark:text-midnight-300'
+                  ? ' text-gray-100 dark:text-midnight-600'
+                  : `${
+                      valueState
+                        ? 'text-gray-900 dark:text-light'
+                        : 'text-gray-400 dark:text-midnight-300'
+                    } group-focus:text-primary dark:group-focus:text-light`
               }`}
+              onClick={toggleShow}
             >
-              {placeholder}
-            </span>
+              {show ? <IconPagingTop /> : <IconPagingBottom />}
+            </div>
           )}
-          <div
-            className={`grid place-items-center absolute top-2/4 right-4 -translate-y-2/4 w-6 h-6 ${
-              disabled
-                ? ' text-gray-100 dark:text-midnight-600'
-                : `${
-                    valueState
-                      ? 'text-gray-900 dark:text-light'
-                      : 'text-gray-400 dark:text-midnight-300'
-                  } group-focus:text-primary dark:group-focus:text-light`
-            }`}
-            onClick={toggleShow}
-          >
-            {show ? <IconPagingTop /> : <IconPagingBottom />}
-          </div>
           {!multiple && valueState && (
             <div
-              className={`grid place-items-center absolute top-2/4 right-10 -translate-y-2/4 w-6 h-6 ${
+              className={`grid place-items-center absolute top-2/4 ${
+                freeSolo ? 'right-4' : 'right-10'
+              } -translate-y-2/4 w-6 h-6 ${
                 disabled
                   ? ' text-gray-100 dark:text-midnight-600'
                   : `${
@@ -337,14 +381,25 @@ function Select(
             <span className="fixed opacity-0 pointer-events-none outline-0"></span>
             <ul
               className={`fixed py-2 left-0 z-[1300] overflow-auto opacity-100 max-h-[150px] bg-light dark:bg-midnight-900 rounded-lg shadow-[0_0_20px_0_rgba(0,0,0,0.1)] font-normal text-gray-900 dark:text-light focus:outline-none`}
-              // TODO: calculate position popup and handle keyup event to focus item
               style={{
                 width: triggerBounds ? triggerBounds.width : '100%',
                 top: triggerBounds ? triggerBounds.bottom + 8 : '0',
                 left: triggerBounds ? triggerBounds.x : '0',
               }}
             >
-              {items}
+              {items.length > 0 ? (
+                items
+              ) : (
+                <SelectItem
+                  value="0"
+                  textDisplay="No options"
+                  onClick={() => {
+                    searchBoxRef.current?.focus();
+                  }}
+                >
+                  No options
+                </SelectItem>
+              )}
             </ul>
             <span className="fixed opacity-0 pointer-events-none outline-0"></span>
           </MenuSelect>
@@ -363,4 +418,4 @@ function Select(
   );
 }
 
-export default forwardRef(Select);
+export default forwardRef(Autocomplete);

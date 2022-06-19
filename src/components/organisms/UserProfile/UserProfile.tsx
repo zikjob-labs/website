@@ -4,13 +4,12 @@ import { isMobile } from '@/utils/userAgent';
 // import PortfolioBox from './PortfolioBox';
 // import AchievementBox from './AchievementBox';
 // import CertificateBox from './CertificateBox';
-import SkillBox from './SkillBox/SkillBox';
-import ExperienceBox from './ExperienceBox/ExperienceBox';
-import EducationBox from './EducationBox/EducationBox';
-import CompletionProgressBox from './CompletionProgressBox';
 import ArrangeButton from './ArrangeButton';
-import MobileBasicInfoBox from './BasicInfo/MobileBasicInfoBox';
-import BasicInfoBox from './BasicInfo/BasicInfoBox';
+import { BasicInfoBox, MobileBasicInfoBox } from './BasicInfo';
+import CompletionProgressBox from './CompletionProgressBox';
+import EducationBox from './EducationBox';
+import ExperienceBox from './ExperienceBox';
+import SkillBox from './SkillBox';
 
 function UserProfile() {
   return (

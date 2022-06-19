@@ -1,31 +1,27 @@
-import { useState } from 'react';
+import { forwardRef } from 'react';
 
-interface Props {
+export interface RadioProps {
   name?: string;
-  label: string;
+  value?: string;
   checked?: boolean;
+  label: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-function Radio({ name, label, checked, onChange }: Props) {
-  const [check, setCheck] = useState(checked ?? false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCheck(e.target.checked);
-
-    if (onChange) {
-      onChange(e);
-    }
-  };
-
+function Radio(
+  { checked, label, onChange, ...props }: RadioProps,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ref: any
+) {
   return (
     <div className="inline-flex items-center">
       <label className="relative flex items-center cursor-pointer p-3 rounded-full">
         <input
-          name={name}
+          ref={ref}
+          checked={checked}
+          onChange={onChange}
+          {...props}
           type="radio"
-          checked={check}
-          onChange={handleChange}
           className="peer appearance-none w-6 h-6 border-[2px] rounded-full border-gray-400 dark:border-gray-100 cursor-pointer transition-all before:content[''] before:block before:w-10 before:h-10 before:rounded-full before:absolute before:top-2/4 before:left-2/4 before:-translate-y-2/4 before:-translate-x-2/4 before:bg-gray-500 checked:before:bg-green-500 before:opacity-0 hover:before:opacity-10 before:transition-opacity text-green-500 checked:border-green-500 dark:checked:border-green-500"
         />
         <div className="absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity text-green-500">
@@ -47,4 +43,4 @@ function Radio({ name, label, checked, onChange }: Props) {
   );
 }
 
-export default Radio;
+export default forwardRef<HTMLInputElement, RadioProps>(Radio);

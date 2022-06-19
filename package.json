@@ -1,7 +1,7 @@
 {
   "name": "zikjob.com",
   "private": true,
-  "version": "0.0.3",
+  "version": "0.0.4",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -21,6 +21,8 @@
   },
   "devDependencies": {
     "@honkhonk/vite-plugin-svgr": "^1.1.0",
+    "@hookform/resolvers": "^2.9.1",
+    "@popperjs/core": "^2.11.5",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.5",
     "@types/ua-parser-js": "^0.7.36",
@@ -33,12 +35,15 @@
     "eslint-plugin-react": "^7.30.0",
     "flag-icons": "^6.4.2",
     "husky": "^8.0.1",
+    "joi": "^17.6.0",
     "lint-staged": "^12.4.2",
     "path": "^0.12.7",
     "postcss": "^8.4.14",
     "prettier": "2.6.2",
+    "react-hook-form": "^7.32.0",
     "react-hot-toast": "^2.2.0",
     "react-image-crop": "^10.0.2",
+    "react-popper": "^2.3.0",
     "sass": "^1.52.1",
     "swiper": "^8.1.6",
     "tailwindcss": "^3.0.24",

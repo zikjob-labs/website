@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { forwardRef, useState } from 'react';
 
 interface Props {
   name?: string;
@@ -14,24 +14,22 @@ interface Props {
 
 const MAX_LENGTH_TEXTAREA = 2000;
 
-function Textarea({
-  name,
-  label,
-  value,
-  minHeight,
-  maxLength,
-  placeholder,
-  helperText,
-  error,
-  onChange,
-}: Props) {
+function Textarea(
+  {
+    name,
+    label,
+    value,
+    minHeight,
+    maxLength,
+    placeholder,
+    helperText,
+    error,
+    onChange,
+  }: Props,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ref: any
+) {
   const [valueState, setValueState] = useState(value ?? '');
-
-  useEffect(() => {
-    return () => {
-      setValueState(value ?? '');
-    };
-  }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValueState(event.target.value);
@@ -44,6 +42,7 @@ function Textarea({
     <div className="flex flex-col">
       <div className="relative w-full min-w-[200px]">
         <textarea
+          ref={ref}
           name={name}
           className={`peer w-full h-full px-4 py-[15px] bg-transparent text-base text-gray-900 dark:text-light font-normal rounded-[7px] outline-0 focus:outlined-0 border-[1.5px] border-t-transparent dark:border-t-transparent ${
             error
@@ -96,4 +95,4 @@ function Textarea({
   );
 }
 
-export default Textarea;
+export default forwardRef(Textarea);

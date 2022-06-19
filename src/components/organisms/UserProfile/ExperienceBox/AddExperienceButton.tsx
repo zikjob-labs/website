@@ -1,7 +1,7 @@
 import { IconAdd } from '@/assets/svg';
 import Modal from '@/components/atoms/Modal';
 import { ModalHandle } from '@/components/atoms/Modal/Modal';
-import { Fragment, useRef } from 'react';
+import { useRef } from 'react';
 import ExperienceUpdateModal from './ExperienceUpdateModal';
 
 interface Props {
@@ -12,7 +12,7 @@ function AddExperienceButton({ header }: Props) {
   const modalRef = useRef<ModalHandle>(null);
 
   return (
-    <Fragment>
+    <>
       <button
         className={`btn btn-outline justify-center items-center ${
           header
@@ -25,6 +25,7 @@ function AddExperienceButton({ header }: Props) {
         Add
       </button>
       <Modal
+        name="add-experience-modal"
         ref={modalRef}
         width="max-w-2xl"
         slide
@@ -32,20 +33,24 @@ function AddExperienceButton({ header }: Props) {
         layer={{ isRoot: true }}
         header={
           <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
-            Experience
+            Add Experience
           </h3>
         }
         footer={
           <div className="w-full flex justify-end">
-            <button className="btn btn-primary !px-4 !py-2 !text-base">
+            <button
+              type="submit"
+              form="add-experience-form"
+              className="btn btn-primary !px-4 !py-2 !text-base"
+            >
               Save
             </button>
           </div>
         }
       >
-        <ExperienceUpdateModal />
+        <ExperienceUpdateModal parentRef={modalRef} />
       </Modal>
-    </Fragment>
+    </>
   );
 }
 

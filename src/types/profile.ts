@@ -6,36 +6,51 @@ export interface ArrangeOrder {
 }
 
 export interface Education {
+  id?: number;
   school: {
     name: string;
-    logo: string;
+    logo?: string;
   };
   major: string;
-  start: Date;
-  end: Date | null;
-  isVerified: boolean;
-  description: string;
+  start: {
+    month: string;
+    year: string;
+  };
+  end?: {
+    month: string;
+    year: string;
+  };
+  isVerified?: boolean;
+  description?: string;
 }
 
 export interface Experience {
+  id?: number;
   company: {
     name: string;
-    logo: string;
+    logo?: string;
   };
-  start: Date;
-  end: Date | null;
-  isVerified: boolean;
-  description: string;
+  position?: string;
+  start: {
+    month: string;
+    year: string;
+  };
+  end?: {
+    month: string;
+    year: string;
+  };
+  isVerified?: boolean;
+  description?: string;
 }
 
 export interface Skill {
   name: string;
-  rate: number;
 }
 
 export interface Certificate {
   name: string;
-  issueDate: Date;
+  issueBy: string;
+  issueDate?: Date;
 }
 
 export interface Achievement {
@@ -46,12 +61,12 @@ export interface Achievement {
 
 export interface Project {
   name: string;
-  description: string;
+  description?: string;
   image: {
     src: string;
   };
-  members: Array<string>;
-  customers: Array<string>;
+  members?: Array<string>;
+  customers?: Array<string>;
 }
 
 export interface Static {
@@ -63,7 +78,7 @@ export interface Profile {
   avatar?: {
     src: string;
   };
-  name: string;
+  fullName?: string;
   headline?: string;
   isVerified?: boolean;
   isFreelancer?: boolean;
@@ -73,21 +88,22 @@ export interface Profile {
   gender?: string;
   country?: string;
   videoUrl?: string;
-  industries?: Array<string>;
-  description?: string;
+  industries?: string[];
+  introduce?: string;
   totalFavorite?: number;
   totalShare?: number;
   value?: number;
-  arrangeOrder?: Array<ArrangeOrder>;
-  education?: Array<Education>;
-  experiences?: Array<Experience>;
-  skills?: Array<Skill>;
-  achievements?: Array<Achievement>;
-  projects?: Array<Project>;
+  arrangeOrder?: ArrangeOrder[];
+  education?: Education[];
+  experiences?: Experience[];
+  skills?: Skill[];
+  certificates?: Certificate[];
+  achievements?: Achievement[];
+  projects?: Project[];
   portfolio?: {
     src: string;
   };
-  statics?: Array<Static>;
+  statics?: Static[];
 }
 
 export interface ProfileState extends State {

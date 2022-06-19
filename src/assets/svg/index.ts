@@ -26,6 +26,9 @@ import IconEditFill from './icon-edit-fill.svg?component';
 import IconPhone from './icon-phone.svg?component';
 import IconMail from './icon-mail.svg?component';
 import IconGender from './icon-gender.svg?component';
+import IconGenderMale from './icon-gender-man.svg?component';
+import IconGenderFemale from './icon-gender-woman.svg?component';
+import IconGenderOther from './icon-gender-other.svg?component';
 import IconEarth from './icon-earth.svg?component';
 import IconVideo from './icon-video.svg?component';
 import IconHeart from './icon-heart.svg?component';
@@ -36,9 +39,12 @@ import IconPagingLeft from './icon-paging-left.svg?component';
 import IconPagingRight from './icon-paging-right.svg?component';
 import IconPagingBottom from './icon-paging-bottom.svg?component';
 import IconPagingTop from './icon-paging-top.svg?component';
-import IconCloseCircle from './icon-close-circle.svg?component';
+import IconCloseLight from './icon-close-light.svg?component';
+import IconCloseBold from './icon-close-bold.svg?component';
 import IconGalleryAdd from './icon-gallery-add.svg?component';
 import IconNavigatorLeft from './icon-navigator-left.svg?component';
+import IconEdu from './icon-edu.svg?component';
+import IconBuilding from './icon-building.svg?component';
 
 import IconEthereum from './icon-ethereum.svg?component';
 import IconBSC from './icon-bsc.svg?component';
@@ -103,6 +109,9 @@ export {
   IconPhone,
   IconMail,
   IconGender,
+  IconGenderMale,
+  IconGenderFemale,
+  IconGenderOther,
   IconEarth,
   IconVideo,
   IconHeart,
@@ -113,9 +122,12 @@ export {
   IconPagingRight,
   IconPagingBottom,
   IconPagingTop,
-  IconCloseCircle,
+  IconCloseLight,
+  IconCloseBold,
   IconGalleryAdd,
   IconNavigatorLeft,
+  IconEdu,
+  IconBuilding,
   // Icon Network
   IconEthereum,
   IconBSC,

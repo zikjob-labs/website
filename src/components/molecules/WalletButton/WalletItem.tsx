@@ -1,4 +1,5 @@
 import { IconSpin } from '@/assets/svg';
+import { ModalHandle } from '@/components/atoms/Modal/Modal';
 import { Fragment, FunctionComponent } from 'react';
 import toast from 'react-hot-toast';
 import { useConnect } from 'wagmi';
@@ -9,12 +10,14 @@ interface Props {
     label: string;
     svg: FunctionComponent;
   };
+  modalRef: React.RefObject<ModalHandle>;
 }
 
-function WalletItem({ item }: Props) {
+function WalletItem({ item, modalRef }: Props) {
   const { connect, connectors, isConnecting, pendingConnector } = useConnect({
     onConnect: () => {
       toast.success('Connected!');
+      modalRef.current?.close();
     },
     onError: (error) => {
       toast.error(error.message);

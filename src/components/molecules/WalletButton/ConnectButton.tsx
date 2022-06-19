@@ -33,7 +33,9 @@ function ConnectButton() {
       >
         Connect
       </button>
+      {/* TODO: Reuse defined modal */}
       <Modal
+        name="connect-wallet"
         ref={modalRef}
         customClass="modal__wallet"
         layer={{ isRoot: true }}
@@ -44,7 +46,7 @@ function ConnectButton() {
         }
       >
         {walletItems.map((item, index) => (
-          <WalletItem key={index} item={item} />
+          <WalletItem key={index} item={item} modalRef={modalRef} />
         ))}
       </Modal>
     </Fragment>

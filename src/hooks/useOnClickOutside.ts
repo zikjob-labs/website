@@ -14,6 +14,7 @@ function useOnClickOutside(
       if (
         !ref.current ||
         ref.current.contains(event.target as Node) ||
+        // For select + autocomplete
         document.getElementById('presentation')?.contains(event.target as Node)
       ) {
         return;

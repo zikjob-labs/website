@@ -1,136 +1,38 @@
-import { IconEditFill, IconTick } from '@/assets/svg';
 import useProfileStore from '@/stores/useProfileStore';
 import AddEducationButton from './AddEducationButton';
+import EducationItem from './EducationItem';
 
 function EducationBox() {
   const profile = useProfileStore((state) => state.profile);
-  if (profile)
-    return (
-      <div className="container profile__box static__box">
-        <div className="profile__box__main">
-          <div className="profile__box__header">
-            <h4>
-              Education
-              <AddEducationButton header />
-            </h4>
-            <div className="toggle__button">
-              <span className="toggle__button__label">Show</span>
-              <label className="toggle__button__body">
-                <input type="checkbox" value="" className="sr-only peer" />
-                <div className="peer peer-checked:bg-blue-100 dark:peer-checked:bg-blue-50 peer-checked:after:bg-primary peer-checked:after:translate-x-full"></div>
-              </label>
-            </div>
-          </div>
-          <div className="profile__box__body">
-            <div className="grid grid-cols-1 lg:grid-cols-2 justify-between gap-10">
-              <div className="flex flex-row items-start">
-                <img
-                  src="https://picsum.photos/100/100"
-                  className="w-[88px] h-[88px] mr-5 rounded-lg"
-                />
-                <div className="flex flex-col gap-1">
-                  <h5 className="mb-1 inline-flex gap-2 justify-between items-start font-semibold">
-                    National University of Civil Engineering
-                    <button>
-                      <span className="block flex justify-center items-center w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-midnight-600">
-                        <IconEditFill className="w-8 h-8 text-primary dark:text-light" />
-                      </span>
-                    </button>
-                  </h5>
-                  <p>Major: Computer Science</p>
-                  <p>10/2015 - 10/2020</p>
-                  <div className="inline-flex items-center text-primary font-semibold">
-                    <div className="w-5 h-5 rounded-full flex justify-center items-center bg-primary text-light  mr-1">
-                      <IconTick className="w-full h-full" />
-                    </div>
-                    Verified
-                  </div>
-                  <p className="mt-1">
-                    Currently, I am a student in a junior high school. It takes
-                    15 minutes to walk from my house to school...{' '}
-                    <span className="text-primary font-medium">Read more</span>
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-row items-start">
-                <img
-                  src="https://picsum.photos/100/100"
-                  className="w-[88px] h-[88px] mr-5 rounded-lg"
-                />
-                <div className="flex flex-col gap-1">
-                  <h5 className="mb-1 inline-flex gap-2 justify-between items-start font-semibold">
-                    National University of Civil Engineering
-                    <button>
-                      <span className="block flex justify-center items-center w-10 h-10 rounded-full hover:bg-gray-100">
-                        <IconEditFill className="w-8 h-8 text-primary dark:text-light dark:hover:bg-midnight-600" />
-                      </span>
-                    </button>
-                  </h5>
-                  <p>Major: Computer Science</p>
-                  <p>10/2015 - 10/2020</p>
-                  <div className="inline-flex items-center text-primary font-semibold">
-                    <button className="w-5 h-5 rounded-full flex justify-center items-center bg-primary text-light  mr-1">
-                      <IconTick className="w-full h-full" />
-                    </button>
-                    Verified
-                  </div>
-                  <p className="mt-1">
-                    Currently, I am a student in a junior high school. It takes
-                    15 minutes to walk from my house to school...{' '}
-                    <span className="text-primary font-medium">Read more</span>
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-row items-start">
-                <img
-                  src="https://picsum.photos/100/100"
-                  className="w-[88px] h-[88px] mr-5 rounded-lg"
-                />
-                <div className="flex flex-col gap-1">
-                  <h5 className="mb-1 inline-flex gap-2 justify-between items-start font-semibold">
-                    National University of Civil Engineering
-                    <button>
-                      <span className="block flex justify-center items-center w-10 h-10 rounded-full hover:bg-gray-100">
-                        <IconEditFill className="w-8 h-8 text-primary dark:text-light dark:hover:bg-midnight-600" />
-                      </span>
-                    </button>
-                  </h5>
-                  <p>Major: Computer Science</p>
-                  <p>10/2015 - 10/2020</p>
-                  <div className="inline-flex items-center text-primary font-semibold">
-                    <div className="w-5 h-5 rounded-full flex justify-center items-center bg-primary text-light  mr-1">
-                      <IconTick className="w-full h-full" />
-                    </div>
-                    Verified
-                  </div>
-                  <p className="mt-1">
-                    Currently, I am a student in a junior high school. It takes
-                    15 minutes to walk from my house to school...{' '}
-                    <span className="text-primary font-medium">Read more</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-
   return (
-    <div className="container profile__box">
+    <div className="container profile__box static__box">
       <div className="profile__box__main">
         <div className="profile__box__header">
-          <h4>Education</h4>
+          <h4>
+            Education
+            {profile?.education && profile.education.length > 0 && (
+              <AddEducationButton header />
+            )}
+          </h4>
+          {/* Milestone 2
           <div className="toggle__button">
             <span className="toggle__button__label">Show</span>
             <label className="toggle__button__body">
               <input type="checkbox" value="" className="sr-only peer" />
               <div className="peer peer-checked:bg-blue-100 dark:peer-checked:bg-blue-50 peer-checked:after:bg-primary peer-checked:after:translate-x-full"></div>
             </label>
-          </div>
+          </div> */}
         </div>
         <div className="profile__box__body">
-          <AddEducationButton />
+          {profile?.education && profile.education.length > 0 ? (
+            <div className="grid grid-cols-1 lg:grid-cols-2 justify-between gap-10">
+              {profile.education.map((item, index) => (
+                <EducationItem key={index} item={item} />
+              ))}
+            </div>
+          ) : (
+            <AddEducationButton />
+          )}
         </div>
       </div>
     </div>

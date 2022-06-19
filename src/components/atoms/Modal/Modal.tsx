@@ -1,11 +1,11 @@
 import { IconCancel, IconNavigatorLeft } from '@/assets/svg';
+import useModalRefOutside from '@/hooks/useModalRefOutside';
 import {
   forwardRef,
   Fragment,
   Ref,
   useCallback,
   useImperativeHandle,
-  useLayoutEffect,
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
@@ -18,7 +18,13 @@ export interface ModalHandle {
   close: (calledFromChild?: boolean) => void;
 }
 
+export interface UpdateModalProps<T> {
+  item?: T;
+  parentRef: React.RefObject<ModalHandle>;
+}
+
 interface Props {
+  name?: string;
   width?: string;
   slide?: boolean;
   slidePosition?: 'left' | 'right';
@@ -34,6 +40,7 @@ interface Props {
 
 function Modal(
   {
+    name,
     width,
     slide,
     slidePosition,
@@ -51,42 +58,42 @@ function Modal(
   };
   const [show, setShow] = useState(false);
   const [showChild, setShowChild] = useState(false);
+  const open = useCallback((calledFromChild?: boolean) => {
+    if (!isRoot && parentRef) {
+      parentRef.current?.close(true);
+    }
+    if (calledFromChild) {
+      setShowChild(false);
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
+    setShow(true);
+  }, []);
   const close = useCallback((calledFromChild?: boolean) => {
     if (!isRoot && parentRef) {
       parentRef.current?.open(true);
     }
     if (calledFromChild) {
       setShowChild(true);
+    } else {
+      document.body.style.removeProperty('overflow');
     }
     setShow(false);
   }, []);
 
-  useLayoutEffect(() => {
-    if (show) {
-      document.body.style.overflow = 'hidden';
-    }
-
-    return () => {
-      document.body.style.removeProperty('overflow');
-    };
-  }, [show]);
-
   useImperativeHandle(
     ref,
     () => ({
-      open: (calledFromChild) => {
-        if (!isRoot && parentRef) {
-          parentRef.current?.close(true);
-        }
-        if (calledFromChild) {
-          setShowChild(false);
-        }
-        setShow(true);
-      },
+      open,
       close,
     }),
-    [close]
+    [open, close]
   );
+
+  useModalRefOutside(name ?? new Date().getTime().toString(), () => ({
+    open,
+    close,
+  }));
 
   const headerSection =
     header &&

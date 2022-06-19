@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 
 function SubscriptionSection() {
   const urlSubscription =
@@ -24,14 +25,12 @@ function SubscriptionSection() {
 
         throw await response.json();
       })
-      .then((data) => {
-        alert('Subscribe success!');
-        console.log('Success: ' + data);
+      .then(() => {
+        toast.success('Connected!');
         setEmail('');
       })
       .catch((error) => {
-        alert(error.error);
-        console.log(error);
+        toast.error(error.error);
       });
   };
 
