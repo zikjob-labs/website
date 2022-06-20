@@ -1,7 +1,8 @@
+import { Link } from 'react-router-dom';
+
 import { FooterSocialList } from '@/components/molecules';
 import Logo from '@/components/molecules/Logo';
 import routes from '@/configs/routes';
-import { Link } from 'react-router-dom';
 
 function Footer() {
   return (

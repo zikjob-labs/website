@@ -1,9 +1,11 @@
+import { Suspense } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { createClient, WagmiConfig, chain, Chain } from 'wagmi';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 // import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import AppRoutes from './AppRoutes';
+import { IconSpin } from './assets/svg';
 import { setTheme } from './utils';
 
 const bsc: Chain = {
@@ -71,7 +73,15 @@ function App() {
   return (
     <BrowserRouter>
       <WagmiConfig client={client}>
-        <AppRoutes />
+        <Suspense
+          fallback={
+            <div className="h-[100vh] flex justify-center items-center">
+              <IconSpin className="spinner" />
+            </div>
+          }
+        >
+          <AppRoutes />
+        </Suspense>
       </WagmiConfig>
     </BrowserRouter>
   );

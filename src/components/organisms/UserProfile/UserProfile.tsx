@@ -1,10 +1,10 @@
 import { isMobile } from '@/utils/userAgent';
+import ActionBar from './ActionBar';
 // import StaticBox from './StaticBox';
 // import ProjectBox from './ProjectBox';
 // import PortfolioBox from './PortfolioBox';
 // import AchievementBox from './AchievementBox';
 // import CertificateBox from './CertificateBox';
-import ArrangeButton from './ArrangeButton';
 import { BasicInfoBox, MobileBasicInfoBox } from './BasicInfo';
 import CompletionProgressBox from './CompletionProgressBox';
 import EducationBox from './EducationBox';
@@ -15,7 +15,7 @@ function UserProfile() {
   return (
     <section className="profile my-10">
       {isMobile ? <MobileBasicInfoBox /> : <BasicInfoBox />}
-      <ArrangeButton />
+      <ActionBar />
       <CompletionProgressBox />
       <EducationBox />
       <ExperienceBox />

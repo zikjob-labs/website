@@ -5,7 +5,7 @@ import {
   FooterTelegram,
   FooterTwitter,
 } from '@/assets/svg';
-import FooterSocialItem from './FooterScoialItem';
+import FooterSocialItem from './FooterSocialItem';
 
 function FooterSocialList() {
   const socials = [

@@ -1,8 +1,12 @@
-import { Routes, Route } from 'react-router-dom';
+import { lazy } from 'react';
+
+import { Route, Routes } from 'react-router-dom';
+
 import routes from './configs/routes';
-import HomePage from './pages/HomePage';
-import ProfilePage from './pages/Profile';
 import { NotFoundPage } from './pages/Common';
+
+const HomePage = lazy(() => import('./pages/HomePage'));
+const ProfilePage = lazy(() => import('./pages/Profile'));
 
 function AppRoutes() {
   return (
