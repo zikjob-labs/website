@@ -18,67 +18,91 @@ function EducationUpdateModal({
   parentRef,
 }: UpdateModalProps<Education>) {
   const [isNotGraduated, setIsNotGraduated] = useState(
-    item ? !item.end?.month : false
+    item ? !item.end?.year : false
   );
 
   const schema = Joi.object<Education>({
     school: Joi.object({
-      name: Joi.string().min(3).required().label('School name'),
+      name: Joi.string().min(3).max(200).label('School name').messages({
+        'string.min': 'Minimum 3 characters',
+        'string.max': 'Maximum 200 characters',
+        'string.empty': 'School name is required',
+      }),
     }),
-    major: Joi.string().min(3).required().label('Major'),
+    major: Joi.string().min(3).max(200).label('Major').messages({
+      'string.min': 'Minimum 3 characters',
+      'string.max': 'Maximum 200 characters',
+      'string.empty': 'School name is required',
+    }),
     start: {
-      month: isNotGraduated
-        ? Joi.optional()
-        : Joi.string()
-            .allow('')
-            .custom((value, helpers) => {
-              if (
-                helpers.state.ancestors[1].start?.year != '' &&
-                helpers.state.ancestors[1].end?.month != '' &&
-                helpers.state.ancestors[1].end?.year != ''
-              ) {
-                const startDate = new Date(
-                  `${value} ${helpers.state.ancestors[1].start?.year}`
-                );
-                const yearDate = new Date(
-                  `${helpers.state.ancestors[1].end?.month} ${helpers.state.ancestors[1].end?.year}`
-                );
-                if (startDate > yearDate)
-                  return helpers.message({
-                    custom: '"Start date" must be less than "end date"',
-                  });
-              }
+      month: Joi.any()
+        .custom((value, helpers) => {
+          const startYear = helpers.state.ancestors[1].start?.year,
+            endMonth = helpers.state.ancestors[1].end?.month,
+            endYear = helpers.state.ancestors[1].end?.year;
 
-              return value;
-            })
-            .label('Start month'),
-      year: isNotGraduated
-        ? Joi.optional()
-        : Joi.string()
-            .allow('')
-            .custom((value, helpers) => {
-              if (
-                helpers.state.ancestors[1].start?.month != '' &&
-                helpers.state.ancestors[1].end?.month != '' &&
-                helpers.state.ancestors[1].end?.year != ''
-              ) {
-                const startDate = new Date(
-                  `${helpers.state.ancestors[1].start?.month} ${value}`
-                );
-                const yearDate = new Date(
-                  `${helpers.state.ancestors[1].end?.month} ${helpers.state.ancestors[1].end?.year}`
-                );
-                if (startDate > yearDate)
-                  return helpers.message({
-                    custom: '"Start date" must be less than "end date"',
-                  });
-              }
+          if (value == '') return value;
 
-              return value;
-            })
-            .label('Start year'),
+          if (!isNotGraduated && startYear != '' && endYear != '') {
+            const startDate = new Date(`${value} ${startYear}`);
+            const yearDate = new Date(
+              endMonth == '' ? endYear : `${endMonth} ${endYear}`
+            );
+            if (startDate > yearDate)
+              return helpers.message({
+                custom: 'Must start before ending',
+              });
+          }
+
+          return value;
+        })
+        .label('Start month'),
+      year: Joi.any()
+        .custom((value, helpers) => {
+          const startMonth = helpers.state.ancestors[1].start?.month,
+            endMonth = helpers.state.ancestors[1].end?.month,
+            endYear = helpers.state.ancestors[1].end?.year;
+
+          if (startMonth != '' && value == '')
+            return helpers.message({
+              custom: 'Please enter a start year',
+            });
+
+          if (!isNotGraduated && endYear != '') {
+            if (value == '')
+              return helpers.message({
+                custom: 'Please enter a start year',
+              });
+
+            const startDate = new Date(
+              startMonth == '' ? value : `${startMonth} ${value}`
+            );
+            const yearDate = new Date(
+              endMonth == '' ? endYear : `${endMonth} ${endYear}`
+            );
+            if (startDate > yearDate)
+              return helpers.message({
+                custom: 'Must start before ending',
+              });
+          }
+
+          return value;
+        })
+        .label('Start year'),
     },
-    end: Joi.optional(),
+    end: isNotGraduated
+      ? Joi.optional()
+      : Joi.object({
+          month: Joi.string().allow(''),
+          year: Joi.any().custom((value, helpers) => {
+            if (helpers.state.ancestors[1].end?.month != '' && value == '')
+              return helpers.message({
+                custom: 'Please enter a end year',
+              });
+
+            return value;
+          }),
+        }),
     description: Joi.optional(),
   });
 
@@ -204,6 +228,8 @@ function EducationUpdateModal({
               label="Month"
               placeholder="March"
               disabled={isNotGraduated}
+              error={Boolean(errors.end?.month)}
+              helperText={errors.end?.month?.message}
               value={item?.end?.month}
               {...register('end.month')}
             >
@@ -217,6 +243,8 @@ function EducationUpdateModal({
               label="Year"
               placeholder="2020"
               disabled={isNotGraduated}
+              error={Boolean(errors.end?.year)}
+              helperText={errors.end?.year?.message}
               value={item?.end?.year}
               {...register('end.year')}
             >

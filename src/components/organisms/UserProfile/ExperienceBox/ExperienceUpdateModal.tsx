@@ -18,16 +18,26 @@ function ExperienceUpdateModal({
   item,
   parentRef,
 }: UpdateModalProps<Experience>) {
-  const [isWorking, setIsWorking] = useState(item ? !item.end?.month : true);
+  const [isWorking, setIsWorking] = useState(item ? !item.end?.month : false);
 
   const schema = Joi.object<Experience>({
     company: Joi.object({
-      name: Joi.string().min(3).required().label('Company name'),
+      name: Joi.string().min(3).max(200).label('Company name').messages({
+        'string.min': 'Minimum 3 characters',
+        'string.max': 'Maximum 200 characters',
+        'string.empty': 'School name is required',
+      }),
     }),
-    position: Joi.string().min(3).required().label('Position'),
+    position: Joi.string().min(3).max(200).label('Position').messages({
+      'string.min': 'Minimum 3 characters',
+      'string.max': 'Maximum 200 characters',
+      'string.empty': 'School name is required',
+    }),
     start: {
       month: isWorking
-        ? Joi.string().required().label('Start month')
+        ? Joi.string().label('Start month').messages({
+            'string.empty': 'Start month is required',
+          })
         : Joi.string()
             .required()
             .custom((value, helpers) => {
@@ -52,7 +62,9 @@ function ExperienceUpdateModal({
             })
             .label('Start month'),
       year: isWorking
-        ? Joi.string().required().label('Start year')
+        ? Joi.string().label('Start year').messages({
+            'string.empty': 'Start year is required',
+          })
         : Joi.string()
             .required()
             .custom((value, helpers) => {
@@ -69,7 +81,7 @@ function ExperienceUpdateModal({
                 );
                 if (startDate > yearDate)
                   return helpers.message({
-                    custom: '"Start date" must be less than "end date"',
+                    custom: 'Must start before ending',
                   });
               }
 
@@ -80,8 +92,12 @@ function ExperienceUpdateModal({
     end: isWorking
       ? Joi.optional()
       : {
-          month: Joi.string().required().label('End month'),
-          year: Joi.string().required().label('End year'),
+          month: Joi.string().label('End month').messages({
+            'string.empty': 'End month is required',
+          }),
+          year: Joi.string().label('End year').messages({
+            'string.empty': 'End year is required',
+          }),
         },
     description: Joi.optional(),
   });
@@ -204,7 +220,7 @@ function ExperienceUpdateModal({
               isWorking ? 'text-gray-100' : ''
             }`}
           >
-            End date (or expected)*
+            End date*
           </h4>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             <Select

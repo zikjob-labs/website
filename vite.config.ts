@@ -1,8 +1,10 @@
+import { visualizer } from 'rollup-plugin-visualizer';
 import { fileURLToPath, URL } from 'url';
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
 import eslintPlugin from 'vite-plugin-eslint';
+
 import svgr from '@honkhonk/vite-plugin-svgr';
+import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -14,7 +16,7 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-  plugins: [svgr(), react(), eslintPlugin()],
+  plugins: [svgr(), react(), eslintPlugin(), visualizer()],
   // build: {
   //   rollupOptions: {
   //     output: {

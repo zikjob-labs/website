@@ -1,21 +1,22 @@
+import { useEffect, useRef, useState } from 'react';
+
+import Joi from 'joi';
+import { SubmitHandler, useForm } from 'react-hook-form';
+
 import { AvatarDefault, IconGalleryAdd } from '@/assets/svg';
+import Autocomplete from '@/components/atoms/Autocomplete';
 import Modal from '@/components/atoms/Modal';
 import { ModalHandle } from '@/components/atoms/Modal/Modal';
 import Radio from '@/components/atoms/Radio';
+import RadioGroup from '@/components/atoms/Radio/RadioGroup';
 import Switch from '@/components/atoms/Switch';
 import Textarea from '@/components/atoms/Textarea';
 import TextField from '@/components/atoms/TextField';
-import { useRef } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import AvatarModal from './AvatarModal';
-import industriesData from '@/constants/industries.json';
-import countryData from '@/constants/country_state.json';
 import useProfileStore from '@/stores/useProfileStore';
-import RadioGroup from '@/components/atoms/Radio/RadioGroup';
-import Autocomplete from '@/components/atoms/Autocomplete';
 import { parseDataInput } from '@/utils';
-import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
+
+import AvatarModal from './AvatarModal';
 
 interface Props {
   parentRef: React.RefObject<ModalHandle>;
@@ -36,21 +37,105 @@ interface IFormInput {
 }
 
 function EditInfoModal({ parentRef }: Props) {
+  const [profile, setProfile] = useProfileStore((state) => [
+    state.profile,
+    state.setProfile,
+  ]);
+  const [industryOptions, setIndustryOptions] = useState(
+    [] as { text: string; value: string }[]
+  );
+  const [countryOptions, setCountryOptions] = useState(
+    [] as { text: string; value: string; phone: string }[]
+  );
+  const [country, setCountry] = useState<
+    | {
+        text: string;
+        value: string;
+        phone: string;
+      }
+    | undefined
+  >(
+    profile?.country
+      ? countryOptions.find((item) => item.value == profile?.country)
+      : undefined
+  );
+
+  useEffect(() => {
+    industryOptions.length == 0 &&
+      fetch('./industries.json')
+        .then((res) => res.json())
+        .then((data: { industries: string[] }) => {
+          setIndustryOptions(
+            data.industries.map((item) => ({ text: item, value: item }))
+          );
+        });
+    countryOptions.length == 0 &&
+      fetch('./country_state.json')
+        .then((res) => res.json())
+        .then((data: { name: string; value: string; phone: string }[]) => {
+          setCountryOptions(
+            data.map((item) => ({
+              text: item.name,
+              value: item.name,
+              phone: item.phone,
+            }))
+          );
+        });
+
+    setCountry(
+      profile?.country
+        ? countryOptions.find((item) => item.value == profile?.country)
+        : undefined
+    );
+  }, [industryOptions, countryOptions]);
   const modalAvatarRef = useRef<ModalHandle>(null);
   const schema = Joi.object<IFormInput>({
-    fullName: Joi.string().allow('').max(50).label('Full name'),
-    headline: Joi.string().allow('').max(50).label('Headline'),
+    fullName: Joi.string()
+      .allow('')
+      .min(3)
+      .max(50)
+      .label('Full name')
+      .messages({
+        'string.min': 'Minimum 3 characters',
+        'string.max': 'Maximum 50 characters',
+      }),
+    headline: Joi.string().allow('').min(3).max(50).label('Headline').messages({
+      'string.min': 'Minimum 3 characters',
+      'string.max': 'Maximum 50 characters',
+    }),
     industries: Joi.optional(),
     gender: Joi.optional(),
     country: Joi.optional(),
-    phone: Joi.optional(),
-    email: Joi.string().allow('').email({ tlds: false }).label('Email'),
+    phone: Joi.string()
+      .allow('')
+      .max(15)
+      .custom((value, helpers) => {
+        console.log(helpers, value);
+        if (helpers.state.ancestors[0].country == '' && value != '') {
+          return helpers.message({
+            custom: `You need to choose your nationality first`,
+          });
+        }
+
+        return value;
+      })
+      .label('Phone')
+      .messages({
+        'string.max': 'Maximum 15 characters',
+      }),
+    email: Joi.string()
+      .allow('')
+      .email({ tlds: false })
+      .label('Email')
+      .messages({
+        'string.email': 'Please enter a valid email address',
+      }),
     videoUrl: Joi.string()
       .allow('')
       .regex(
         /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/
       )
-      .message('Youtube URL is not correct')
+      .message('Please enter a valid Youtube link')
       .label('Youtube URL'),
     isFreelancer: Joi.optional(),
     canContact: Joi.optional(),
@@ -63,10 +148,7 @@ function EditInfoModal({ parentRef }: Props) {
   } = useForm<IFormInput>({
     resolver: joiResolver(schema),
   });
-  const [profile, setProfile] = useProfileStore((state) => [
-    state.profile,
-    state.setProfile,
-  ]);
+
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     console.log(data);
     setProfile({
@@ -77,14 +159,9 @@ function EditInfoModal({ parentRef }: Props) {
     parentRef.current?.close();
   };
 
-  const industryOptions = industriesData.industries.map((item) => ({
-    text: item,
-    value: item,
-  }));
-  const countryOptions = countryData.map((item) => ({
-    text: item.name,
-    value: item.name,
-  }));
+  const startAdornmentPhone = countryOptions.find(
+    (item) => item.value == country?.value
+  );
 
   return (
     <div className="flex flex-col">
@@ -169,13 +246,20 @@ function EditInfoModal({ parentRef }: Props) {
               label="Nationality"
               placeholder="Ex: Vietnam"
               value={profile?.country}
-              {...register('country')}
               options={countryOptions}
+              {...register('country', {
+                onChange: (e) =>
+                  setCountry(
+                    countryOptions.find((item) => item.value == e.target.value)
+                  ),
+              })}
             />
             <TextField
               type="number"
               label="Phone number"
               placeholder="Enter your phone number"
+              error={Boolean(errors.phone)}
+              helperText={errors.phone?.message}
               value={profile?.phone}
               onKeyPress={(e) => {
                 if (/[0-9]/.test(e.key)) {
@@ -185,10 +269,18 @@ function EditInfoModal({ parentRef }: Props) {
                 e.preventDefault();
                 return false;
               }}
+              startAdornment={
+                startAdornmentPhone
+                  ? `(${startAdornmentPhone.phone.includes('+') ? '' : '+'}${
+                      countryOptions.find(
+                        (item) => item.value == country?.value
+                      )?.phone
+                    })`
+                  : undefined
+              }
               {...register('phone')}
             />
             <TextField
-              type="email"
               label="Email"
               placeholder="Enter your email"
               error={Boolean(errors.email)}
@@ -214,7 +306,7 @@ function EditInfoModal({ parentRef }: Props) {
           <div className="block">
             <TextField
               label="Youtube link"
-              placeholder="Enter youtube link"
+              placeholder="Enter Youtube link"
               error={Boolean(errors.videoUrl)}
               helperText={errors.videoUrl?.message}
               value={profile?.videoUrl}

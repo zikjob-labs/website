@@ -196,7 +196,7 @@ function Autocomplete(
     .filter((child) => {
       return multiple ||
         (valueState != undefined && valueSearch != data[valueState.toString()])
-        ? child.text.includes(valueSearch)
+        ? child.text.toLowerCase().includes(valueSearch.toLowerCase())
         : true;
     })
     .map((child, index) => {

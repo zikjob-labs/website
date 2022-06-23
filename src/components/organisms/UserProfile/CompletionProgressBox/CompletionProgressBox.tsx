@@ -171,15 +171,15 @@ function CompletionProgressBox() {
 
   const tasks = [
     {
+      text: 'Add avatar (5%)',
+      action: () => alert('Coming soon!'),
+      // Milestone 2
+      isCompleted: false, // Boolean(profile?.avatar),
+    },
+    {
       text: 'Add full name (5%)',
       action: openEditInfoModal,
       isCompleted: Boolean(profile?.fullName),
-    },
-    {
-      text: 'Add avatar (5%)',
-      action: openEditInfoModal,
-      // Milestone 2
-      isCompleted: true, // Boolean(profile?.avatar),
     },
     {
       text: 'Add nationality (5%)',
@@ -207,17 +207,17 @@ function CompletionProgressBox() {
       isCompleted: Boolean(profile?.introduce),
     },
     {
-      text: 'Add at least 1 school (10%)',
+      text: 'Add education (10%)',
       action: openAddEducationModal,
       isCompleted: isFilledEducation,
     },
     {
-      text: 'Add at least 1 work experience (10%)',
+      text: 'Add work experience (10%)',
       action: openAddExperienceModal,
       isCompleted: isFilledExperience,
     },
     {
-      text: 'Add a description of your work (5%)',
+      text: 'Add work description (at least 100 characters) (5%)',
       action: openAddExperienceModal,
       isCompleted:
         profile?.experiences &&
@@ -225,27 +225,21 @@ function CompletionProgressBox() {
           0,
     },
     {
-      text: 'Add at least 3 skills (10%)',
+      text: 'Add skills (at least 3 skills) (10%)',
       action: openSkillModal,
       isCompleted: isFilledSkill,
     },
     {
-      text: 'Add at least 1 certificate (5%)',
+      text: 'Add certificate (5%)',
       action: () => alert('Coming soon!'),
       // Milestone 2
-      isCompleted: true,
+      isCompleted: false,
     },
     {
-      text: 'Add at least 1 project (15%) with image (5%)',
+      text: 'Add portfolio or project (20%)',
       action: () => alert('Coming soon!'),
       // Milestone 2
-      isCompleted: true,
-    },
-    {
-      text: 'Add a portfolio (20%)',
-      action: () => alert('Coming soon!'),
-      // Milestone 2
-      isCompleted: true,
+      isCompleted: false,
     },
   ];
 
@@ -259,7 +253,9 @@ function CompletionProgressBox() {
           <div className="relative flex justify-end">
             {percentCircle.map((item, index) => (
               <div
-                className={`z-[100] ${index == 0 || index == 2 ? 'w-1/2' : ''}`}
+                className={`z-[100] ${
+                  index == 0 ? 'w-1/2' : index == 2 ? 'w-[40%] lg:w-[47%]' : ''
+                }`}
                 key={index}
               >
                 <div
@@ -272,7 +268,7 @@ function CompletionProgressBox() {
                   <IconTick className="w-full h-full text-light" />
                 </div>
                 <div
-                  className={`mt-2 font-medium text-sm lg:text-base text-center ${
+                  className={`mt-2 font-medium text-xs lg:text-base text-center ${
                     percent >= item.percentNeeded
                       ? 'text-gray-900 dark:text-light'
                       : 'text-blue-50 dark:text-midnight-500'
@@ -282,7 +278,7 @@ function CompletionProgressBox() {
                 </div>
               </div>
             ))}
-            <div className="absolute z-[99] w-[94.5%] lg:w-[96.5%] mr-5 lg:mr-8 top-[9px] lg:top-[17px] h-2 lg:h-4 bg-blue-50 dark:bg-midnight-700 rounded-full">
+            <div className="absolute z-[99] w-[94%] lg:w-[96.5%] mr-6 lg:mr-8 top-[9px] lg:top-[17px] h-2 lg:h-4 bg-blue-50 dark:bg-midnight-700 rounded-full">
               <div
                 className={`h-full bg-gradient-to-b from-blue-400 to-blue-800 rounded-full`}
                 style={{ width: percent + '%' }}
@@ -312,22 +308,22 @@ function CompletionProgressBox() {
               </div>
             ))}
           </div>
-          <div className="relative flex flex-col lg:flex-row gap-2 justify-start items-center mt-6 cursor-pointer">
+          <div className="relative flex flex-col lg:flex-row gap-2 justify-start items-start lg:items-center mt-6 cursor-pointer">
             <h4
-              className="inline-flex justify-center items-center gap-2 text-primary font-medium"
+              className="inline-flex justify-center items-center gap-2 text-primary dark:text-light font-medium"
               onClick={() => setOpen(!open)}
             >
               Your profile is {percent}% complete
               {open ? (
-                <IconPagingTop className="w-4 h-4 text-primary" />
+                <IconPagingTop className="w-4 h-4 text-primary dark:text-light" />
               ) : (
-                <IconPagingBottom className="w-4 h-4 text-primary" />
+                <IconPagingBottom className="w-4 h-4 text-primary dark:text-light" />
               )}
             </h4>
             {open && (
               <div
                 ref={ref}
-                className="dropdown__menu !z-[999] !top-8 left-32 w-[380px] max-h-[200px] overflow-y-scroll"
+                className="dropdown__menu !z-[999] !top-8 left-0 lg:left-32 w-[310px] lg:w-[380px] max-h-[200px] overflow-y-scroll"
               >
                 <ul className="text-primary">
                   {tasks

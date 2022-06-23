@@ -1,6 +1,7 @@
 import { IconEditFill } from '@/assets/svg';
 import Modal from '@/components/atoms/Modal';
 import { ModalHandle } from '@/components/atoms/Modal/Modal';
+import DeleteButton from '@/components/molecules/DeleteButton';
 import useProfileStore from '@/stores/useProfileStore';
 import { Education } from '@/types/profile';
 import { useRef } from 'react';
@@ -46,12 +47,7 @@ function EditEducationButton({ item }: { item: Education }) {
         }
         footer={
           <div className="w-full flex justify-between">
-            <button
-              className="px-4 py-2 text-gray-600 hover:text-red-500 hover:bg-red-50 active:text-red-500 active:bg-red-100 disabled:text-gray-300 disabled:hover:text-gray-300 disabled:hover:bg-light disabled:cursor-not-allowed dark:text-midnight-100 dark:hover:text-red-500 dark:hover:bg-midnight-700 dark:active:text-red-500 dark:active:bg-midnight-600 dark:disabled:text-midnight-400 dark:disabled:hover:text-midnight-400 dark:disabled:hover:bg-transparent dark:disabled:cursor-not-allowed rounded-lg"
-              onClick={deleteItem}
-            >
-              Delete
-            </button>
+            <DeleteButton name="delete-education-modal" onDelete={deleteItem} />
             <button
               type="submit"
               form={`edit-education-form-${item.id}`}

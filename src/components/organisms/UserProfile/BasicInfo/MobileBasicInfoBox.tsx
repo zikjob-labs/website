@@ -108,7 +108,7 @@ function MobileBasicInfoBox() {
         )}
         {profile?.industries && (
           <p className="text-sm">
-            Industries:{' '}
+            Industry:{' '}
             <span className="font-medium">{profile.industries.join(', ')}</span>
           </p>
         )}
@@ -116,7 +116,7 @@ function MobileBasicInfoBox() {
           <div className="inline-flex items-center break-all">
             {profile.introduce.length > 300 ? (
               <p className="text-sm break-word">
-                {profile.introduce}
+                {profile.introduce.slice(0, 300)}
                 {'...'}
                 <span className="text-primary font-medium">Read more</span>
               </p>

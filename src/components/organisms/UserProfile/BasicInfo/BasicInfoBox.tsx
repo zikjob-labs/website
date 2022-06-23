@@ -101,15 +101,15 @@ function BasicInfoBox() {
           )}
           {profile?.industries && (
             <div className="inline-flex items-center mr-4 dark:text-primary">
-              <label className="mr-2">Industries:</label>
+              <label className="mr-2">Industry:</label>
               <div className="font-medium">{profile.industries.join(', ')}</div>
             </div>
           )}
           {profile?.introduce && (
             <div className="inline-flex items-center mr-4 dark:text-primary mt-4">
               {profile.introduce.length > 300 ? (
-                <p>
-                  {profile.introduce}
+                <p className="break-all">
+                  {profile.introduce.slice(0, 300)}
                   {'...'}
                   <span className="text-primary font-medium cursor-pointer">
                     Read more

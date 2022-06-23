@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useLayoutEffect, useRef, useState } from 'react';
 
 interface Props {
   name?: string;
@@ -9,16 +9,58 @@ interface Props {
   helperText?: string;
   error?: boolean;
   disabled?: boolean;
+  startAdornment?: React.ReactNode;
+  endAdornment?: React.ReactNode;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   onKeyPress?: React.KeyboardEventHandler<HTMLInputElement>;
 }
 
 function TextField(
-  { label, value, helperText, error, onChange, ...props }: Props,
+  {
+    label,
+    value,
+    helperText,
+    error,
+    startAdornment,
+    endAdornment,
+    onChange,
+    ...props
+  }: Props,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ref: any
 ) {
+  const spanStartAdornmentRef = useRef<HTMLSpanElement>(null);
+  const spanEndAdornmentRef = useRef<HTMLSpanElement>(null);
   const [valueState, setValueState] = useState(value ?? '');
+  const [paddingState, setPaddingState] = useState({
+    paddingLeft: '1rem',
+    paddingRight: '1rem',
+  });
+
+  let contentBounds: DOMRect | undefined;
+  useLayoutEffect(() => {
+    let paddingLeft, paddingRight;
+    if (spanStartAdornmentRef.current) {
+      contentBounds = spanStartAdornmentRef.current.getBoundingClientRect();
+      paddingLeft = contentBounds.width + 'px';
+    }
+    if (spanEndAdornmentRef.current) {
+      contentBounds = spanEndAdornmentRef.current.getBoundingClientRect();
+      paddingRight = contentBounds.width + 'px';
+    }
+
+    setPaddingState({
+      paddingLeft: paddingLeft ?? '1rem',
+      paddingRight: paddingRight ?? '1rem',
+    });
+
+    return () => {
+      setPaddingState({
+        paddingLeft: '1rem',
+        paddingRight: '1rem',
+      });
+    };
+  }, [startAdornment, endAdornment]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValueState(event.target.value);
@@ -34,11 +76,15 @@ function TextField(
           ref={ref}
           autoComplete="do-not-autofill"
           value={valueState}
-          className={`peer w-full h-full px-4 py-[15px] bg-transparent text-base text-gray-900 dark:text-light disabled:text-gray-100 dark:disabled:text-midnight-600 font-normal rounded-[7px] outline-0 focus:outlined-0 border-[1.5px] border-t-transparent dark:border-t-transparent disabled:border-t-transparent dark:disabled:border-t-transparent ${
+          className={`peer w-full h-full py-[15px] bg-transparent text-base text-gray-900 dark:text-light disabled:text-gray-100 dark:disabled:text-midnight-600 font-normal rounded-[7px] outline-0 focus:outlined-0 border-[1.5px] border-t-transparent dark:border-t-transparent disabled:border-t-transparent dark:disabled:border-t-transparent ${
             error
               ? 'border-red-500 placeholder-shown:border-t-transparent placeholder-shown:border-red-500 hover:border-t-transparent hover:border-red-500 focus:border-t-transparent focus:border-red-500'
               : 'border-gray-900 dark:border-light disabled:border-gray-100 dark:disabled:border-midnight-600 placeholder-shown:border-t-transparent disabled:placeholder-shown:border-t-transparent dark:placeholder-shown:border-t-transparent dark:disabled:placeholder-shown:border-t-transparent placeholder-shown:border-gray-400 disabled:placeholder-shown:border-gray-100 dark:placeholder-shown:border-midnight-300 dark:disabled:placeholder-shown:border-midnight-600 hover:border-t-transparent dark:hover:border-t-transparent hover:border-gray-900 dark:hover:border-light focus:border-t-transparent dark:focus:border-t-transparent focus:border-primary dark:focus:border-light disabled:cursor-not-allowed'
           } placeholder:text-gray-400 disabled:placeholder:text-gray-100 dark:placeholder:text-midnight-300 dark:disabled:placeholder:text-midnight-600`}
+          style={{
+            paddingLeft: startAdornment ? paddingState.paddingLeft : '1rem',
+            paddingRight: endAdornment ? paddingState.paddingRight : '1rem',
+          }}
           onChange={handleChange}
           {...props}
         />
@@ -59,6 +105,22 @@ function TextField(
         >
           {label}
         </label>
+        {startAdornment && (
+          <span
+            ref={spanStartAdornmentRef}
+            className="absolute top-0 left-0 pl-4 py-4 text-base"
+          >
+            {startAdornment}
+          </span>
+        )}
+        {endAdornment && (
+          <span
+            ref={spanEndAdornmentRef}
+            className="absolute top-0 right-0 pr-4 py-4 text-base"
+          >
+            {endAdornment}
+          </span>
+        )}
       </div>
       {helperText && (
         <p

@@ -40,14 +40,18 @@ function FullNameItem({ profile }: Props) {
       className="group inline-flex items-center text-xl font-semibold break-all"
       ref={setReferenceElement}
     >
-      {profile?.fullName ?? parseWalletAddress(account?.address)}
+      {profile?.fullName && profile.fullName != ''
+        ? profile.fullName
+        : parseWalletAddress(account?.address)}
       <div
         ref={setPopperElement}
         className="hidden group-hover:block py-1 px-3 text-xs font-medium text-white bg-gray-900 rounded-lg shadow-sm dark:bg-gray-700"
         style={styles.popper}
         {...attributes.popper}
       >
-        {profile?.fullName ?? account?.address}
+        {profile?.fullName && profile.fullName != ''
+          ? profile.fullName
+          : account?.address}
         <div
           ref={setArrowElement}
           className="invisible absolute bg-gray-900 before:bg-gray-900 before:absolute w-2 h-2 before:w-2 before:h-2 before:visible before:content-[''] before:rotate-45"

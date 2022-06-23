@@ -29,6 +29,7 @@ interface Props {
   slide?: boolean;
   slidePosition?: 'left' | 'right';
   customClass?: string;
+  backdropCustomClass?: string;
   layer?: {
     isRoot?: boolean;
     parentRef?: React.RefObject<ModalHandle>;
@@ -45,6 +46,7 @@ function Modal(
     slide,
     slidePosition,
     customClass,
+    backdropCustomClass,
     layer,
     header,
     children,
@@ -142,7 +144,7 @@ function Modal(
           </div>
         </div>
       </div>
-      <div className="modal__backdrop"></div>
+      <div className={`modal__backdrop ${backdropCustomClass}`}></div>
     </Fragment>,
     modalRootElement ?? boxElement
   );

@@ -3,14 +3,25 @@ import { UpdateModalProps } from '@/components/atoms/Modal/Modal';
 import useProfileStore from '@/stores/useProfileStore';
 import { Skill } from '@/types/profile';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import skillData from '@/constants/skills.json';
 import { parseDataInput } from '@/utils';
+import { useEffect, useState } from 'react';
 
 interface Form {
   skills: string[];
 }
 
 function SkillUpdateModal({ parentRef }: UpdateModalProps<Skill>) {
+  const [skillOptions, setSkillOptions] = useState(
+    [] as { text: string; value: string }[]
+  );
+  useEffect(() => {
+    skillOptions.length == 0 &&
+      fetch('./skills.json')
+        .then((res) => res.json())
+        .then((data: string[]) => {
+          setSkillOptions(data.map((item) => ({ text: item, value: item })));
+        });
+  }, []);
   const {
     register,
     handleSubmit,
@@ -29,8 +40,6 @@ function SkillUpdateModal({ parentRef }: UpdateModalProps<Skill>) {
     });
     parentRef.current?.close();
   };
-
-  const skillOptions = skillData.map((item) => ({ text: item, value: item }));
 
   return (
     <div className="flex flex-col">

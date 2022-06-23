@@ -22,7 +22,9 @@ function ExperienceItem({ item }: { item: Experience }) {
         </h5>
         <p>Position: {item.position}</p>
         <p>{`${item.start.month} ${item.start.year} ${
-          item.end ? `- ${item.end.month} ${item.end.year}` : ''
+          item.end && item.end.year != ''
+            ? `- ${item.end.month} ${item.end.year}`
+            : '- Now'
         } `}</p>
         {item.isVerified && (
           <div className="inline-flex items-center text-primary font-semibold">
@@ -35,7 +37,7 @@ function ExperienceItem({ item }: { item: Experience }) {
         {item.description &&
           (item.description.length > 300 ? (
             <p className="mt-1">
-              {item.description}
+              {item.description.slice(0, 300)}
               {'...'}
               <span className="text-primary font-medium cursor-pointer">
                 Read more
