@@ -25,13 +25,13 @@ function ExperienceUpdateModal({
       name: Joi.string().min(3).max(200).label('Company name').messages({
         'string.min': 'Minimum 3 characters',
         'string.max': 'Maximum 200 characters',
-        'string.empty': 'School name is required',
+        'string.empty': 'Company name is required',
       }),
     }),
     position: Joi.string().min(3).max(200).label('Position').messages({
       'string.min': 'Minimum 3 characters',
       'string.max': 'Maximum 200 characters',
-      'string.empty': 'School name is required',
+      'string.empty': 'Position is required',
     }),
     start: {
       month: isWorking
@@ -66,7 +66,6 @@ function ExperienceUpdateModal({
             'string.empty': 'Start year is required',
           })
         : Joi.string()
-            .required()
             .custom((value, helpers) => {
               if (
                 helpers.state.ancestors[1].start?.month != '' &&
@@ -87,7 +86,10 @@ function ExperienceUpdateModal({
 
               return value;
             })
-            .label('Start year'),
+            .label('Start year')
+            .messages({
+              'string.empty': 'Start year is required',
+            }),
     },
     end: isWorking
       ? Joi.optional()
@@ -170,7 +172,7 @@ function ExperienceUpdateModal({
           <div className="mt-2 block">
             <Checkbox
               checked={isWorking}
-              label="I am currently working in this role"
+              label="I am currently working here"
               onChange={(e) => {
                 setIsWorking(e.target.checked);
               }}

@@ -84,7 +84,7 @@ function Textarea(
       </div>
       {helperText && (
         <p
-          className={`mx-4 mt-1 text-xs ${
+          className={`mx-4 text-xs ${
             error ? 'text-red-500' : 'text-gray-400 dark:text-midnight-300'
           }`}
         >

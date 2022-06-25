@@ -32,7 +32,7 @@ function EducationUpdateModal({
     major: Joi.string().min(3).max(200).label('Major').messages({
       'string.min': 'Minimum 3 characters',
       'string.max': 'Maximum 200 characters',
-      'string.empty': 'School name is required',
+      'string.empty': 'Major is required',
     }),
     start: {
       month: Joi.any()
@@ -170,7 +170,7 @@ function EducationUpdateModal({
               {...register('major')}
             />
             <Checkbox
-              label="I am not graduated"
+              label="I am currently studying here"
               checked={isNotGraduated}
               onChange={(e) => {
                 setIsNotGraduated(e.target.checked);
@@ -221,7 +221,7 @@ function EducationUpdateModal({
               isNotGraduated ? 'text-gray-100' : ''
             }`}
           >
-            End date (or expected)
+            End date
           </h4>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             <Select
@@ -265,7 +265,7 @@ function EducationUpdateModal({
           <div className="block">
             <Textarea
               label="Description"
-              placeholder="Tell me something about yourself"
+              placeholder="Tell me something about your majors and knowledge"
               value={item?.description}
               {...register('description')}
             />

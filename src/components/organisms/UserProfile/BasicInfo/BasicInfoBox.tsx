@@ -34,20 +34,20 @@ function BasicInfoBox() {
           <div className="absolute w-4 h-4 right-[10%] top-[80%] rounded-full bg-[#00BA88]"></div>
         </div>
       </div>
-      <div className="grow">
+      <div className="grow flex flex-col">
         <FullNameItem profile={profile} />
         {profile?.headline && (
           <p className="mt-1 text-lg">{profile.headline}</p>
         )}
         {(profile?.canContact || profile?.isFreelancer) && (
-          <div className="mt-4 inline-flex items-center gap-2">
+          <div className="inline-flex items-center gap-2 mt-4">
             {profile?.canContact && (
-              <div className="px-3 py-1.5 text-sm font-medium bg-blue-50 dark:bg-midnight-800 rounded-xl">
+              <div className="px-3 py-1.5 text-sm font-medium bg-blue-50 dark:bg-midnight-800 rounded-xl cursor-pointer">
                 Contact Now
               </div>
             )}
             {profile?.isFreelancer && (
-              <div className="px-3 py-1.5 text-sm font-medium bg-blue-50 dark:bg-midnight-800 rounded-xl">
+              <div className="px-3 py-1.5 text-sm font-medium bg-blue-50 dark:bg-midnight-800 rounded-xl cursor-pointer">
                 Freelancer
               </div>
             )}

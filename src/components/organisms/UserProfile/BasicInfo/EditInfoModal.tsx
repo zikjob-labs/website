@@ -172,6 +172,7 @@ function EditInfoModal({ parentRef }: Props) {
               <AvatarDefault className="w-full h-full max-w-32 max-h-32" />
             </div>
             <button
+              type="button"
               className="absolute -bottom-5 left-[12%] inline-flex items-center px-4 py-2 border-[1.5px] border-gray-200 dark:border-midnight-400 bg-light dark:bg-midnight-800 rounded-lg"
               // Milestone 1.5
               // onClick={() => modalAvatarRef.current?.open(true)}
@@ -296,6 +297,7 @@ function EditInfoModal({ parentRef }: Props) {
             <Textarea
               label="Description"
               placeholder="Tell me something about yourself"
+              helperText="Minimum 150 characters for detailed personal insight"
               value={profile?.introduce}
               {...register('introduce')}
             />
