@@ -1,5 +1,8 @@
+import { useAccount, useNetwork } from 'wagmi';
+
 import {
   AvatarDefault,
+  IconDocument,
   IconEarth,
   IconGender,
   IconMail,
@@ -12,12 +15,17 @@ import FavoriteButton from '@/components/molecules/FavoriteButton';
 import ShareButton from '@/components/molecules/ShareButton';
 import useProfileStore from '@/stores/useProfileStore';
 import { parseWalletAddress } from '@/utils';
-import { useAccount } from 'wagmi';
+
 import EditInfoButton from './EditInfoButton';
 
 function MobileBasicInfoBox() {
+  const { activeChain } = useNetwork();
   const { data: account } = useAccount();
-  const profile = useProfileStore((state) => state.profile);
+  const [profile, zikkieAddress] = useProfileStore((state) => [
+    state.profile,
+    state.zikkieAddress,
+  ]);
+
   return (
     <div className="container flex flex-col gap-3 justify-start mb-7">
       <div className="flex flex-row justify-start items-start">
@@ -69,6 +77,21 @@ function MobileBasicInfoBox() {
         </button>
       </div>
       <div className="flex flex-col gap-2 justify-start items-start">
+        {zikkieAddress != '' && (
+          <div className="w-full inline-flex items-center">
+            <IconDocument className="w-5 h-5 mr-2" />
+            <span className="text-sm dark:text-light text-ellipsis overflow-hidden">
+              <a
+                href={`${activeChain?.blockExplorers?.default.url}/address/${zikkieAddress}`}
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-primary"
+              >
+                {zikkieAddress}
+              </a>
+            </span>
+          </div>
+        )}
         {profile?.phone && (
           <div className="inline-flex items-center mr-4">
             <IconPhone className="w-5 h-5 mr-2" />

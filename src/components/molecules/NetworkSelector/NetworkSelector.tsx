@@ -1,7 +1,7 @@
 import {
   IconArrowDown,
   IconBSC,
-  IconEthereum,
+  // IconEthereum,
   IconWrongNetwork,
 } from '@/assets/svg';
 import useOnClickOutside from '@/hooks/useOnClickOutside';
@@ -17,30 +17,30 @@ function NetworkSelector() {
   const { activeChain } = useNetwork();
 
   const networkItems = [
-    {
-      id: 1,
-      text: 'Ethereum',
-      img: IconEthereum,
-      active: false,
-    },
-    {
-      id: 3,
-      text: 'Ropsten',
-      img: IconEthereum,
-      active: false,
-    },
-    {
-      id: 42,
-      text: 'Kovan',
-      img: IconEthereum,
-      active: false,
-    },
-    {
-      id: 56,
-      text: 'BSC',
-      img: IconBSC,
-      active: false,
-    },
+    // {
+    //   id: 1,
+    //   text: 'Ethereum',
+    //   img: IconEthereum,
+    //   active: false,
+    // },
+    // {
+    //   id: 3,
+    //   text: 'Ropsten',
+    //   img: IconEthereum,
+    //   active: false,
+    // },
+    // {
+    //   id: 42,
+    //   text: 'Kovan',
+    //   img: IconEthereum,
+    //   active: false,
+    // },
+    // {
+    //   id: 56,
+    //   text: 'BSC',
+    //   img: IconBSC,
+    //   active: false,
+    // },
     {
       id: 97,
       text: 'BSC Testnet',

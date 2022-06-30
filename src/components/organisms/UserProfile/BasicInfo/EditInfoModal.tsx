@@ -152,7 +152,6 @@ function EditInfoModal({ parentRef }: Props) {
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     console.log(data);
     setProfile({
-      ...profile,
       ...data,
       industries: parseDataInput(data.industries),
     });

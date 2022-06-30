@@ -1,5 +1,6 @@
 import {
   AvatarDefault,
+  IconDocument,
   IconEarth,
   IconGenderFemale,
   IconGenderMale,
@@ -15,9 +16,14 @@ import { Gender } from '@/constants';
 import useProfileStore from '@/stores/useProfileStore';
 import FullNameItem from './FullNameItem';
 import EditInfoButton from './EditInfoButton';
+import { useNetwork } from 'wagmi';
 
 function BasicInfoBox() {
-  const profile = useProfileStore((state) => state.profile);
+  const { activeChain } = useNetwork();
+  const [profile, zikkieAddress] = useProfileStore((state) => [
+    state.profile,
+    state.zikkieAddress,
+  ]);
 
   return (
     <div className="container flex flex-row justify-start">
@@ -54,6 +60,21 @@ function BasicInfoBox() {
           </div>
         )}
         <div className="flex flex-col items-start gap-2 mt-4">
+          {zikkieAddress != '' && (
+            <div className="inline-flex items-center mr-4">
+              <IconDocument className="w-5 h-5 mr-2" />
+              <span className="text-sm dark:text-light">
+                <a
+                  href={`${activeChain?.blockExplorers?.default.url}/address/${zikkieAddress}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-primary"
+                >
+                  {zikkieAddress}
+                </a>
+              </span>
+            </div>
+          )}
           {profile?.phone && (
             <div className="inline-flex items-center mr-4">
               <IconPhone className="w-5 h-5 mr-2" />

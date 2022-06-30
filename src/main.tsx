@@ -5,14 +5,12 @@ import 'swiper/css/pagination';
 
 import React from 'react';
 
-import { Buffer } from 'buffer';
 import { createRoot } from 'react-dom/client';
 import { Toaster } from 'react-hot-toast';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
-window.Buffer = window.Buffer || Buffer;
+import nprogressFetch from './nprogressFetch';
 
 const container = document.getElementById('root');
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -25,3 +23,4 @@ root.render(
 );
 
 reportWebVitals();
+nprogressFetch();

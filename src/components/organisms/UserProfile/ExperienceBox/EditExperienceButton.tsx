@@ -20,7 +20,7 @@ function EditExperienceButton({ item }: { item: Experience }) {
 
     if (itemIndex != -1) {
       experiences.splice(itemIndex, 1);
-      setProfile({ ...profile, experiences });
+      setProfile({ experiences });
       modalRef.current?.close();
     }
   };

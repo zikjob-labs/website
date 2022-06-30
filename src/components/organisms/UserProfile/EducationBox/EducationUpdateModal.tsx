@@ -9,7 +9,7 @@ import { getDefaultData } from '@/utils';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { get, SubmitHandler, useForm } from 'react-hook-form';
 
 const { months, startYears, endYears } = getDefaultData();
 
@@ -139,7 +139,6 @@ function EducationUpdateModal({
     }
 
     setProfile({
-      ...profile,
       education,
     });
     parentRef.current?.close();
@@ -228,8 +227,8 @@ function EducationUpdateModal({
               label="Month"
               placeholder="March"
               disabled={isNotGraduated}
-              error={Boolean(errors.end?.month)}
-              helperText={errors.end?.month?.message}
+              error={Boolean(get(errors, 'end.month'))}
+              helperText={get(errors, 'end.month')?.message}
               value={item?.end?.month}
               {...register('end.month')}
             >
@@ -243,8 +242,8 @@ function EducationUpdateModal({
               label="Year"
               placeholder="2020"
               disabled={isNotGraduated}
-              error={Boolean(errors.end?.year)}
-              helperText={errors.end?.year?.message}
+              error={Boolean(get(errors, 'end.year'))}
+              helperText={get(errors, 'end.year')?.message}
               value={item?.end?.year}
               {...register('end.year')}
             >

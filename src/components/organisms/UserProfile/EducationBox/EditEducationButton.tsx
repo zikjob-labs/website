@@ -21,7 +21,7 @@ function EditEducationButton({ item }: { item: Education }) {
 
     if (itemIndex != -1) {
       education.splice(itemIndex, 1);
-      setProfile({ ...profile, education });
+      setProfile({ education });
       modalRef.current?.close();
     }
   };

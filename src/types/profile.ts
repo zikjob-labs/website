@@ -1,4 +1,5 @@
 import { State } from 'zustand';
+import { ImageFile, ImageNFT } from './lukso';
 
 export interface ArrangeOrder {
   boxName: string;
@@ -107,6 +108,58 @@ export interface Profile {
 }
 
 export interface ProfileState extends State {
+  zikkieAddress: string;
+  isLogged: boolean;
   profile?: Profile;
-  setProfile: (updatedInfo?: Profile) => void;
+  setIsLogged: (isLogged: boolean) => void;
+  setProfile: (updatedInfo?: Profile, callUpdate?: boolean) => Promise<void>;
+  checkZikkie: (createIfNotExists?: boolean) => Promise<void>;
+  loadZikkie: () => Promise<void>;
+  updateZikkie: () => Promise<void>;
+}
+
+export interface ZikJobProfile {
+  ZikJobProfile: {
+    fullName?: string;
+    headline?: string;
+    isFreelancer?: boolean;
+    canContact?: boolean;
+    gender?: string;
+    country?: string;
+    videoUrl?: string;
+    industries?: string[];
+    introduce?: string;
+    avatar?: (ImageFile | ImageNFT)[];
+    education?: {
+      school?: string;
+      major?: string;
+      startMonth?: string;
+      startYear?: string;
+      endMonth?: string;
+      endYear?: string;
+      description?: string;
+      images?: (ImageFile | ImageNFT)[];
+    }[];
+    experiences?: {
+      companyName?: string;
+      position?: string;
+      startMonth?: string;
+      startYear?: string;
+      endMonth?: string;
+      endYear?: string;
+      description?: string;
+      images?: (ImageFile | ImageNFT)[];
+    }[];
+    skills?: string[];
+  };
+}
+
+export interface MeResponse {
+  name: string;
+  address: string;
+  zikkieAddress: string;
+  email: string;
+  emailVerifiedAt: Date;
+  phone: string;
+  data: string;
 }

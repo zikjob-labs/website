@@ -8,7 +8,7 @@ import useProfileStore from '@/stores/useProfileStore';
 import { Experience } from '@/types/profile';
 import { getDefaultData } from '@/utils';
 import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { get, SubmitHandler, useForm } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 
@@ -138,7 +138,6 @@ function ExperienceUpdateModal({
     }
 
     setProfile({
-      ...profile,
       experiences,
     });
     parentRef.current?.close();
@@ -229,8 +228,8 @@ function ExperienceUpdateModal({
               label="Month"
               placeholder="January"
               disabled={isWorking}
-              error={Boolean(errors.end?.month)}
-              helperText={errors.end?.month?.message}
+              error={Boolean(get(errors, 'end.month'))}
+              helperText={get(errors, 'end.month')?.message}
               value={item?.end?.month}
               {...register('end.month')}
             >
@@ -244,8 +243,8 @@ function ExperienceUpdateModal({
               label="Year"
               placeholder="2018"
               disabled={isWorking}
-              error={Boolean(errors.end?.year)}
-              helperText={errors.end?.year?.message}
+              error={Boolean(get(errors, 'end.year'))}
+              helperText={get(errors, 'end.year')?.message}
               value={item?.end?.year}
               {...register('end.year')}
             >

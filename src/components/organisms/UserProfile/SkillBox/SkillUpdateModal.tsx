@@ -35,7 +35,6 @@ function SkillUpdateModal({ parentRef }: UpdateModalProps<Skill>) {
     console.log(data);
 
     setProfile({
-      ...profile,
       skills: parseDataInput(data.skills)?.map((item) => ({ name: item })),
     });
     parentRef.current?.close();

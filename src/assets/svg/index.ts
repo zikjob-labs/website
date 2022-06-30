@@ -13,6 +13,7 @@ import IconCancel from './icon-cancel.svg?component';
 import IconCloseBold from './icon-close-bold.svg?component';
 import IconCloseLight from './icon-close-light.svg?component';
 import IconDelete from './icon-delete.svg?component';
+import IconDocument from './icon-document.svg?component';
 import IconEarth from './icon-earth.svg?component';
 import IconEditFill from './icon-edit-fill.svg?component';
 import IconEdit from './icon-edit.svg?component';
@@ -83,8 +84,8 @@ import FooterTelegram from './footer-telegram.svg?component';
 import FooterTwitter from './footer-twitter.svg?component';
 
 export {
-  Logo,
   LogoNoText,
+  Logo,
   AvatarDefault,
   // Icon
   IconMoon,
@@ -130,6 +131,7 @@ export {
   IconEdu,
   IconBuilding,
   IconRefresh,
+  IconDocument,
   // Icon Network
   IconEthereum,
   IconBSC,
