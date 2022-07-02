@@ -1,4 +1,4 @@
-import { whatIsZikjobImg } from '@/assets/images';
+import { wavyBg, whatIsZikjobImg } from '@/assets/images';
 import { WaveList } from '@/components/molecules';
 
 function WhatIsZikJobSection() {
@@ -25,7 +25,10 @@ function WhatIsZikJobSection() {
           <img src={whatIsZikjobImg} alt="what-is-zikjob" />
         </figure>
       </div>
-      <div className="wave hidden lg:block bg-[url('./src/assets/images/wavy-bg.png')] bg-no-repeat bg-center bg-cover">
+      <div
+        className="wave hidden lg:block bg-no-repeat bg-center bg-cover"
+        style={{ backgroundImage: `url('${wavyBg}')` }}
+      >
         <div className="container">
           <WaveList />
         </div>

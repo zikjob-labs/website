@@ -1,8 +1,11 @@
-import { heroImg } from '@/assets/images';
+import { gradientGrayBg, heroImg } from '@/assets/images';
 
 function Hero() {
   return (
-    <section className="hero bg-[url('./src/assets/images/gradient-gray-bg.png')] bg-no-repeat bg-bottom bg-cover">
+    <section
+      className={`hero bg-no-repeat bg-bottom bg-cover`}
+      style={{ backgroundImage: `url('${gradientGrayBg}')` }}
+    >
       <div className="container flex flex-col lg:flex-row items-center">
         <figure className="mb-5 lg:mb-0 lg:w-[30%]">
           <img src={heroImg} alt="hero-section" />

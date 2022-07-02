@@ -11,6 +11,9 @@ import NodeModulesPolyfills from '@esbuild-plugins/node-modules-polyfill'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  define: {
+    global: 'globalThis',
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

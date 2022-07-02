@@ -8,6 +8,8 @@ import icon3Img from './icon-3.png';
 import symbol1Img from './symbol-1.png';
 import symbol2Img from './symbol-2.png';
 import symbol3Img from './symbol-3.png';
+import gradientGrayBg from './gradient-gray-bg.png';
+import wavyBg from './wavy-bg.png';
 
 export {
   heroImg,
@@ -20,4 +22,6 @@ export {
   symbol1Img,
   symbol2Img,
   symbol3Img,
+  gradientGrayBg,
+  wavyBg,
 };
