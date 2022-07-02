@@ -3,10 +3,9 @@ import { Fragment, FunctionComponent } from 'react';
 
 import toast from 'react-hot-toast';
 import { SiweMessage } from 'siwe';
-import { useConnect, useDisconnect } from 'wagmi';
+import { useAccount, useConnect, useDisconnect } from 'wagmi';
 
 import { IconSpin } from '@/assets/svg';
-import { ModalHandle } from '@/components/atoms/Modal/Modal';
 import useProfileStore from '@/stores/useProfileStore';
 import { getNonce, me, verifyMessage } from '@/apis/api';
 
@@ -16,40 +15,29 @@ interface Props {
     label: string;
     svg: FunctionComponent;
   };
-  modalRef: React.RefObject<ModalHandle>;
 }
 
-function WalletItem({ item, modalRef }: Props) {
-  const [checkZikkie, loadZikkie, setProfile, setIsLogged] = useProfileStore(
-    (state) => [
-      state.checkZikkie,
-      state.loadZikkie,
-      state.setProfile,
-      state.setIsLogged,
-    ]
-  );
+function WalletItem({ item }: Props) {
+  const [setProfile, setIsLogged] = useProfileStore((state) => [
+    state.setProfile,
+    state.setIsLogged,
+  ]);
   const { disconnect } = useDisconnect({
     onError: (error) => {
       toast.error(error.message);
     },
   });
-  const { connectAsync, connectors, isConnecting, pendingConnector } =
-    useConnect({
-      onConnect: async () => {
-        toast.success('Connected!');
-        modalRef.current?.close();
-        await checkZikkie();
-        await loadZikkie();
-      },
-      onError: (error) => {
-        toast.error(error.message);
-      },
-    });
+  const { isConnecting } = useAccount();
+  const { connectAsync, connectors, pendingConnector } = useConnect({
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
   const connector = connectors.find((i) => i.id == item.id);
 
   const connect = async () => {
     try {
-      const res = await connectAsync(connector);
+      const res = await connectAsync({ connector });
 
       const message = new SiweMessage({
         domain: window.location.host,

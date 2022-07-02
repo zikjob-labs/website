@@ -4,8 +4,8 @@ import AccountButton from './AccountButton';
 import ConnectButton from './ConnectButton';
 
 function WalletButton() {
-  const { data: account } = useAccount();
-  if (account) return <AccountButton />;
+  const { isConnected } = useAccount();
+  if (isConnected) return <AccountButton />;
 
   return <ConnectButton />;
 }

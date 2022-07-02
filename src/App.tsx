@@ -1,17 +1,24 @@
 import { Suspense } from 'react';
 
 import { BrowserRouter } from 'react-router-dom';
-import { createClient, WagmiConfig } from 'wagmi';
+import { configureChains, createClient, WagmiConfig } from 'wagmi';
+// import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
+import { publicProvider } from 'wagmi/providers/public';
 
-// import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import AppRoutes from './AppRoutes';
 import { IconSpin } from './assets/svg';
-import chains from './constants/chains';
+import constChains from './constants/chains';
 import { setTheme } from './utils';
 
+const { chains, provider, webSocketProvider } = configureChains(constChains, [
+  publicProvider(),
+]);
+
 const client = createClient({
+  provider,
+  webSocketProvider,
   autoConnect: false,
   connectors: [
     new MetaMaskConnector({

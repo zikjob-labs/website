@@ -12,7 +12,7 @@ interface Props {
 }
 
 function FullNameItem({ profile }: Props) {
-  const { data: account } = useAccount();
+  const { address } = useAccount();
   const [referenceElement, setReferenceElement] =
     useState<HTMLHeadElement | null>(null);
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(
@@ -46,7 +46,7 @@ function FullNameItem({ profile }: Props) {
       >
         {profile?.fullName && profile.fullName != ''
           ? profile.fullName
-          : parseWalletAddress(account?.address)}
+          : parseWalletAddress(address)}
         <div
           ref={setPopperElement}
           className="hidden group-hover:block py-1 px-3 text-xs font-medium text-white bg-gray-900 rounded-lg shadow-sm dark:bg-gray-700"
@@ -55,7 +55,7 @@ function FullNameItem({ profile }: Props) {
         >
           {profile?.fullName && profile.fullName != ''
             ? profile.fullName
-            : account?.address}
+            : address}
           <div
             ref={setArrowElement}
             className="invisible absolute bg-gray-900 before:bg-gray-900 before:absolute w-2 h-2 before:w-2 before:h-2 before:visible before:content-[''] before:rotate-45"

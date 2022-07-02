@@ -14,7 +14,7 @@ function NetworkSelector() {
   const [isOpen, setOpen] = useState(false);
   useOnClickOutside(ref, () => setOpen(false));
 
-  const { activeChain } = useNetwork();
+  const { chain: activeChain } = useNetwork();
 
   const networkItems = [
     // {

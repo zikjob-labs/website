@@ -19,7 +19,7 @@ import EditInfoButton from './EditInfoButton';
 import { useNetwork } from 'wagmi';
 
 function BasicInfoBox() {
-  const { activeChain } = useNetwork();
+  const { chain: activeChain } = useNetwork();
   const [profile, zikkieAddress] = useProfileStore((state) => [
     state.profile,
     state.zikkieAddress,

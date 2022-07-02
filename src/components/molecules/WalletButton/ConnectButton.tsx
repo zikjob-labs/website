@@ -46,7 +46,7 @@ function ConnectButton() {
         }
       >
         {walletItems.map((item, index) => (
-          <WalletItem key={index} item={item} modalRef={modalRef} />
+          <WalletItem key={index} item={item} />
         ))}
       </Modal>
     </Fragment>

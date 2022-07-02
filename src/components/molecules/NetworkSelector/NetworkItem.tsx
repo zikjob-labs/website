@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 import toast from 'react-hot-toast';
-import { useNetwork } from 'wagmi';
+import { useSwitchNetwork } from 'wagmi';
 
 interface Props {
   item: {
@@ -12,7 +12,7 @@ interface Props {
 }
 
 function NetworkItem({ item }: Props) {
-  const { switchNetwork } = useNetwork({
+  const { switchNetwork } = useSwitchNetwork({
     onError: (error) => {
       toast.error(error.message);
     },

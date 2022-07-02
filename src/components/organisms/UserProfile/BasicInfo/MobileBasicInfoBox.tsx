@@ -19,8 +19,8 @@ import { parseWalletAddress } from '@/utils';
 import EditInfoButton from './EditInfoButton';
 
 function MobileBasicInfoBox() {
-  const { activeChain } = useNetwork();
-  const { data: account } = useAccount();
+  const { chain: activeChain } = useNetwork();
+  const { address } = useAccount();
   const [profile, zikkieAddress] = useProfileStore((state) => [
     state.profile,
     state.zikkieAddress,
@@ -44,7 +44,7 @@ function MobileBasicInfoBox() {
         </div>
         <div className="grow">
           <h3 className="flex items-start text-lg font-medium break-all">
-            {profile?.fullName ?? parseWalletAddress(account?.address)}
+            {profile?.fullName ?? parseWalletAddress(address)}
             {profile?.isVerified && (
               <div className="inline-flex items-center text-primary">
                 <div className="w-6 h-6 rounded-full flex justify-center items-center bg-primary text-light  mr-1">
