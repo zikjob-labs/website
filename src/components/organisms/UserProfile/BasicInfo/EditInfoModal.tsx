@@ -110,7 +110,6 @@ function EditInfoModal({ parentRef }: Props) {
       .allow('')
       .max(15)
       .custom((value, helpers) => {
-        console.log(helpers, value);
         if (helpers.state.ancestors[0].country == '' && value != '') {
           return helpers.message({
             custom: `You need to choose your nationality first`,

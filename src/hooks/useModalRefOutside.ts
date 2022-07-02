@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 const modalRefs: Record<string, any> = {};
 
 export const getModalRef = <T>(name: string): T | undefined => {
-  console.log(modalRefs);
   if (modalRefs[name]) return modalRefs[name]();
 
   return undefined;

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 interface Props {
   header: React.ReactNode;
@@ -8,11 +8,11 @@ interface Props {
 
 function PageTemplate({ header, footer, children }: Props) {
   return (
-    <Fragment>
+    <>
       {header}
       {children}
       {footer}
-    </Fragment>
+    </>
   );
 }
 

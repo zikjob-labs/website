@@ -1,5 +1,3 @@
-import { Fragment } from 'react';
-
 interface Props {
   wave: {
     name: string;
@@ -12,7 +10,7 @@ interface Props {
 
 function WaveItem({ wave }: Props) {
   return (
-    <Fragment>
+    <>
       <li className="wave__item">
         <a href={wave.href}>
           <img src={wave.img} alt={`${wave.name}-platform`} />
@@ -24,7 +22,7 @@ function WaveItem({ wave }: Props) {
           <img src={wave.symbol} alt="polygon-symbol" />
         </figure>
       </li>
-    </Fragment>
+    </>
   );
 }
 

@@ -1,7 +1,7 @@
 import { IconAdd } from '@/assets/svg';
 import Modal from '@/components/atoms/Modal';
 import { ModalHandle } from '@/components/atoms/Modal/Modal';
-import { Fragment, useRef } from 'react';
+import { useRef } from 'react';
 import SkillUpdateModal from './SkillUpdateModal';
 
 interface Props {
@@ -12,7 +12,7 @@ function AddOrEditSkillButton({ header }: Props) {
   const modalRef = useRef<ModalHandle>(null);
 
   return (
-    <Fragment>
+    <>
       <button
         className={`btn btn-outline justify-center items-center ${
           header
@@ -50,7 +50,7 @@ function AddOrEditSkillButton({ header }: Props) {
       >
         <SkillUpdateModal parentRef={modalRef} />
       </Modal>
-    </Fragment>
+    </>
   );
 }
 

@@ -18,6 +18,9 @@ export default defineConfig({
     },
   },
   plugins: [svgr(), react(), eslintPlugin(), visualizer()],
+  legacy: {
+    buildRollupPluginCommonjs: true,
+  },
   optimizeDeps: {
     esbuildOptions: {
       plugins: [

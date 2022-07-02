@@ -15,6 +15,7 @@ function AccountButton() {
   const { disconnect } = useDisconnect({
     onError: (error) => {
       toast.error(error.message);
+      console.error(error);
     },
   });
 

@@ -2,7 +2,6 @@ import { IconCancel, IconNavigatorLeft } from '@/assets/svg';
 import useModalRefOutside from '@/hooks/useModalRefOutside';
 import {
   forwardRef,
-  Fragment,
   Ref,
   useCallback,
   useImperativeHandle,
@@ -132,7 +131,7 @@ function Modal(
     : '';
 
   return createPortal(
-    <Fragment>
+    <>
       <div className={`${activeClass} modal ${customClass} ${slideClass}`}>
         <div className={`modal__dialog ${widthClass}`}>
           <div className="modal__content">
@@ -145,7 +144,7 @@ function Modal(
         </div>
       </div>
       <div className={`modal__backdrop ${backdropCustomClass}`}></div>
-    </Fragment>,
+    </>,
     modalRootElement ?? boxElement
   );
 }

@@ -76,6 +76,7 @@ const useProfileStore = create<ProfileState>()(
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
           toast.error(error.message);
+          console.error(error);
         }
       },
       loadZikkie: async () => {
@@ -118,6 +119,7 @@ const useProfileStore = create<ProfileState>()(
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
           toast.error(error.message);
+          console.error(error);
         }
       },
       updateZikkie: async () => {
@@ -125,7 +127,6 @@ const useProfileStore = create<ProfileState>()(
           const zikkieAddress = get().zikkieAddress;
           const profileState = get().profile;
           const signer = await fetchSigner();
-          console.log(profileState);
 
           if (signer) {
             const zikkieContract = getContract({
@@ -181,6 +182,7 @@ const useProfileStore = create<ProfileState>()(
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
           toast.error(error.message);
+          console.error(error);
         }
       },
     })),

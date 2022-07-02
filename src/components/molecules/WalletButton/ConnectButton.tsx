@@ -1,7 +1,7 @@
 import { IconMetaMask, IconWalletConnect } from '@/assets/svg';
 import Modal from '@/components/atoms/Modal';
 import { ModalHandle } from '@/components/atoms/Modal/Modal';
-import { Fragment, useRef } from 'react';
+import { useRef } from 'react';
 import WalletItem from './WalletItem';
 
 function ConnectButton() {
@@ -26,7 +26,7 @@ function ConnectButton() {
   ];
 
   return (
-    <Fragment>
+    <>
       <button
         className="btn btn-primary"
         onClick={() => modalRef.current?.open()}
@@ -49,7 +49,7 @@ function ConnectButton() {
           <WalletItem key={index} item={item} />
         ))}
       </Modal>
-    </Fragment>
+    </>
   );
 }
 

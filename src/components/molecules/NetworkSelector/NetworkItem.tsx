@@ -15,6 +15,7 @@ function NetworkItem({ item }: Props) {
   const { switchNetwork } = useSwitchNetwork({
     onError: (error) => {
       toast.error(error.message);
+      console.error(error);
     },
   });
 

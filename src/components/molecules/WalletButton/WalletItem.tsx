@@ -1,5 +1,5 @@
 // import useProfileStore from '@/stores/useProfileStore';
-import { Fragment, FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 
 import toast from 'react-hot-toast';
 import { SiweMessage } from 'siwe';
@@ -25,12 +25,14 @@ function WalletItem({ item }: Props) {
   const { disconnect } = useDisconnect({
     onError: (error) => {
       toast.error(error.message);
+      console.error(error);
     },
   });
   const { isConnecting } = useAccount();
   const { connectAsync, connectors, pendingConnector } = useConnect({
     onError: (error) => {
       toast.error(error.message);
+      console.error(error);
     },
   });
   const connector = connectors.find((i) => i.id == item.id);
@@ -38,6 +40,7 @@ function WalletItem({ item }: Props) {
   const connect = async () => {
     const res = await connectAsync({ connector });
     try {
+      console.log(res);
       const message = new SiweMessage({
         domain: window.location.host,
         address: res.account,
@@ -47,6 +50,7 @@ function WalletItem({ item }: Props) {
         chainId: res.chain?.id,
         nonce: await getNonce(),
       });
+      console.log(message);
 
       const signer = await connector?.getSigner();
       const signature = await signer?.signMessage(message.prepareMessage());
@@ -68,11 +72,12 @@ function WalletItem({ item }: Props) {
     } catch (error: any) {
       toast.error(error.message);
       disconnect();
+      console.error(error);
     }
   };
 
   return (
-    <Fragment>
+    <>
       {connector?.ready && !isConnecting && (
         <div className="modal__wallet__item" onClick={connect}>
           <span>{item.label}</span>
@@ -85,7 +90,7 @@ function WalletItem({ item }: Props) {
           <IconSpin className="spinner" />
         </div>
       )}
-    </Fragment>
+    </>
   );
 }
 
