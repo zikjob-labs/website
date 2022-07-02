@@ -36,9 +36,8 @@ function WalletItem({ item }: Props) {
   const connector = connectors.find((i) => i.id == item.id);
 
   const connect = async () => {
+    const res = await connectAsync({ connector });
     try {
-      const res = await connectAsync({ connector });
-
       const message = new SiweMessage({
         domain: window.location.host,
         address: res.account,

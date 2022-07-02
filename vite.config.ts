@@ -6,14 +6,12 @@ import eslintPlugin from 'vite-plugin-eslint';
 import svgr from '@honkhonk/vite-plugin-svgr';
 import react from '@vitejs/plugin-react';
 
-import GlobalsPolyfills from '@esbuild-plugins/node-globals-polyfill'
-import NodeModulesPolyfills from '@esbuild-plugins/node-modules-polyfill'
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
+import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill';
+import rollupNodePolyFill from 'rollup-plugin-node-polyfills';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  define: {
-    global: 'globalThis',
-  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
@@ -23,30 +21,31 @@ export default defineConfig({
   optimizeDeps: {
     esbuildOptions: {
       plugins: [
-        NodeModulesPolyfills(),
-        GlobalsPolyfills({
+        NodeModulesPolyfillPlugin(),
+        NodeGlobalsPolyfillPlugin({
           process: true,
           buffer: true,
-        })
+        }),
       ],
       define: {
         global: 'globalThis',
-      }
-    }
-  }
-  // build: {
-  //   rollupOptions: {
-  //     output: {
-  //       manualChunks(id) {
-  //         if (id.includes('node_modules')) {
-  //           return id
-  //             .toString()
-  //             .split('node_modules/')[1]
-  //             .split('/')[0]
-  //             .toString();
-  //         }
-  //       },
-  //     },
-  //   },
-  // },
+      },
+    },
+  },
+  build: {
+    rollupOptions: {
+      plugins: [rollupNodePolyFill()],
+      // output: {
+      //   manualChunks(id) {
+      //     if (id.includes('node_modules')) {
+      //       return id
+      //         .toString()
+      //         .split('node_modules/')[1]
+      //         .split('/')[0]
+      //         .toString();
+      //     }
+      //   },
+      // },
+    },
+  },
 });
