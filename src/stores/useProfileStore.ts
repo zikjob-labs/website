@@ -84,7 +84,11 @@ const useProfileStore = create<ProfileState>()(
           const zikkieProfileAddress = get().zikkieAddress;
           const signer = await fetchSigner();
 
-          if (zikkieProfileAddress != ZeroAddress && signer) {
+          if (
+            zikkieProfileAddress != '' &&
+            zikkieProfileAddress != ZeroAddress &&
+            signer
+          ) {
             const zikkieContract = getContract({
               addressOrName: zikkieProfileAddress,
               contractInterface: ZikkieJson.abi,

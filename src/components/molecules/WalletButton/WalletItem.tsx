@@ -40,7 +40,6 @@ function WalletItem({ item }: Props) {
   const connect = async () => {
     const res = await connectAsync({ connector });
     try {
-      console.log(res);
       const message = new SiweMessage({
         domain: window.location.host,
         address: res.account,
@@ -50,7 +49,6 @@ function WalletItem({ item }: Props) {
         chainId: res.chain?.id,
         nonce: await getNonce(),
       });
-      console.log(message);
 
       const signer = await connector?.getSigner();
       const signature = await signer?.signMessage(message.prepareMessage());
