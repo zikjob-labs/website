@@ -23,12 +23,16 @@ import { storeJson, update } from '@/apis/api';
 const useProfileStore = create<ProfileState>()(
   devtools(
     immer((set, get) => ({
-      zikkieAddress: '',
       isLogged: false,
+      zikkieAddress: '',
       profile: undefined,
       setIsLogged: (isLogged: boolean) =>
         set((state) => {
           state.isLogged = isLogged;
+          if (!isLogged) {
+            state.zikkieAddress = '';
+            state.profile = undefined;
+          }
         }),
       setProfile: async (updatedProfile?: Profile, callUpdate = true) => {
         if (
@@ -40,7 +44,7 @@ const useProfileStore = create<ProfileState>()(
           await update({
             name: updatedProfile?.fullName,
             email: updatedProfile?.email,
-            phone: updatedProfile?.phone,
+            phone: updatedProfile?.country ? updatedProfile?.phone : '',
           });
         }
 

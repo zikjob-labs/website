@@ -1,4 +1,5 @@
 import { IconBuilding, IconTick } from '@/assets/svg';
+import Description from '@/components/molecules/Description';
 import { Experience } from '@/types/profile';
 import EditExperienceButton from './EditExperienceButton';
 
@@ -11,7 +12,7 @@ function ExperienceItem({ item }: { item: Experience }) {
           className="w-[88px] h-[88px] mr-5 rounded-lg"
         />
       ) : (
-        <div className="w-[88px] h-[88px] flex justify-center items-center bg-gray-100 text-gray-500 mr-5 rounded-lg">
+        <div className="min-w-[88px] min-h-[88px] w-[88px] h-[88px] flex justify-center items-center bg-gray-100 text-gray-500 mr-5 rounded-lg">
           <IconBuilding className="w-[54px] h-[54px]" />
         </div>
       )}
@@ -20,8 +21,12 @@ function ExperienceItem({ item }: { item: Experience }) {
           {item.company.name}
           <EditExperienceButton item={item} />
         </h5>
-        <p>Position: {item.position}</p>
-        <p>{`${item.start.month} ${item.start.year} ${
+        <p className="text-gray-600 dark:text-gray-300 text-base">
+          Position: {item.position}
+        </p>
+        <p className="text-gray-600 dark:text-gray-300 text-sm">{`${
+          item.start.month
+        } ${item.start.year} ${
           item.end && item.end.year != ''
             ? `- ${item.end.month} ${item.end.year}`
             : '- Now'
@@ -34,18 +39,11 @@ function ExperienceItem({ item }: { item: Experience }) {
             Verified
           </div>
         )}
-        {item.description &&
-          (item.description.length > 300 ? (
-            <p className="mt-1">
-              {item.description.slice(0, 300)}
-              {'...'}
-              <span className="text-primary font-medium cursor-pointer">
-                Read more
-              </span>
-            </p>
-          ) : (
-            <p className="mt-1">{item.description}</p>
-          ))}
+        {item.description && (
+          <p className="mt-1">
+            <Description description={item.description} />
+          </p>
+        )}
       </div>
     </div>
   );

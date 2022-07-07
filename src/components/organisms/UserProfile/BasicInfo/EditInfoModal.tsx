@@ -41,6 +41,7 @@ function EditInfoModal({ parentRef }: Props) {
     state.profile,
     state.setProfile,
   ]);
+  // TODO: add to store
   const [industryOptions, setIndustryOptions] = useState(
     [] as { text: string; value: string }[]
   );

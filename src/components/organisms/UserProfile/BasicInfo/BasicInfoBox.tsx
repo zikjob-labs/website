@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react';
+import { useNetwork } from 'wagmi';
+
 import {
   AvatarDefault,
   IconDocument,
@@ -14,9 +17,10 @@ import FavoriteButton from '@/components/molecules/FavoriteButton';
 import ShareButton from '@/components/molecules/ShareButton';
 import { Gender } from '@/constants';
 import useProfileStore from '@/stores/useProfileStore';
-import FullNameItem from './FullNameItem';
+
 import EditInfoButton from './EditInfoButton';
-import { useNetwork } from 'wagmi';
+import FullNameItem from './FullNameItem';
+import Description from '@/components/molecules/Description';
 
 function BasicInfoBox() {
   const { chain: activeChain } = useNetwork();
@@ -24,6 +28,25 @@ function BasicInfoBox() {
     state.profile,
     state.zikkieAddress,
   ]);
+  // TODO: add to store
+  const [countryOptions, setCountryOptions] = useState(
+    [] as { text: string; value: string; phone: string }[]
+  );
+
+  useEffect(() => {
+    countryOptions.length == 0 &&
+      fetch('./country_state.json')
+        .then((res) => res.json())
+        .then((data: { name: string; value: string; phone: string }[]) => {
+          setCountryOptions(
+            data.map((item) => ({
+              text: item.name,
+              value: item.name,
+              phone: item.phone,
+            }))
+          );
+        });
+  }, [countryOptions]);
 
   return (
     <div className="container flex flex-row justify-start">
@@ -78,7 +101,10 @@ function BasicInfoBox() {
           {profile?.phone && (
             <div className="inline-flex items-center mr-4">
               <IconPhone className="w-5 h-5 mr-2" />
-              <span className="text-sm dark:text-light">{profile.phone}</span>
+              <span className="text-sm dark:text-light">{`(+${
+                countryOptions.find((item) => item.value == profile?.country)
+                  ?.phone
+              }) ${profile.phone}`}</span>
             </div>
           )}
           {profile?.email && (
@@ -90,11 +116,11 @@ function BasicInfoBox() {
           {profile?.gender && (
             <div className="inline-flex items-center mr-4">
               {Gender.male == profile.gender ? (
-                <IconGenderMale className="mr-2" />
+                <IconGenderMale className="w-5 h-5 mr-2" />
               ) : Gender.female == profile.gender ? (
-                <IconGenderFemale className="mr-2" />
+                <IconGenderFemale className="w-5 h-5 mr-2" />
               ) : (
-                <IconGenderOther className="mr-2" />
+                <IconGenderOther className="w-5 h-5 mr-2" />
               )}
               <span className="text-sm dark:text-light capitalize">
                 {profile.gender}
@@ -128,17 +154,9 @@ function BasicInfoBox() {
           )}
           {profile?.introduce && (
             <div className="inline-flex items-center mr-4 dark:text-primary mt-4">
-              {profile.introduce.length > 300 ? (
-                <p className="break-all">
-                  {profile.introduce.slice(0, 300)}
-                  {'...'}
-                  <span className="text-primary font-medium cursor-pointer">
-                    Read more
-                  </span>
-                </p>
-              ) : (
-                <p>{profile.introduce}</p>
-              )}
+              <p className="break-word">
+                <Description description={profile.introduce} />
+              </p>
             </div>
           )}
         </div>

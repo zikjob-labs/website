@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useAccount, useNetwork } from 'wagmi';
 
 import {
@@ -17,6 +18,7 @@ import useProfileStore from '@/stores/useProfileStore';
 import { parseWalletAddress } from '@/utils';
 
 import EditInfoButton from './EditInfoButton';
+import Description from '@/components/molecules/Description';
 
 function MobileBasicInfoBox() {
   const { chain: activeChain } = useNetwork();
@@ -25,6 +27,25 @@ function MobileBasicInfoBox() {
     state.profile,
     state.zikkieAddress,
   ]);
+  // TODO: add to store
+  const [countryOptions, setCountryOptions] = useState(
+    [] as { text: string; value: string; phone: string }[]
+  );
+
+  useEffect(() => {
+    countryOptions.length == 0 &&
+      fetch('./country_state.json')
+        .then((res) => res.json())
+        .then((data: { name: string; value: string; phone: string }[]) => {
+          setCountryOptions(
+            data.map((item) => ({
+              text: item.name,
+              value: item.name,
+              phone: item.phone,
+            }))
+          );
+        });
+  }, [countryOptions]);
 
   return (
     <div className="container flex flex-col gap-3 justify-start mb-7">
@@ -53,7 +74,9 @@ function MobileBasicInfoBox() {
               </div>
             )}
           </h3>
-          {profile?.headline && <p className="mt-1 text-sm">UI/UX Designer</p>}
+          {profile?.headline && (
+            <p className="mt-1 text-sm">{profile.headline}</p>
+          )}
           {(profile?.canContact || profile?.isFreelancer) && (
             <div className="mt-1 inline-flex items-center gap-2">
               {profile?.canContact && (
@@ -95,7 +118,10 @@ function MobileBasicInfoBox() {
         {profile?.phone && (
           <div className="inline-flex items-center mr-4">
             <IconPhone className="w-5 h-5 mr-2" />
-            <span className="text-sm dark:text-light">{profile.phone}</span>
+            <span className="text-sm dark:text-light">{`(+${
+              countryOptions.find((item) => item.value == profile?.country)
+                ?.phone
+            }) ${profile.phone}`}</span>
           </div>
         )}
         {profile?.email && (
@@ -107,7 +133,9 @@ function MobileBasicInfoBox() {
         {profile?.gender && (
           <div className="inline-flex items-center mr-4">
             <IconGender className="mr-2" />
-            <span className="text-sm dark:text-light">{profile.gender}</span>
+            <span className="text-sm dark:text-light capitalize">
+              {profile.gender}
+            </span>
           </div>
         )}
         {profile?.country && (
@@ -136,16 +164,10 @@ function MobileBasicInfoBox() {
           </p>
         )}
         {profile?.introduce && (
-          <div className="inline-flex items-center break-all">
-            {profile.introduce.length > 300 ? (
-              <p className="text-sm break-word">
-                {profile.introduce.slice(0, 300)}
-                {'...'}
-                <span className="text-primary font-medium">Read more</span>
-              </p>
-            ) : (
-              <p className="text-sm">{profile.introduce}</p>
-            )}
+          <div className="inline-flex items-center">
+            <p className="text-sm break-word">
+              <Description description={profile.introduce} />
+            </p>
           </div>
         )}
       </div>

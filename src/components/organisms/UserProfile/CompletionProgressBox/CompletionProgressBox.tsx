@@ -48,11 +48,12 @@ function CompletionProgressBox() {
       .length > 0
   ) {
     percent += 10;
-    percent +=
+    if (
       profile.experiences.filter((exp) => Boolean(exp.description)).length > 0
-        ? 5
-        : 0;
-    isFilledExperience = true;
+    ) {
+      percent += 5;
+      isFilledExperience = true;
+    }
   }
 
   if (profile?.skills && profile.skills.length >= 3) {
@@ -217,7 +218,7 @@ function CompletionProgressBox() {
       isCompleted: isFilledExperience,
     },
     {
-      text: 'Add work description (at least 100 characters) (5%)',
+      text: 'Add work description (5%)',
       action: openAddExperienceModal,
       isCompleted:
         profile?.experiences &&

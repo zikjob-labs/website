@@ -18,7 +18,7 @@ function ExperienceUpdateModal({
   item,
   parentRef,
 }: UpdateModalProps<Experience>) {
-  const [isWorking, setIsWorking] = useState(item ? !item.end?.month : false);
+  const [isWorking, setIsWorking] = useState(item ? !item.end?.year : false);
 
   const schema = Joi.object<Experience>({
     company: Joi.object({
@@ -34,73 +34,69 @@ function ExperienceUpdateModal({
       'string.empty': 'Position is required',
     }),
     start: {
-      month: isWorking
-        ? Joi.string().label('Start month').messages({
-            'string.empty': 'Start month is required',
-          })
-        : Joi.string()
-            .required()
-            .custom((value, helpers) => {
-              if (
-                helpers.state.ancestors[1].start?.year != '' &&
-                helpers.state.ancestors[1].end?.month != '' &&
-                helpers.state.ancestors[1].end?.year != ''
-              ) {
-                const startDate = new Date(
-                  `${value} ${helpers.state.ancestors[1].start?.year}`
-                );
-                const yearDate = new Date(
-                  `${helpers.state.ancestors[1].end?.month} ${helpers.state.ancestors[1].end?.year}`
-                );
-                if (startDate > yearDate)
-                  return helpers.message({
-                    custom: '"Start date" must be less than "end date"',
-                  });
-              }
+      month: Joi.any()
+        .custom((value, helpers) => {
+          const startYear = helpers.state.ancestors[1].start?.year,
+            endMonth = helpers.state.ancestors[1].end?.month,
+            endYear = helpers.state.ancestors[1].end?.year;
 
-              return value;
-            })
-            .label('Start month'),
-      year: isWorking
-        ? Joi.string().label('Start year').messages({
-            'string.empty': 'Start year is required',
-          })
-        : Joi.string()
-            .custom((value, helpers) => {
-              if (
-                helpers.state.ancestors[1].start?.month != '' &&
-                helpers.state.ancestors[1].end?.month != '' &&
-                helpers.state.ancestors[1].end?.year != ''
-              ) {
-                const startDate = new Date(
-                  `${helpers.state.ancestors[1].start?.month} ${value}`
-                );
-                const yearDate = new Date(
-                  `${helpers.state.ancestors[1].end?.month} ${helpers.state.ancestors[1].end?.year}`
-                );
-                if (startDate > yearDate)
-                  return helpers.message({
-                    custom: 'Must start before ending',
-                  });
-              }
+          if (value == '') return value;
 
-              return value;
-            })
-            .label('Start year')
-            .messages({
-              'string.empty': 'Start year is required',
-            }),
+          if (!isWorking && startYear != '' && endYear != '') {
+            const startDate = new Date(`${value} ${startYear}`);
+            const yearDate = new Date(
+              endMonth == '' ? endYear : `${endMonth} ${endYear}`
+            );
+            if (startDate > yearDate)
+              return helpers.message({
+                custom: 'Must start before ending',
+              });
+          }
+
+          return value;
+        })
+        .label('Start month'),
+      year: Joi.any()
+        .custom((value, helpers) => {
+          const startMonth = helpers.state.ancestors[1].start?.month,
+            endMonth = helpers.state.ancestors[1].end?.month,
+            endYear = helpers.state.ancestors[1].end?.year;
+
+          if (startMonth != '' && value == '')
+            return helpers.message({
+              custom: 'Please enter a start year',
+            });
+
+          if (!isWorking && endYear != '') {
+            if (value == '')
+              return helpers.message({
+                custom: 'Please enter a start year',
+              });
+
+            const startDate = new Date(
+              startMonth == '' ? value : `${startMonth} ${value}`
+            );
+            const yearDate = new Date(
+              endMonth == '' ? endYear : `${endMonth} ${endYear}`
+            );
+            if (startDate > yearDate)
+              return helpers.message({
+                custom: 'Must start before ending',
+              });
+          }
+
+          return value;
+        })
+        .label('Start year'),
     },
     end: isWorking
       ? Joi.optional()
-      : {
-          month: Joi.string().label('End month').messages({
-            'string.empty': 'End month is required',
+      : Joi.object({
+          month: Joi.string().allow(''),
+          year: Joi.string().messages({
+            'string.empty': 'Please enter a end year',
           }),
-          year: Joi.string().label('End year').messages({
-            'string.empty': 'End year is required',
-          }),
-        },
+        }),
     description: Joi.optional(),
   });
 
@@ -266,6 +262,7 @@ function ExperienceUpdateModal({
             <Textarea
               label="Description"
               placeholder="Tell me something about your work"
+              helperText="Minimum 100 characters for details information about your experience"
               value={item?.description}
               {...register('description')}
             />

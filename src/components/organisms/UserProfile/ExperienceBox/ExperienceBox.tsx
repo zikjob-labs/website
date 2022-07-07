@@ -9,7 +9,7 @@ function ExperienceBox() {
       <div className="profile__box__main">
         <div className="profile__box__header">
           <h4>
-            Experiences
+            Experience
             {profile?.experiences && profile.experiences.length > 0 && (
               <AddExperienceButton header />
             )}
