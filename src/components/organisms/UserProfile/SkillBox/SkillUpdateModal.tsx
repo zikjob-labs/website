@@ -46,14 +46,13 @@ function SkillUpdateModal({ parentRef }: UpdateModalProps<Skill>) {
         <div className="flex flex-col">
           <div className="block">
             <Autocomplete
-              label="Skill*"
+              label="Skill"
               placeholder="Please select your skills (up to 18)"
               multiple
               maxItem={18}
               error={Boolean(errors.skills)}
-              helperText={errors.skills ? 'Skills is required' : ''}
               value={profile?.skills?.map((i) => i.name)}
-              {...register('skills', { required: true })}
+              {...register('skills')}
               options={skillOptions}
             />
           </div>

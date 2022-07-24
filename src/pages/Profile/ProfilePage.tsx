@@ -9,17 +9,11 @@ import { logout } from '@/apis/api';
 import toast from 'react-hot-toast';
 
 function ProfilePage() {
-  const [checkZikkie, loadZikkie, setIsLogged] = useProfileStore((state) => [
-    state.checkZikkie,
-    state.loadZikkie,
-    state.setIsLogged,
-  ]);
+  const setIsLogged = useProfileStore((state) => state.setIsLogged);
   const { isConnected } = useAccount({
     async onConnect() {
       document.body.style.removeProperty('overflow');
       toast.success('Connected!');
-      await checkZikkie();
-      await loadZikkie();
     },
     async onDisconnect() {
       toast.success('Disconnected!');

@@ -1,12 +1,17 @@
 import { IconRefresh } from '@/assets/svg';
 import FloatingButton from '@/components/atoms/FloatingButton';
 import useProfileStore from '@/stores/useProfileStore';
+import { useNetwork } from 'wagmi';
 
 function SyncButton() {
-  const [updateZikkie] = useProfileStore((state) => [state.updateZikkie]);
+  const { chain } = useNetwork();
+  const [checkZikkie, updateZikkie] = useProfileStore((state) => [
+    state.checkZikkie,
+    state.updateZikkie,
+  ]);
 
   const sync = async () => {
-    await updateZikkie();
+    chain && (await checkZikkie(chain.id).then(() => updateZikkie()));
   };
 
   return (

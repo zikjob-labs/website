@@ -109,8 +109,8 @@ export const parseZikJobProfileJson = (data: ZikJobProfile): Profile => {
             year: edu.startYear,
           },
           end: {
-            month: edu.endMonth,
-            year: edu.endYear,
+            month: edu.endMonth ?? '',
+            year: edu.endYear ?? '',
           },
           description: edu.description,
         } as Education)
@@ -127,8 +127,8 @@ export const parseZikJobProfileJson = (data: ZikJobProfile): Profile => {
             year: exp.startYear,
           },
           end: {
-            month: exp.endMonth,
-            year: exp.endYear,
+            month: exp.endMonth ?? '',
+            year: exp.endYear ?? '',
           },
           description: exp.description,
         } as Experience)

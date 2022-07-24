@@ -5,7 +5,9 @@ import {
   AvatarDefault,
   IconDocument,
   IconEarth,
-  IconGender,
+  IconGenderFemale,
+  IconGenderMale,
+  IconGenderOther,
   IconMail,
   IconPhone,
   IconTick,
@@ -19,6 +21,7 @@ import { parseWalletAddress } from '@/utils';
 
 import EditInfoButton from './EditInfoButton';
 import Description from '@/components/molecules/Description';
+import { Gender } from '@/constants';
 
 function MobileBasicInfoBox() {
   const { chain: activeChain } = useNetwork();
@@ -31,6 +34,7 @@ function MobileBasicInfoBox() {
   const [countryOptions, setCountryOptions] = useState(
     [] as { text: string; value: string; phone: string }[]
   );
+  const country = countryOptions.find((item) => item.value == profile?.country);
 
   useEffect(() => {
     countryOptions.length == 0 &&
@@ -118,10 +122,9 @@ function MobileBasicInfoBox() {
         {profile?.phone && (
           <div className="inline-flex items-center mr-4">
             <IconPhone className="w-5 h-5 mr-2" />
-            <span className="text-sm dark:text-light">{`(+${
-              countryOptions.find((item) => item.value == profile?.country)
-                ?.phone
-            }) ${profile.phone}`}</span>
+            <span className="text-sm dark:text-light">{`(${
+              country?.phone.includes('+') ? '' : '+'
+            }${country?.phone}) ${profile.phone}`}</span>
           </div>
         )}
         {profile?.email && (
@@ -132,7 +135,13 @@ function MobileBasicInfoBox() {
         )}
         {profile?.gender && (
           <div className="inline-flex items-center mr-4">
-            <IconGender className="mr-2" />
+            {Gender.male == profile.gender ? (
+              <IconGenderMale className="w-5 h-5 mr-2" />
+            ) : Gender.female == profile.gender ? (
+              <IconGenderFemale className="w-5 h-5 mr-2" />
+            ) : (
+              <IconGenderOther className="w-5 h-5 mr-2" />
+            )}
             <span className="text-sm dark:text-light capitalize">
               {profile.gender}
             </span>
@@ -158,13 +167,13 @@ function MobileBasicInfoBox() {
           </div>
         )}
         {profile?.industries && (
-          <p className="text-sm">
+          <p className="text-sm dark:text-light">
             Industry:{' '}
             <span className="font-medium">{profile.industries.join(', ')}</span>
           </p>
         )}
         {profile?.introduce && (
-          <div className="inline-flex items-center">
+          <div className="inline-flex items-center dark:text-light">
             <p className="text-sm break-word">
               <Description description={profile.introduce} />
             </p>

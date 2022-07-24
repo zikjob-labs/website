@@ -32,6 +32,7 @@ function BasicInfoBox() {
   const [countryOptions, setCountryOptions] = useState(
     [] as { text: string; value: string; phone: string }[]
   );
+  const country = countryOptions.find((item) => item.value == profile?.country);
 
   useEffect(() => {
     countryOptions.length == 0 &&
@@ -101,10 +102,9 @@ function BasicInfoBox() {
           {profile?.phone && (
             <div className="inline-flex items-center mr-4">
               <IconPhone className="w-5 h-5 mr-2" />
-              <span className="text-sm dark:text-light">{`(+${
-                countryOptions.find((item) => item.value == profile?.country)
-                  ?.phone
-              }) ${profile.phone}`}</span>
+              <span className="text-sm dark:text-light">{`(${
+                country?.phone.includes('+') ? '' : '+'
+              }${country?.phone}) ${profile.phone}`}</span>
             </div>
           )}
           {profile?.email && (
@@ -134,7 +134,7 @@ function BasicInfoBox() {
             </div>
           )}
           {profile?.videoUrl && (
-            <div className="inline-flex items-center mr-4 dark:text-primary">
+            <div className="inline-flex items-center mr-4 text-primary">
               <IconVideo className="mr-2" />
               <a
                 className="text-sm text-primary"
@@ -147,13 +147,13 @@ function BasicInfoBox() {
             </div>
           )}
           {profile?.industries && (
-            <div className="inline-flex items-center mr-4 dark:text-primary">
+            <div className="inline-flex items-center mr-4 dark:text-light">
               <label className="mr-2">Industry:</label>
               <div className="font-medium">{profile.industries.join(', ')}</div>
             </div>
           )}
           {profile?.introduce && (
-            <div className="inline-flex items-center mr-4 dark:text-primary mt-4">
+            <div className="inline-flex items-center mr-4 dark:text-light mt-4">
               <p className="break-word">
                 <Description description={profile.introduce} />
               </p>

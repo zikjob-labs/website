@@ -3,7 +3,7 @@ import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
-import { ZeroAddress, ZikJobAuthAddress } from '@/constants';
+import { ZeroAddress } from '@/constants';
 import { Profile, ProfileState, ZikJobProfile } from '@/types/profile';
 import ZikJobAuthJson from '@/web3/contracts/Account/ZikJobAuth.sol/ZikJobAuth.json';
 import ZikkieJson from '@/web3/contracts/Account/Zikkie.sol/Zikkie.json';
@@ -19,6 +19,7 @@ import {
   parseZikJobProfileJson,
 } from '@/utils/makeJson';
 import { storeJson, update } from '@/apis/api';
+import contracts from '@/constants/contracts';
 
 const useProfileStore = create<ProfileState>()(
   devtools(
@@ -53,10 +54,16 @@ const useProfileStore = create<ProfileState>()(
           state.profile = { ...oldProfile, ...updatedProfile };
         });
       },
-      checkZikkie: async (createIfNotExists = false) => {
+      checkZikkie: async (chainId, createIfNotExists = false) => {
         try {
+          console.log(chainId);
+          if (!Object.keys(contracts).includes(chainId.toString()))
+            throw new Error('Chain not support!');
+
+          const ZikJobAuthAddress = contracts[chainId].address;
           const signer = await fetchSigner();
-          if (signer) {
+
+          if (signer && ZikJobAuthAddress) {
             const zikjobAuthContract = getContract({
               addressOrName: ZikJobAuthAddress,
               contractInterface: ZikJobAuthJson.abi,

@@ -29,7 +29,7 @@ function EducationItem({ item }: { item: Education }) {
         } ${item.start.year} ${
           item.end && item.end.year != ''
             ? `- ${item.end.month} ${item.end.year}`
-            : ''
+            : '- Now'
         } `}</p>
         {item.isVerified && (
           <div className="inline-flex items-center text-primary font-semibold">

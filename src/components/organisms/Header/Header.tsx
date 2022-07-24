@@ -17,8 +17,11 @@ function Header() {
   return (
     <header className="header bg-light dark:bg-dark sticky z-[1010] top-0 px-4 py-3 lg:px-8 lg:py-4">
       <div className="flex items-center">
-        <h1>
+        <h1 className="inline-flex items-start">
           <Logo />
+          <span className="bg-red-500 text-xs text-white px-2 py-1 rounded-2xl">
+            Testnet
+          </span>
         </h1>
         <nav
           className={`header__nav ${

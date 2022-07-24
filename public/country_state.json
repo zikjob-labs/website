@@ -405,14 +405,6 @@
     ]
   },
   {
-    "name": "Antarctica",
-    "countryCode": "AQ",
-    "countryCodeAlpha3": "ATA",
-    "phone": "",
-    "currency": "",
-    "stateProvinces": null
-  },
-  {
     "name": "Argentina",
     "countryCode": "AR",
     "countryCodeAlpha3": "ARG",

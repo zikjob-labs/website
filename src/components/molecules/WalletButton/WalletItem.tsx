@@ -18,10 +18,14 @@ interface Props {
 }
 
 function WalletItem({ item }: Props) {
-  const [setProfile, setIsLogged] = useProfileStore((state) => [
-    state.setProfile,
-    state.setIsLogged,
-  ]);
+  const [checkZikkie, loadZikkie, setProfile, setIsLogged] = useProfileStore(
+    (state) => [
+      state.checkZikkie,
+      state.loadZikkie,
+      state.setProfile,
+      state.setIsLogged,
+    ]
+  );
   const { disconnect } = useDisconnect({
     onError: (error) => {
       toast.error(error.message);
@@ -40,13 +44,14 @@ function WalletItem({ item }: Props) {
   const connect = async () => {
     const res = await connectAsync({ connector });
     try {
+      checkZikkie(res.chain.id).then(() => loadZikkie());
       const message = new SiweMessage({
         domain: window.location.host,
         address: res.account,
         statement: 'Sign in to the ZikJob Profile.',
         uri: window.location.origin,
         version: '1',
-        chainId: res.chain?.id,
+        chainId: res.chain.id,
         nonce: await getNonce(),
       });
 

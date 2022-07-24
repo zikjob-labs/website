@@ -50,6 +50,8 @@ import IconWrongNetwork from './icon-wrong-network.svg?component';
 
 import IconBSC from './icon-bsc.svg?component';
 import IconEthereum from './icon-ethereum.svg?component';
+import IconLuksoBlack from './icon-lukso-black.svg?component';
+import IconLuksoWhite from './icon-lukso-white.svg?component';
 
 import IconCoinbaseWallet from './icon-coinbasewallet.svg?component';
 import IconMetaMask from './icon-metamask.svg?component';
@@ -135,6 +137,8 @@ export {
   // Icon Network
   IconEthereum,
   IconBSC,
+  IconLuksoBlack,
+  IconLuksoWhite,
   // Icon Wallet
   IconMetaMask,
   IconWalletConnect,

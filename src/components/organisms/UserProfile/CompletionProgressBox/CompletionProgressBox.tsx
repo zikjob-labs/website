@@ -137,7 +137,7 @@ function CompletionProgressBox() {
     ],
     [
       {
-        text: 'Experiences',
+        text: 'Experience',
         isFilled: isFilledExperience,
       },
     ],
@@ -326,7 +326,7 @@ function CompletionProgressBox() {
                 ref={ref}
                 className="dropdown__menu !z-[999] !top-8 left-0 lg:left-32 w-[310px] lg:w-[380px] max-h-[200px] overflow-y-scroll"
               >
-                <ul className="text-primary">
+                <ul className="text-primary dark:text-light">
                   {tasks
                     .filter((task) => !task.isCompleted)
                     .map((task, index) => (

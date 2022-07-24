@@ -42,6 +42,56 @@ const bscTestnet: Chain = {
   },
 };
 
-const chains = [chain.mainnet, chain.ropsten, chain.kovan, bsc, bscTestnet];
+const luksoTestnet: Chain = {
+  id: 2828,
+  name: 'Lukso L16',
+  network: 'l16',
+  nativeCurrency: {
+    name: 'Lukso Testnet Token',
+    decimals: 18,
+    symbol: 'LYXt',
+  },
+  rpcUrls: {
+    default: 'https://rpc.l16.lukso.network/',
+  },
+  testnet: true,
+  blockExplorers: {
+    default: {
+      name: 'luksoscan',
+      url: 'https://explorer.execution.l16.lukso.network/',
+    },
+  },
+};
+
+const local: Chain = {
+  id: 31337,
+  name: 'Hardhat Node',
+  network: 'unknown',
+  nativeCurrency: {
+    name: 'Hardhat Node Token',
+    decimals: 18,
+    symbol: 'tLN',
+  },
+  rpcUrls: {
+    default: 'http://127.0.0.1:8546/',
+  },
+  testnet: true,
+  blockExplorers: {
+    default: {
+      name: 'local',
+      url: 'http://127.0.0.1:8546/',
+    },
+  },
+};
+
+const chains = [
+  chain.mainnet,
+  chain.ropsten,
+  chain.kovan,
+  bsc,
+  bscTestnet,
+  luksoTestnet,
+  local,
+];
 
 export default chains;

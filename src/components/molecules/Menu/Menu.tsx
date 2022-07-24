@@ -14,9 +14,16 @@ function Menu() {
         isActive: false,
       },
       {
-        key: 'about-us',
-        text: 'About us',
-        to: 'https://docs.zikjob.com/general/the-team',
+        key: 'jobs',
+        text: 'Job',
+        to: '#',
+        isOutside: true,
+        isActive: false,
+      },
+      {
+        key: 'marketplace',
+        text: 'Marketplace',
+        to: '#',
         isOutside: true,
         isActive: false,
       },
@@ -25,13 +32,6 @@ function Menu() {
         text: 'Whitepaper',
         to: 'https://docs.zikjob.com',
         isOutside: true,
-        isActive: false,
-      },
-      {
-        key: 'news',
-        text: 'News',
-        to: routes.path.profile,
-        isOutside: false,
         isActive: false,
       },
     ] as MenuItem[]

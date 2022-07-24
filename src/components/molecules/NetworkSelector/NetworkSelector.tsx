@@ -1,12 +1,12 @@
-import {
-  IconArrowDown,
-  IconBSC,
-  // IconEthereum,
-  IconWrongNetwork,
-} from '@/assets/svg';
-import useOnClickOutside from '@/hooks/useOnClickOutside';
+// import { isDark } from '@/utils';
 import { useRef, useState } from 'react';
+
 import { useNetwork } from 'wagmi';
+
+import { IconArrowDown, IconBSC, IconWrongNetwork } from '@/assets/svg';
+import useOnClickOutside from '@/hooks/useOnClickOutside';
+// import useThemeStore from '@/stores/useThemeStore';
+
 import NetworkItem from './NetworkItem';
 
 function NetworkSelector() {
@@ -15,39 +15,56 @@ function NetworkSelector() {
   useOnClickOutside(ref, () => setOpen(false));
 
   const { chain: activeChain } = useNetwork();
+  // const [theme] = useThemeStore((state) => [state.theme]);
 
-  const networkItems = [
-    // {
-    //   id: 1,
-    //   text: 'Ethereum',
-    //   img: IconEthereum,
-    //   active: false,
-    // },
-    // {
-    //   id: 3,
-    //   text: 'Ropsten',
-    //   img: IconEthereum,
-    //   active: false,
-    // },
-    // {
-    //   id: 42,
-    //   text: 'Kovan',
-    //   img: IconEthereum,
-    //   active: false,
-    // },
-    // {
-    //   id: 56,
-    //   text: 'BSC',
-    //   img: IconBSC,
-    //   active: false,
-    // },
-    {
-      id: 97,
-      text: 'BSC Testnet',
-      img: IconBSC,
-      active: false,
-    },
-  ];
+  const isDevelopment = import.meta.env.VITE_ENV == 'development';
+  const networkItems = isDevelopment
+    ? [
+        {
+          id: 31337,
+          text: 'Local',
+          img: IconBSC,
+          active: false,
+        },
+      ]
+    : [
+        // {
+        //   id: 1,
+        //   text: 'Ethereum',
+        //   img: IconEthereum,
+        //   active: false,
+        // },
+        // {
+        //   id: 3,
+        //   text: 'Ropsten',
+        //   img: IconEthereum,
+        //   active: false,
+        // },
+        // {
+        //   id: 42,
+        //   text: 'Kovan',
+        //   img: IconEthereum,
+        //   active: false,
+        // },
+        // {
+        //   id: 56,
+        //   text: 'BSC',
+        //   img: IconBSC,
+        //   active: false,
+        // },
+        {
+          id: 97,
+          text: 'BSC Testnet',
+          img: IconBSC,
+          active: false,
+        },
+        // {
+        //   id: 2828,
+        //   text: 'Lukso Testnet',
+        //   img: isDark(theme) ? IconLuksoWhite : IconLuksoBlack,
+        //   active: false,
+        // },
+      ];
 
   let networkItemActive = networkItems[0];
   let isWrongNetwork = false;
@@ -67,7 +84,7 @@ function NetworkSelector() {
   }
 
   return (
-    <div ref={ref} className="dropdown network__selector">
+    <div ref={ref} className="dropdown network__selector flex">
       <button
         className={`btn btn-outline flex items-center lg:ml-4 ${
           isWrongNetwork
@@ -81,7 +98,7 @@ function NetworkSelector() {
         ) : (
           <networkItemActive.img className="block lg:hidden w-6 h-6" />
         )}
-        <span className="hidden lg:block">
+        <span className="hidden lg:block text-base">
           {isWrongNetwork ? 'Wrong Network' : networkItemActive.text}
         </span>{' '}
         <IconArrowDown className="w-5" />

@@ -1,3 +1,4 @@
+import useProfileStore from '@/stores/useProfileStore';
 import { FunctionComponent } from 'react';
 import toast from 'react-hot-toast';
 import { useSwitchNetwork } from 'wagmi';
@@ -12,7 +13,14 @@ interface Props {
 }
 
 function NetworkItem({ item }: Props) {
+  const [checkZikkie, loadZikkie] = useProfileStore((state) => [
+    state.checkZikkie,
+    state.loadZikkie,
+  ]);
   const { switchNetwork } = useSwitchNetwork({
+    onSuccess: async (chain) => {
+      await checkZikkie(chain.id).then(() => loadZikkie());
+    },
     onError: (error) => {
       toast.error(error.message);
       console.error(error);

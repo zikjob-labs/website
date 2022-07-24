@@ -1,11 +1,13 @@
 import { IconDocument } from '@/assets/svg';
 import useProfileStore from '@/stores/useProfileStore';
+import { useNetwork } from 'wagmi';
 
 function CreateZikkieButton() {
+  const { chain } = useNetwork();
   const [checkZikkie] = useProfileStore((state) => [state.checkZikkie]);
 
   const create = async () => {
-    await checkZikkie(true);
+    chain && (await checkZikkie(chain.id, true));
   };
 
   return (

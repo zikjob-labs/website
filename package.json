@@ -1,7 +1,7 @@
 {
   "name": "zikjob.com",
   "private": true,
-  "version": "0.0.5",
+  "version": "0.1.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -56,7 +56,7 @@
     "tailwindcss": "^3.1.4",
     "typescript": "^4.7.4",
     "ua-parser-js": "^1.0.2",
-    "vite": "^3.0.0-beta.5",
+    "vite": "^3.0.0",
     "vite-plugin-eslint": "^1.6.1"
   },
   "prettier": {
