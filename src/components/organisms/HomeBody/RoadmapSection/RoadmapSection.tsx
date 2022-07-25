@@ -16,31 +16,26 @@ function RoadmapSection() {
           <div className="step">
             <h3>Q2 2022</h3>
             <ul>
-              <li>Sell NFT Box</li>
-              <li>Open ZIKJOB Token Public Sale</li>
-              <li>Run Beta Test Profile (Zik) System</li>
-              <li>Airdrop NFT Achievement for early users</li>
-              <li>Launch ZJS Staking Program</li>
+              <li>Build NFTs Marketplace</li>
+              <li>Build ZIK Profile</li>
+              <li>Listing on CMC</li>
             </ul>
           </div>
           <div className="step">
             <h3>Q3 2022</h3>
             <ul>
-              <li>Open NFT Box</li>
-              <li>Launch Profile (Zik) System</li>
-              <li>Run Beta Job Listing System</li>
+              <li>ZIK Profile Testnet</li>
               <li>Launch NFT Marketplace</li>
-              <li>Sell NFT Achievement Token</li>
+              <li>Community NFTs Airdrop</li>
+              <li>Launch ZJS Staking Program</li>
             </ul>
           </div>
           <div className="step">
             <h3>Q4 2022</h3>
             <ul>
-              <li>Launch ZIKJOB DAO</li>
-              <li>Build Multichain: Polygon, Solana, Avax, Near,...</li>
-              <li>Run Beta NFT Tool for make achievement</li>
-              <li>Launch Job Listing System</li>
-              <li>Run Beta Test Profile Bank</li>
+              <li>ZIK Profile Update</li>
+              <li>Build Multichain: Lukso, Polygon...</li>
+              <li>Launch Beta Job Listing System</li>
             </ul>
           </div>
         </div>
