@@ -34,7 +34,7 @@ function RoadmapSection() {
             <h3>Q4 2022</h3>
             <ul>
               <li>ZIK Profile Update</li>
-              <li>Build Multichain: Lukso, Polygon...</li>
+              <li>Build Multichain: Lukso, Polygon, Ethereum...</li>
               <li>Launch Beta Job Listing System</li>
             </ul>
           </div>
