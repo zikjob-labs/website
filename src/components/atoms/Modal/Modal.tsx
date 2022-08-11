@@ -25,6 +25,7 @@ export interface UpdateModalProps<T> {
 interface Props {
   name?: string;
   width?: string;
+  showClose?: boolean;
   slide?: boolean;
   slidePosition?: 'left' | 'right';
   customClass?: string;
@@ -42,6 +43,7 @@ function Modal(
   {
     name,
     width,
+    showClose = true,
     slide,
     slidePosition,
     customClass,
@@ -101,15 +103,17 @@ function Modal(
     (isRoot ? (
       <div className="modal__header">
         {header}
-        <button
-          type="button"
-          className="bg-transparent rounded-lg p-0.5 ml-auto inline-flex items-center"
-        >
-          <IconCancel
-            className="w-6 h-6 fill-gray-400 hover:fill-gray-900 dark:hover:fill-light"
-            onClick={() => close()}
-          />
-        </button>
+        {showClose && (
+          <button
+            type="button"
+            className="bg-transparent rounded-lg p-0.5 ml-auto inline-flex items-center"
+          >
+            <IconCancel
+              className="w-6 h-6 fill-gray-400 hover:fill-gray-900 dark:hover:fill-light"
+              onClick={() => close()}
+            />
+          </button>
+        )}
       </div>
     ) : (
       <div className="modal__header">
