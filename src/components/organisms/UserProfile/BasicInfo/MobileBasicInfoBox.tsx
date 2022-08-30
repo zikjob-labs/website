@@ -22,6 +22,7 @@ import { parseWalletAddress } from '@/utils';
 import EditInfoButton from './EditInfoButton';
 import Description from '@/components/molecules/Description';
 import { Gender } from '@/constants';
+import MultiChain from './MultiChain';
 
 function MobileBasicInfoBox() {
   const { chain: activeChain } = useNetwork();
@@ -103,6 +104,7 @@ function MobileBasicInfoBox() {
           <LogoNoText className="w-6 h-6 mr-1" />0 ZJS
         </button>
       </div>
+      <MultiChain />
       <div className="flex flex-col gap-2 justify-start items-start">
         {zikkieAddress != '' && (
           <div className="w-full inline-flex items-center">

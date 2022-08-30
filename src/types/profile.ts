@@ -114,6 +114,7 @@ export interface ProfileState extends State {
   setIsLogged: (isLogged: boolean) => void;
   setProfile: (updatedInfo?: Profile, callUpdate?: boolean) => Promise<void>;
   checkZikkie: (chainId: number) => Promise<void>;
+  checkZikkieMultichain: (address: string) => Promise<Record<number, string>>;
   createZikkie: (chainId: number) => Promise<void>;
   loadZikkie: () => Promise<void>;
   updateZikkie: () => Promise<void>;

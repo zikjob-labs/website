@@ -12,7 +12,7 @@ import {
   encodeKeyValue,
   decodeKeyValue,
 } from '@erc725/erc725.js/build/main/src/lib/utils';
-import { fetchSigner, getContract } from '@wagmi/core';
+import { fetchSigner, getContract, getProvider } from '@wagmi/core';
 import {
   makeLsp3ProfileJson,
   makeZikJobProfileJson,
@@ -20,6 +20,7 @@ import {
 } from '@/utils/makeJson';
 import { storeJson, update } from '@/apis/api';
 import contracts from '@/constants/contracts';
+import { ethers } from 'ethers';
 
 const useProfileStore = create<ProfileState>()(
   devtools(
@@ -84,6 +85,38 @@ const useProfileStore = create<ProfileState>()(
           toast.error(error.message);
           console.error(error);
         }
+      },
+      checkZikkieMultichain: async (address: string) => {
+        const multichainSupport: Record<number, string> = {};
+        try {
+          for (const chainId in contracts) {
+            const contract = contracts[chainId];
+            const ZikJobAuthAddress = contract.address;
+
+            if (ZikJobAuthAddress) {
+              const provider = getProvider({ chainId: parseInt(chainId) });
+              const zikjobAuthContract = new ethers.Contract(
+                ZikJobAuthAddress,
+                ZikJobAuthJson.abi,
+                provider
+              );
+
+              const zikkieProfileAddress: string =
+                await zikjobAuthContract.userToZikkie(address);
+
+              multichainSupport[chainId] = zikkieProfileAddress;
+              console.log(
+                `Your Zikkie Profile on chainId (${chainId}) is: ${zikkieProfileAddress}`
+              );
+            }
+          }
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
+          toast.error(error.message);
+          console.error(error);
+        }
+
+        return multichainSupport;
       },
       createZikkie: async (chainId) => {
         console.log(chainId);

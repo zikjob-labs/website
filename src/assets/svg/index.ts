@@ -87,6 +87,10 @@ import FooterMedium from './footer-medium.svg?component';
 import FooterTelegram from './footer-telegram.svg?component';
 import FooterTwitter from './footer-twitter.svg?component';
 
+import IconChainBSC from './chains/icon-binance.svg?component';
+import IconChainCoinEx from './chains/icon-coinex.svg?component';
+import IconChainLukso from './chains/icon-lukso.svg?component';
+
 export {
   LogoNoText,
   Logo,
@@ -175,4 +179,8 @@ export {
   FooterFacebook,
   FooterDiscord,
   FooterMedium,
+  // Chains
+  IconChainBSC,
+  IconChainCoinEx,
+  IconChainLukso,
 };

@@ -31,7 +31,7 @@ const bscTestnet: Chain = {
     symbol: 'tBNB',
   },
   rpcUrls: {
-    default: 'https://data-seed-prebsc-2-s3.binance.org:8545',
+    default: 'https://data-seed-prebsc-1-s2.binance.org:8545',
   },
   testnet: true,
   blockExplorers: {
@@ -91,7 +91,9 @@ const chains = [
   bsc,
   bscTestnet,
   luksoTestnet,
-  local,
 ];
+
+const isDevelopment = import.meta.env.VITE_ENV == 'development';
+isDevelopment && chains.push(local);
 
 export default chains;
