@@ -21,6 +21,7 @@ import useProfileStore from '@/stores/useProfileStore';
 import EditInfoButton from './EditInfoButton';
 import FullNameItem from './FullNameItem';
 import Description from '@/components/molecules/Description';
+import MultiChain from './MultiChain';
 
 function BasicInfoBox() {
   const { chain: activeChain } = useNetwork();
@@ -63,6 +64,7 @@ function BasicInfoBox() {
           )}
           <div className="absolute w-4 h-4 right-[10%] top-[80%] rounded-full bg-[#00BA88]"></div>
         </div>
+        <MultiChain />
       </div>
       <div className="grow flex flex-col">
         <FullNameItem profile={profile} />

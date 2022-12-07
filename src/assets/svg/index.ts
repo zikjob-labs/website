@@ -26,6 +26,7 @@ import IconGenderFemale from './icon-gender-woman.svg?component';
 import IconGender from './icon-gender.svg?component';
 import IconHeartFull from './icon-heart-full.svg?component';
 import IconHeart from './icon-heart.svg?component';
+import IconInfo from './icon-info.svg?component';
 import IconLogout from './icon-logout.svg?component';
 import IconMail from './icon-mail.svg?component';
 import IconMenu from './icon-menu.svg?component';
@@ -41,6 +42,7 @@ import IconPhone from './icon-phone.svg?component';
 import IconRefresh from './icon-refresh.svg?component';
 import IconShare from './icon-share.svg?component';
 import IconSpin from './icon-spin.svg?component';
+import IconSuccess from './icon-success.svg?component';
 import IconSunToggle from './icon-sun-toggle.svg?component';
 import IconSun from './icon-sun.svg?component';
 import IconTick from './icon-tick.svg?component';
@@ -85,6 +87,10 @@ import FooterMedium from './footer-medium.svg?component';
 import FooterTelegram from './footer-telegram.svg?component';
 import FooterTwitter from './footer-twitter.svg?component';
 
+import IconChainBSC from './chains/icon-binance.svg?component';
+import IconChainCoinEx from './chains/icon-coinex.svg?component';
+import IconChainLukso from './chains/icon-lukso.svg?component';
+
 export {
   LogoNoText,
   Logo,
@@ -119,6 +125,7 @@ export {
   IconEarth,
   IconVideo,
   IconHeart,
+  IconInfo,
   IconHeartFull,
   IconShare,
   IconDelete,
@@ -134,6 +141,7 @@ export {
   IconBuilding,
   IconRefresh,
   IconDocument,
+  IconSuccess,
   // Icon Network
   IconEthereum,
   IconBSC,
@@ -171,4 +179,8 @@ export {
   FooterFacebook,
   FooterDiscord,
   FooterMedium,
+  // Chains
+  IconChainBSC,
+  IconChainCoinEx,
+  IconChainLukso,
 };

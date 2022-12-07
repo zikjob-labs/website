@@ -1,11 +1,17 @@
-// import { isDark } from '@/utils';
+import { isDark } from '@/utils';
 import { useRef, useState } from 'react';
 
 import { useNetwork } from 'wagmi';
 
-import { IconArrowDown, IconBSC, IconWrongNetwork } from '@/assets/svg';
+import {
+  IconArrowDown,
+  IconBSC,
+  IconLuksoBlack,
+  IconLuksoWhite,
+  IconWrongNetwork,
+} from '@/assets/svg';
 import useOnClickOutside from '@/hooks/useOnClickOutside';
-// import useThemeStore from '@/stores/useThemeStore';
+import useThemeStore from '@/stores/useThemeStore';
 
 import NetworkItem from './NetworkItem';
 
@@ -15,7 +21,7 @@ function NetworkSelector() {
   useOnClickOutside(ref, () => setOpen(false));
 
   const { chain: activeChain } = useNetwork();
-  // const [theme] = useThemeStore((state) => [state.theme]);
+  const [theme] = useThemeStore((state) => [state.theme]);
 
   const isDevelopment = import.meta.env.VITE_ENV == 'development';
   const networkItems = isDevelopment
@@ -58,12 +64,12 @@ function NetworkSelector() {
           img: IconBSC,
           active: false,
         },
-        // {
-        //   id: 2828,
-        //   text: 'Lukso Testnet',
-        //   img: isDark(theme) ? IconLuksoWhite : IconLuksoBlack,
-        //   active: false,
-        // },
+        {
+          id: 2828,
+          text: 'Lukso Testnet',
+          img: isDark(theme) ? IconLuksoWhite : IconLuksoBlack,
+          active: false,
+        },
       ];
 
   let networkItemActive = networkItems[0];

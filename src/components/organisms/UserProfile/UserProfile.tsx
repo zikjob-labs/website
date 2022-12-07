@@ -9,6 +9,7 @@ import { BasicInfoBox, MobileBasicInfoBox } from './BasicInfo';
 import CompletionProgressBox from './CompletionProgressBox';
 import EducationBox from './EducationBox';
 import ExperienceBox from './ExperienceBox';
+import LoadingProfileModal from './LoadingProfileModal';
 import SkillBox from './SkillBox';
 
 function UserProfile() {
@@ -29,6 +30,8 @@ function UserProfile() {
       <PortfolioBox /> */}
       {/* Milestone 3
       <StaticBox /> */}
+
+      <LoadingProfileModal />
     </section>
   );
 }

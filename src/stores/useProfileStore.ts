@@ -12,7 +12,7 @@ import {
   encodeKeyValue,
   decodeKeyValue,
 } from '@erc725/erc725.js/build/main/src/lib/utils';
-import { fetchSigner, getContract } from '@wagmi/core';
+import { fetchSigner, getContract, getProvider } from '@wagmi/core';
 import {
   makeLsp3ProfileJson,
   makeZikJobProfileJson,
@@ -20,13 +20,14 @@ import {
 } from '@/utils/makeJson';
 import { storeJson, update } from '@/apis/api';
 import contracts from '@/constants/contracts';
+import { ethers } from 'ethers';
 
 const useProfileStore = create<ProfileState>()(
   devtools(
     immer((set, get) => ({
-      isLogged: false,
+      isLogged: Boolean(0),
       zikkieAddress: '',
-      profile: undefined,
+      profile: {},
       setIsLogged: (isLogged: boolean) =>
         set((state) => {
           state.isLogged = isLogged;
@@ -54,7 +55,7 @@ const useProfileStore = create<ProfileState>()(
           state.profile = { ...oldProfile, ...updatedProfile };
         });
       },
-      checkZikkie: async (chainId, createIfNotExists = false) => {
+      checkZikkie: async (chainId) => {
         try {
           console.log(chainId);
           if (!Object.keys(contracts).includes(chainId.toString()))
@@ -70,13 +71,8 @@ const useProfileStore = create<ProfileState>()(
               signerOrProvider: signer,
             });
 
-            let zikkieProfileAddress: string =
+            const zikkieProfileAddress: string =
               await zikjobAuthContract.userToZikkie(await signer.getAddress());
-            if (createIfNotExists && zikkieProfileAddress == ZeroAddress) {
-              zikkieProfileAddress =
-                await zikjobAuthContract.callStatic.createZikkie();
-              await zikjobAuthContract.createZikkie();
-            }
             console.log('Your Zikkie Profile is: ' + zikkieProfileAddress);
 
             set((state) => {
@@ -89,6 +85,65 @@ const useProfileStore = create<ProfileState>()(
           toast.error(error.message);
           console.error(error);
         }
+      },
+      checkZikkieMultichain: async (address: string) => {
+        const multichainSupport: Record<number, string> = {};
+        try {
+          for (const chainId in contracts) {
+            const contract = contracts[chainId];
+            const ZikJobAuthAddress = contract.address;
+
+            if (ZikJobAuthAddress) {
+              const provider = getProvider({ chainId: parseInt(chainId) });
+              const zikjobAuthContract = new ethers.Contract(
+                ZikJobAuthAddress,
+                ZikJobAuthJson.abi,
+                provider
+              );
+
+              const zikkieProfileAddress: string =
+                await zikjobAuthContract.userToZikkie(address);
+
+              multichainSupport[chainId] = zikkieProfileAddress;
+              console.log(
+                `Your Zikkie Profile on chainId (${chainId}) is: ${zikkieProfileAddress}`
+              );
+            }
+          }
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
+          toast.error(error.message);
+          console.error(error);
+        }
+
+        return multichainSupport;
+      },
+      createZikkie: async (chainId) => {
+        console.log(chainId);
+        if (!Object.keys(contracts).includes(chainId.toString()))
+          throw new Error('Chain not support!');
+
+        const ZikJobAuthAddress = contracts[chainId].address;
+        if (!ZikJobAuthAddress)
+          throw new Error('ZikJobAuth address not setting!');
+
+        const signer = await fetchSigner();
+
+        const zikjobAuthContract = getContract({
+          addressOrName: ZikJobAuthAddress,
+          contractInterface: ZikJobAuthJson.abi,
+          signerOrProvider: signer,
+        });
+
+        const zikkieProfileAddress: string =
+          await zikjobAuthContract.callStatic.createZikkie();
+        await zikjobAuthContract.createZikkie();
+        console.log('Your Zikkie Profile is: ' + zikkieProfileAddress);
+
+        set((state) => {
+          state.zikkieAddress =
+            zikkieProfileAddress == ZeroAddress ? '' : zikkieProfileAddress;
+        });
       },
       loadZikkie: async () => {
         try {
@@ -110,6 +165,10 @@ const useProfileStore = create<ProfileState>()(
             const dataProfileEncoded = await zikkieContract['getData(bytes32)'](
               zikjobProfileSchema.key
             );
+
+            if (dataProfileEncoded == '0x')
+              throw new Error('Please make Zik Profile then sync');
+
             const dataProfileDecoded = decodeKeyValue(
               zikjobProfileSchema.valueContent,
               zikjobProfileSchema.valueType,
